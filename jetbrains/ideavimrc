@@ -1,0 +1,40 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+"" 需要安装的插件列表
+"" IdeaVim
+"" IdeaVimExtension
+"" Which-Key
+"" AceJump
+
+"" 设置leader键
+let mapleader = " "
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=10
+
+"" 增量搜索
+set incsearch
+"" 设置相对行号
+set number relativenumber
+"" 设置进入 Normal 模式时回到英文输入状态，避免维持中文输入法 - IdeaVim-EasyMotion
+set keep-english-in-normal
+"" 开启 Which-Key 插件
+set which-key
+set notimeout
+"" 设置和系统共享剪切板
+" set clipboard^=unnamed
+
+"" 快捷键
+"" s - 使用 AceJump（替代<Ctrl-;>）
+map s <Action>(AceAction)
+
+"" -- IDE Action 快捷键 -- https://jb.gg/abva4t
+"" gi - 访问接口的实现
+nmap gi <Action>(GotoImplementation)
+"" gI - 访问实现的接口
+nmap gI <Action>(GotoSuperMethod)
