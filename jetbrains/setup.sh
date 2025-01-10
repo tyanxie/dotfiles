@@ -27,7 +27,7 @@ if [ ! -e "$target" ]; then
     create_link
 else
     #文件存在则询问用户是否删除文件
-    echo ".ideavimrc 已经存在，是否删除并重新创建？（y/n）:"
+    echo -n ".ideavimrc 已经存在，是否删除并重新创建？（y/n）:"
     #等待用户输入
     read -r input
     #如果用户输入是y或Y，则删除原始配置并重新创建
