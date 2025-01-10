@@ -10,7 +10,7 @@ return {
         keys = {
             { "<leader>E", "<leader>fe", desc = "Explorer NeoTree (Root Dir)", remap = true },
             { "<leader>e", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
-            -- use <leader>fc go to current file's secondary parent directory
+            -- 使用<leader>fh查看当前打开文件的二级父目录
             {
                 "<leader>fh",
                 function()
@@ -23,14 +23,9 @@ return {
             filesystem = {
                 window = {
                     mappings = {
-                        -- use "o" to open file by system default application
-                        -- it's map to "system_open"" commend
-                        ["o"] = function(state)
-                            local node = state.tree:get_node()
-                            local path = node:get_id()
-                            vim.fn.jobstart({ "open", path }, { detach = true })
-                        end,
-                        -- disable s and S to avoid split windows
+                        -- 使用e命令递归打开所有文件夹
+                        ["e"] = "expand_all_nodes",
+                        -- 关闭s与S命令，防止切割窗口命令和leap命令冲突
                         ["s"] = "noop",
                         ["S"] = "noop",
                     },
