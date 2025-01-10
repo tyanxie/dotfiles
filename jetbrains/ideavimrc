@@ -29,7 +29,12 @@ set notimeout
 "" 设置和系统共享剪切板
 " set clipboard^=unnamed
 
-"" 快捷键
+"" NERDTree 插件
+set NERDTree
+"" 快捷打开 NERDTree
+map <leader>e :NERDTree<CR>
+
+"" AcpJump 插件
 "" s - 使用 AceJump（替代<Ctrl-;>）
 map s <Action>(AceAction)
 
