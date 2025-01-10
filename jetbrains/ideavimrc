@@ -37,6 +37,8 @@ map <leader>e :NERDTree<CR>
 "" AcpJump 插件
 "" s - 使用 AceJump（替代<Ctrl-;>）
 map s <Action>(AceAction)
+"" s 键在 select 模式下不生效
+sunmap s
 
 "" -- IDE Action 快捷键 -- https://jb.gg/abva4t
 "" gi - 访问接口的实现
