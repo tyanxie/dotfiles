@@ -38,4 +38,14 @@ return {
     {
         "mg979/vim-visual-multi",
     },
+
+    -- lsp_signature 强大的展示函数/接口等签名插件
+    {
+        "ray-x/lsp_signature.nvim",
+        event = "VeryLazy",
+        opts = {},
+        config = function(_, opts)
+            require("lsp_signature").setup(opts)
+        end,
+    },
 }
