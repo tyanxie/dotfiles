@@ -8,8 +8,8 @@ setup() {
     local source="$2"
     local target="$3"
 
-    #判断文件是否不存在
-    if [ ! -e "$target" ]; then
+    #判断文件是否不存在且不为软链接
+    if [ ! -e "$target" ] && [ ! -L "$target" ]; then
         #文件不存在则直接创建链接
         create_link "$name" "$source" "$target"
         return $?
@@ -37,8 +37,8 @@ create_link() {
     local source="$2"
     local target="$3"
 
-    #如果原始文件存在则删除
-    if [ -e "$target" ]; then
+    #如果原始文件存在或为软链接则删除
+    if [ -e "$target" ] || [ -L "$target" ]; then
         #删除文件命令
         local command="rm -rf \"$target\""
         echo -e "[$name] 删除原始文件：$command"
