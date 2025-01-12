@@ -94,16 +94,24 @@ return {
         },
     },
 
+    -- go 语言 dap 支持
     {
-        "mfussenegger/nvim-dap",
-        dependencies = {
-            {
-                "williamboman/mason.nvim",
-                opts = { ensure_installed = { "delve" } },
-            },
-            {
-                "leoluz/nvim-dap-go",
-                opts = {},
+        "leoluz/nvim-dap-go",
+        opts = {
+            -- 个性化 dap 配置
+            -- 参考文件：https://github.com/leoluz/nvim-dap-go/blob/main/lua/dap-go.lua
+            dap_configurations = {
+                {
+                    type = "go",
+                    name = "Debug Package(Remote)",
+                    request = "launch",
+                    program = "${fileDirname}",
+                    -- outputMode 需要配置为 remote 才能正常看到输出内容
+                    -- https://github.com/mfussenegger/nvim-dap/discussions/1407#discussioncomment-11705594
+                    -- nvim-dap-go 已经有 PR 但还未合入：https://github.com/leoluz/nvim-dap-go/pull/109
+                    -- 相关 issue：https://github.com/leoluz/nvim-dap-go/issues/108
+                    outputMode = "remote",
+                },
             },
         },
     },
