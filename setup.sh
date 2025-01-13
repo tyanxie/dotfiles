@@ -73,8 +73,11 @@ for arg in "$@"; do
     ideavimrc)
         setup "$arg" "$(pwd)/ideavimrc" "$HOME/.ideavimrc"
         ;;
-    neovim|nvim)
+    neovim | nvim)
         setup "$arg" "$(pwd)/nvim" "$HOME/.config/nvim"
+        ;;
+    tmux)
+        setup "$arg" "$(pwd)/tmux.conf" "$HOME/.tmux.conf"
         ;;
     *)
         echo "不支持的参数：$arg" >&2
