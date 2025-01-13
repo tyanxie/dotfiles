@@ -15,3 +15,9 @@ vim.keymap.del({ "n", "i", "v" }, "<A-k>")
 -- 设置 J 和 K 为快速上下，一次相当于执行多次 j/k 命令
 vim.keymap.set({ "n", "x" }, "J", "5j", { desc = "Fast Down", silent = true })
 vim.keymap.set({ "n", "x" }, "K", "5k", { desc = "Fast Up", silent = true })
+
+-- vim-visual-multi将C-Up和C-Down的功能增加到C-A-j和C-A-k（C-j与C-k被默认用于切换聚焦的panel）
+-- 解决iTerm2下通过tmux使用时，C-Up和C-Down无法使用的问题
+-- https://github.com/mg979/vim-visual-multi/blob/a6975e7c1ee157615bbc80fc25e4392f71c344d4/autoload/vm/plugs.vim#L11
+vim.keymap.set("n", "<C-A-j>", "<cmd>call vm#commands#add_cursor_down(0, v:count1)<cr>")
+vim.keymap.set("n", "<C-A-k>", "<cmd>call vm#commands#add_cursor_up(0, v:count1)<cr>")
