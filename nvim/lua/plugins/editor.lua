@@ -38,4 +38,13 @@ return {
     {
         "mg979/vim-visual-multi",
     },
+
+    -- vim-tmux-clipboard 用于跨tmux会话进行复制
+    {
+        "roxma/vim-tmux-clipboard",
+        enabled = function()
+            -- 仅在Linux操作系统上开启，因为macOS操作系统上Neovim可以和系统剪切板关联，无需通过tmux传输
+            return vim.uv.os_uname().sysname == "Linux"
+        end,
+    },
 }
