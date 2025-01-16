@@ -79,6 +79,9 @@ for arg in "$@"; do
     tmux)
         setup "$arg" "$(pwd)/tmux.conf" "$HOME/.tmux.conf"
         ;;
+    kitty)
+        setup "$arg" "$(pwd)/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+        ;;
     *)
         echo "不支持的参数：$arg" >&2
         ;;
