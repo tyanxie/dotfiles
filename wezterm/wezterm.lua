@@ -29,22 +29,22 @@ config.text_background_opacity = 0.9
 
 -- 背景，配置参考：https://www.bilibili.com/video/BV1miWMe9Esq?vd_source=66989d6205583753c78874fada7f0721
 config.background = {
-    -- 背景图片
+	-- 背景图片
 	{
 		source = {
-            -- TODO: 兼容windows系统的USERPROFILE
+			-- TODO: 兼容windows系统的USERPROFILE
 			File = os.getenv("HOME") .. "/.config/wezterm/background.jpg",
 		},
 		hsb = {
-            -- 色相
+			-- 色相
 			hue = 1.0,
-            -- 饱和度
+			-- 饱和度
 			saturation = 1.02,
-            -- 亮度
+			-- 亮度
 			brightness = 0.25,
 		},
 	},
-    -- 为背景图片覆盖一层蒙版，防止过亮
+	-- 为背景图片覆盖一层蒙版，防止过亮
 	{
 		source = {
 			Color = "#282c35",
@@ -55,6 +55,7 @@ config.background = {
 	},
 }
 
+-- 窗口padding
 config.window_padding = {
 	left = 20,
 	right = 20,
