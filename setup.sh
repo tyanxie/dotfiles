@@ -77,7 +77,8 @@ for arg in "$@"; do
         setup "$arg" "$(pwd)/nvim" "$HOME/.config/nvim"
         ;;
     tmux)
-        setup "$arg" "$(pwd)/tmux.conf" "$HOME/.tmux.conf"
+        setup "$arg" "$(pwd)/tmux/tmux.conf" "$HOME/.tmux.conf"
+        setup "$arg" "$(pwd)/tmux/tmux" "$HOME/.config/tmux"
         ;;
     wezterm)
         setup "$arg" "$(pwd)/wezterm" "$HOME/.config/wezterm"
