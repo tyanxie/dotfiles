@@ -6,17 +6,20 @@ return {
     },
 
     -- nvim-lspconfig 实现语言服务器支持
-    -- 需要安装 protols：
-    --  方法1、cargo install protols
-    --  方法2、安装预编译包并且添加进环境变量：https://github.com/coder3101/protols/releases
-    -- {
-    --     "neovim/nvim-lspconfig",
-    --     opts = {
-    --         servers = {
-    --             protols = {},
-    --         },
-    --     },
-    -- },
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = {
+            {
+                "williamboman/mason.nvim",
+                opts = { ensure_installed = { "buf" } },
+            },
+        },
+        opts = {
+            servers = {
+                buf_ls = {},
+            },
+        },
+    },
 
     -- conform 代码格式化插件
     {
@@ -29,7 +32,7 @@ return {
         },
         opts = {
             formatters_by_ft = {
-                proto = { "common_protobuf", lsp_format = "last" },
+                proto = { "common_protobuf", lsp_format = "fallback" },
             },
             -- 自定义格式格式化工具
             formatters = {
