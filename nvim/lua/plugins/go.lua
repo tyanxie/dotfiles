@@ -89,7 +89,7 @@ return {
         "stevearc/conform.nvim",
         opts = {
             formatters_by_ft = {
-                go = { "goimports", lsp_format = "last" },
+                go = { "goimports", lsp_format = "fallback" },
             },
         },
     },
