@@ -14,13 +14,6 @@ vim.g.autoformat = false
 -- 上下滚动至少展示16行
 vim.opt.scrolloff = 16
 
--- 获取操作系统名称，Linux/Darwin
-local uname = vim.uv.os_uname().sysname
--- 如果是Linux操作系统，则取消鼠标能力，防止远程服务器无法选择复制内容的问题
-if uname == "Linux" then
-    vim.opt.mouse = ""
-end
-
 -- 在第120列展示高亮竖线，其颜色在init.lua中进行设置，否则无法成功
 vim.opt.colorcolumn = "120"
 
