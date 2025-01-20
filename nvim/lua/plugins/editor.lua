@@ -43,8 +43,8 @@ return {
     {
         "roxma/vim-tmux-clipboard",
         enabled = function()
-            -- 仅在Linux操作系统上开启，因为macOS操作系统上Neovim可以和系统剪切板关联，无需通过tmux传输
-            return vim.uv.os_uname().sysname == "Linux"
+            -- 仅在ssh环境+tmux会话中上开启，因为本机操作系统上Neovim可以和系统剪切板关联，无需通过tmux传输
+            return (os.getenv("SSH_CLIENT") ~= nil or os.getenv("SSH_TTY") ~= nil) and os.getenv("TMUX") ~= nil
         end,
     },
 

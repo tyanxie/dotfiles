@@ -29,9 +29,10 @@ if os.getenv("SSH_CLIENT") ~= nil or os.getenv("SSH_TTY") ~= nil then
     -- wezterm不支持读取系统剪切板，因此需要自己实现一个paste函数取代原有的paste函数，否则会导致粘贴时卡住
     -- https://github.com/neovim/neovim/discussions/28010#discussioncomment-10187140
     local function paste()
-        return function()
-            return vim.split(vim.fn.getreg('"'), "\n")
-        end
+        return {
+            vim.split(vim.fn.getreg(""), "\n"),
+            vim.fn.getregtype(""),
+        }
     end
 
     -- 使用OSC52支持ssh复制内容到本机剪切板
