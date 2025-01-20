@@ -18,11 +18,6 @@ vim.opt.scrolloff = 16
 vim.opt.colorcolumn = "120"
 
 if os.getenv("SSH_CLIENT") ~= nil or os.getenv("SSH_TTY") ~= nil then
-    -- 如果在tmux中，则关闭鼠标能力，解决tmux中复制问题
-    if os.getenv("TMUX") ~= nil then
-        vim.opt.mouse = ""
-    end
-
     -- 必须：设置neovim使用+寄存器
     vim.o.clipboard = "unnamedplus"
 
