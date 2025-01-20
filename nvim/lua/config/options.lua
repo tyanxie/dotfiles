@@ -17,9 +17,12 @@ vim.opt.scrolloff = 16
 -- 在第120列展示高亮竖线，其颜色在init.lua中进行设置，否则无法成功
 vim.opt.colorcolumn = "120"
 
--- 使用OSC52支持ssh复制内容到本机剪切板
--- 注意使用的终端仿真器需要支持OSC52
 if os.getenv("SSH_CLIENT") ~= nil or os.getenv("SSH_TTY") ~= nil then
+    -- 如果在tmux中，则关闭鼠标能力，解决tmux中复制问题
+    if os.getenv("TMUX") ~= nil then
+        vim.opt.mouse = ""
+    end
+
     -- 必须：设置neovim使用+寄存器
     vim.o.clipboard = "unnamedplus"
 
@@ -31,7 +34,8 @@ if os.getenv("SSH_CLIENT") ~= nil or os.getenv("SSH_TTY") ~= nil then
         end
     end
 
-    -- 修改剪切板配置，默认使用OSC52
+    -- 使用OSC52支持ssh复制内容到本机剪切板
+    -- 注意使用的终端仿真器需要支持OSC52
     vim.g.clipboard = {
         name = "OSC 52",
         copy = {
@@ -43,15 +47,4 @@ if os.getenv("SSH_CLIENT") ~= nil or os.getenv("SSH_TTY") ~= nil then
             ["*"] = paste,
         },
     }
-    -- vim.g.clipboard = {
-    --     name = "OSC 52",
-    --     copy = {
-    --         ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-    --         ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-    --     },
-    --     paste = {
-    --         ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-    --         ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
-    --     },
-    -- }
 end
