@@ -13,8 +13,9 @@ vim.keymap.del({ "n", "i", "v" }, "<A-j>")
 vim.keymap.del({ "n", "i", "v" }, "<A-k>")
 
 -- 设置 J 和 K 为快速上下，一次相当于执行多次 j/k 命令
-vim.keymap.set({ "n", "x" }, "J", "5j", { desc = "Fast Down", silent = true })
-vim.keymap.set({ "n", "x" }, "K", "5k", { desc = "Fast Up", silent = true })
+-- 参考lazyvim的smark jk实现：https://github.com/LazyVim/LazyVim/blob/1e83b4f843f88678189df81b1c88a400c53abdbc/lua/lazyvim/config/keymaps.lua#L8
+vim.keymap.set({ "n", "x" }, "J", "v:count == 0 ? '5gj' : '5j'", { desc = "Fast Down", expr = true, silent = true })
+vim.keymap.set({ "n", "x" }, "K", "v:count == 0 ? '5gk' : '5k'", { desc = "Fast Up", expr = true, silent = true })
 
 -- vim-visual-multi将C-Up和C-Down的功能增加到C-A-j和C-A-k（C-j与C-k被默认用于切换聚焦的panel）
 -- 解决iTerm2下通过tmux使用时，C-Up和C-Down无法使用的问题
