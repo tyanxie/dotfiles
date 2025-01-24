@@ -1,10 +1,39 @@
--- bootstrap lazy.nvim, LazyVim and your plugins
-require("config.lazy")
+require("config.options")
+require("config.keymaps")
+require("config.autocmds")
 
--- 设置高亮竖线的颜色
-vim.cmd([[highlight ColorColumn ctermbg=NONE guibg=#323438]])
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out, "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
+end
+vim.opt.rtp:prepend(lazypath)
 
--- 移除formatoptions选项中的c/r/o选项，实现在注释行换行时不会自动增加注释符号
-vim.opt.formatoptions:remove("c")
-vim.opt.formatoptions:remove("r")
-vim.opt.formatoptions:remove("o")
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+-- This is also a good place to setup other settings (vim.opt)
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
+-- Setup lazy.nvim
+require("lazy").setup({
+    spec = {
+        -- 引入plugins目录下的插件
+        { import = "plugins" },
+    },
+    -- 自动校验插件更新
+    checker = { enabled = true },
+})
+
+-- 设置colorscheme
+vim.cmd.colorscheme("nightfox")

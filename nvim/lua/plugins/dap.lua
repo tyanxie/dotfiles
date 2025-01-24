@@ -54,14 +54,9 @@ return {
         },
 
         config = function()
-            -- load mason-nvim-dap here, after all adapters have been setup
-            if LazyVim.has("mason-nvim-dap.nvim") then
-                require("mason-nvim-dap").setup(LazyVim.opts("mason-nvim-dap.nvim"))
-            end
-
             vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
-            for name, sign in pairs(LazyVim.config.icons.dap) do
+            for name, sign in pairs(require("util.icons").dap) do
                 sign = type(sign) == "table" and sign or { sign }
                 vim.fn.sign_define(
                     "Dap" .. name,
@@ -104,5 +99,11 @@ return {
             --     dapui.close({})
             -- end
         end,
+    },
+
+    -- go语言dap支持
+    {
+        "leoluz/nvim-dap-go",
+        opts = {},
     },
 }

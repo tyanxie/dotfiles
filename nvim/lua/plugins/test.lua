@@ -1,75 +1,55 @@
 return {
-    recommended = true,
-    desc = "Neotest support. Requires language specific adapters to be configured. (see lang extras)",
     {
         "nvim-neotest/neotest",
-        dependencies = { "nvim-neotest/nvim-nio" },
+        dependencies = {
+            "fredrikaverpil/neotest-golang", -- go语言测试支持
+            "nvim-neotest/nvim-nio",
+        },
         opts = {
             -- Can be a list of adapters like what neotest expects,
             -- or a list of adapter names,
             -- or a table of adapter names, mapped to adapter configs.
             -- The adapter will then be automatically loaded with the config.
-            adapters = {},
-            -- Example for loading neotest-golang with a custom config
-            -- adapters = {
-            --   ["neotest-golang"] = {
-            --     go_test_args = { "-v", "-race", "-count=1", "-timeout=60s" },
-            --     dap_go_enabled = true,
-            --   },
-            -- },
+            adapters = {
+                ["neotest-golang"] = {
+                    -- Here we can set options for neotest-golang, e.g.
+                    -- go_test_args = { "-v", "-race", "-count=1", "-timeout=60s" },
+                    dap_go_enabled = true, -- requires leoluz/nvim-dap-go
+                },
+            },
             status = { virtual_text = true },
             output = { open_on_run = true },
             quickfix = {
                 open = function()
-                    if LazyVim.has("trouble.nvim") then
-                        require("trouble").open({ mode = "quickfix", focus = false })
-                    else
-                        vim.cmd("copen")
-                    end
+                    require("trouble").open({ mode = "quickfix", focus = false })
                 end,
             },
         },
         config = function(_, opts)
-            local neotest_ns = vim.api.nvim_create_namespace("neotest")
-            vim.diagnostic.config({
-                virtual_text = {
-                    format = function(diagnostic)
-                        -- Replace newline and tab characters with space for more compact diagnostics
-                        local message =
-                            diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
-                        return message
-                    end,
-                },
-            }, neotest_ns)
-
-            if LazyVim.has("trouble.nvim") then
-                opts.consumers = opts.consumers or {}
-                -- Refresh and auto close trouble after running tests
-                ---@type neotest.Consumer
-                opts.consumers.trouble = function(client)
-                    client.listeners.results = function(adapter_id, results, partial)
-                        if partial then
-                            return
-                        end
-                        local tree = assert(client:get_position(nil, { adapter = adapter_id }))
-
-                        local failed = 0
-                        for pos_id, result in pairs(results) do
-                            if result.status == "failed" and tree:get_key(pos_id) then
-                                failed = failed + 1
-                            end
-                        end
-                        vim.schedule(function()
-                            local trouble = require("trouble")
-                            if trouble.is_open() then
-                                trouble.refresh()
-                                if failed == 0 then
-                                    trouble.close()
-                                end
-                            end
-                        end)
-                        return {}
+            opts.consumers = opts.consumers or {}
+            opts.consumers.trouble = function(client)
+                client.listeners.results = function(adapter_id, results, partial)
+                    if partial then
+                        return
                     end
+                    local tree = assert(client:get_position(nil, { adapter = adapter_id }))
+
+                    local failed = 0
+                    for pos_id, result in pairs(results) do
+                        if result.status == "failed" and tree:get_key(pos_id) then
+                            failed = failed + 1
+                        end
+                    end
+                    vim.schedule(function()
+                        local trouble = require("trouble")
+                        if trouble.is_open() then
+                            trouble.refresh()
+                            if failed == 0 then
+                                trouble.close()
+                            end
+                        end
+                    end)
+                    return {}
                 end
             end
 
@@ -105,26 +85,71 @@ return {
             require("neotest").setup(opts)
         end,
 
-        -- stylua: ignore
         keys = {
-            { "<leader>ct", "", desc = "+test"},
-            { "<leader>ctt", function() require("neotest").run.run(vim.fn.expand("%")) end, desc = "Run File (Neotest)" },
-            { "<leader>ctT", function() require("neotest").run.run(vim.uv.cwd()) end, desc = "Run All Test Files (Neotest)" },
-            { "<leader>ctr", function() require("neotest").run.run() end, desc = "Run Nearest (Neotest)" },
-            { "<leader>ctl", function() require("neotest").run.run_last() end, desc = "Run Last (Neotest)" },
-            { "<leader>cts", function() require("neotest").summary.toggle() end, desc = "Toggle Summary (Neotest)" },
-            { "<leader>cto", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show Output (Neotest)" },
-            { "<leader>ctO", function() require("neotest").output_panel.toggle() end, desc = "Toggle Output Panel (Neotest)" },
-            { "<leader>ctS", function() require("neotest").run.stop() end, desc = "Stop (Neotest)" },
-            { "<leader>ctw", function() require("neotest").watch.toggle(vim.fn.expand("%")) end, desc = "Toggle Watch (Neotest)" },
-        },
-    },
-
-    {
-        "mfussenegger/nvim-dap",
-        -- stylua: ignore
-        keys = {
-            { "<leader>ctd", function() require("neotest").run.run({strategy = "dap"}) end, desc = "Debug Nearest" },
+            { "<leader>ct", "", desc = "+test" },
+            {
+                "<leader>ctt",
+                function()
+                    require("neotest").run.run(vim.fn.expand("%"))
+                end,
+                desc = "Run File (Neotest)",
+            },
+            {
+                "<leader>ctT",
+                function()
+                    require("neotest").run.run(vim.uv.cwd())
+                end,
+                desc = "Run All Test Files (Neotest)",
+            },
+            {
+                "<leader>ctr",
+                function()
+                    require("neotest").run.run()
+                end,
+                desc = "Run Nearest (Neotest)",
+            },
+            {
+                "<leader>ctl",
+                function()
+                    require("neotest").run.run_last()
+                end,
+                desc = "Run Last (Neotest)",
+            },
+            {
+                "<leader>cts",
+                function()
+                    require("neotest").summary.toggle()
+                end,
+                desc = "Toggle Summary (Neotest)",
+            },
+            {
+                "<leader>cto",
+                function()
+                    require("neotest").output.open({ enter = true, auto_close = true })
+                end,
+                desc = "Show Output (Neotest)",
+            },
+            {
+                "<leader>ctO",
+                function()
+                    require("neotest").output_panel.toggle()
+                end,
+                desc = "Toggle Output Panel (Neotest)",
+            },
+            {
+                "<leader>ctS",
+                function()
+                    require("neotest").run.stop()
+                end,
+                desc = "Stop (Neotest)",
+            },
+            {
+                "<leader>ctw",
+                function()
+                    require("neotest").watch.toggle(vim.fn.expand("%"))
+                end,
+                desc = "Toggle Watch (Neotest)",
+            },
         },
     },
 }
