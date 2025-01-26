@@ -103,7 +103,12 @@ return {
                     end,
                     desc = "Open with System Application",
                 },
-                ["P"] = { "toggle_preview", config = { use_float = false, use_image_nvim = true } },
+                -- 预览内容
+                -- 非Linux系统才预览图片
+                ["P"] = {
+                    "toggle_preview",
+                    config = { use_float = false, use_image_nvim = require("util").not_linux() },
+                },
                 -- 使用e命令递归打开所有文件夹
                 ["e"] = "expand_all_nodes",
                 -- 关闭s与S命令，防止切割窗口命令和leap命令冲突
