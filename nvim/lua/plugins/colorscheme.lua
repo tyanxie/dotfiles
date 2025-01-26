@@ -28,6 +28,9 @@ return {
         opts = {
             options = {
                 transparent = false,
+                styles = {
+                    comments = "italic",
+                },
             },
         },
     },
