@@ -5,6 +5,7 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
+        "3rd/image.nvim",
     },
     keys = {
         {
@@ -102,7 +103,7 @@ return {
                     end,
                     desc = "Open with System Application",
                 },
-                ["P"] = { "toggle_preview", config = { use_float = false } },
+                ["P"] = { "toggle_preview", config = { use_float = false, use_image_nvim = true } },
                 -- 使用e命令递归打开所有文件夹
                 ["e"] = "expand_all_nodes",
                 -- 关闭s与S命令，防止切割窗口命令和leap命令冲突
