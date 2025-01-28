@@ -51,7 +51,7 @@ return {
                             { "kind_icon" },
                             { "label", gap = 1 },
                         },
-                        -- 绘制组件陪孩子
+                        -- 绘制组件配置
                         components = {
                             -- 类型icon配置
                             kind_icon = {

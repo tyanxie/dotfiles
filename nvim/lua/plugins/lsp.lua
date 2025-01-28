@@ -135,7 +135,7 @@ return {
             setup("gopls", {
                 settings = {
                     gopls = {
-                        -- 可以在gopls的文档中找到配置项：https://github.com/golang/tools/tree/master/gopls/doc
+                        -- 可以在gopls的文档中找到配置项：https://github.com/golang/tools/blob/master/gopls/doc/settings.md
                         codelenses = {
                             gc_details = false,
                             generate = true,
