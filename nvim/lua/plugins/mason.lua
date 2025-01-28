@@ -7,6 +7,7 @@ return {
     opts = {
         ensure_installed = {
             "stylua",
+            "lua-language-server",
             "shfmt",
             "gopls",
             "goimports",

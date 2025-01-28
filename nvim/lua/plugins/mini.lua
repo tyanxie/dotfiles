@@ -18,6 +18,7 @@ return {
                 [".go-version"] = { glyph = "" },
                 ["go.mod"] = { glyph = "" },
                 ["go.sum"] = { glyph = "" },
+                ["go.work"] = { glyph = "" },
                 ["devcontainer.json"] = { glyph = "", hl = "MiniIconsAzure" },
             },
             filetype = {
