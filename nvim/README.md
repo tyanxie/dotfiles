@@ -2,6 +2,15 @@
 
 个人 [Neovim](https://github.com/neovim/neovim) 配置。
 
+## 问题记录
+
+> 本章节记录一些让我实在无法用下去的问题。
+
+1. gopls的code completion无法提示出一个完全从未使用过的模块，
+想要提示出来必须是一个使用过或间接引用过的模块才可以正常提示，个人认为这是一个bug，
+正在等待gopls官方的回复：[issue](https://github.com/golang/go/issues/71462)，无论如何这是一个非常影响使用体验的问题，
+这也是我只能暂时放弃将Neovim作为主要工作流的核心原因。
+
 ## Protocol Buffers (Protobuf)
 
 当前配置使用 [protols](https://github.com/coder3101/protols) 作为
