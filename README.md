@@ -10,3 +10,12 @@
 ## tmux
 
 需要安装 [tmux-mem-cpu-load](https://github.com/thewtex/tmux-mem-cpu-load) 以获得完整体验。
+
+## IdeaVim
+
+需要安装的插件列表：
+- IdeaVim
+- IdeaVimExtension
+- Which-Key
+- AceJump
+
