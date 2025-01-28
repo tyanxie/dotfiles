@@ -19,6 +19,9 @@ return {
             "bash-language-server",
             "shellcheck",
             "marksman",
+            "json-lsp",
+            "taplo",
+            "yaml-language-server",
         },
     },
     config = function(_, opts)
