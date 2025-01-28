@@ -44,3 +44,8 @@ sunmap s
 nmap gi <Action>(GotoImplementation)
 "" gI - 访问实现的接口
 nmap gI <Action>(GotoSuperMethod)
+
+"" gd与gr - 访问Declaration，尽量保证和Neovim有类似的体验
+nmap gd <Action>(GotoDeclaration)
+nmap gr <Action>(GotoDeclaration)
+
