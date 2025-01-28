@@ -12,6 +12,10 @@
 "" 设置leader键
 let mapleader = " "
 
+"" 快速上下移动
+map J 5j
+map K 5k
+
 "" -- Suggested options --
 " Show a few lines of context around the cursor. Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
