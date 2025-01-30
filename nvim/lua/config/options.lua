@@ -199,7 +199,7 @@ vim.opt.wildmode = "longest:full,full"
 -- 窗口最小宽度
 vim.opt.winminwidth = 5
 
--- 关闭自动换行
+-- 自动换行开关
 vim.opt.wrap = false
 
 -- 在第120列展示高亮竖线
