@@ -31,6 +31,7 @@ return {
             javascript = { "prettier", lsp_format = "fallback" },
             typescript = { "prettier", lsp_format = "fallback" },
             vue = { "prettier", lsp_format = "fallback" },
+            markdown = { "prettier", lsp_format = "fallback" },
         },
         formatters = {
             -- 参考官方 clang-format 进行定制：https://github.com/stevearc/conform.nvim/blob/master/lua/conform/formatters/clang-format.lua
