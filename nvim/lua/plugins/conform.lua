@@ -38,6 +38,8 @@ return {
             proto = { "common_protobuf", lsp_format = "fallback" },
             html = { "prettier", lsp_format = "fallback" },
             css = { "prettier", lsp_format = "fallback" },
+            javascript = { "prettier", lsp_format = "fallback" },
+            typescript = { "prettier", lsp_format = "fallback" },
         },
         formatters = {
             -- 参考官方 clang-format 进行定制：https://github.com/stevearc/conform.nvim/blob/master/lua/conform/formatters/clang-format.lua

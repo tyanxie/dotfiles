@@ -243,6 +243,9 @@ return {
 
             -- css
             setup("cssls", {})
+
+            -- javascript/typescript
+            setup("vtsls", {})
         end,
     },
 
