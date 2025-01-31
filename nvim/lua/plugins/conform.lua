@@ -15,7 +15,14 @@ return {
         },
     },
     config = function(_, opts)
-        require("conform").setup(opts)
+        -- 初始化conform
+        local conform = require("conform")
+        conform.setup(opts)
+        -- 个性化定制prettier
+        conform.formatters.prettier = {
+            -- 末尾增加参数，tab宽度为4个space
+            append_args = { "--tab-width", "4" },
+        }
     end,
     opts = {
         default_format_opts = {
@@ -26,10 +33,11 @@ return {
         },
         formatters_by_ft = {
             lua = { "stylua" },
-            fish = { "fish_indent" },
             sh = { "shfmt" },
             go = { "goimports", lsp_format = "fallback" },
             proto = { "common_protobuf", lsp_format = "fallback" },
+            html = { "prettier", lsp_format = "fallback" },
+            css = { "prettier", lsp_format = "fallback" },
         },
         formatters = {
             -- 参考官方 clang-format 进行定制：https://github.com/stevearc/conform.nvim/blob/master/lua/conform/formatters/clang-format.lua

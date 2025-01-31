@@ -237,6 +237,12 @@ return {
 
             -- markdown
             setup("marksman", {})
+
+            -- html
+            setup("html", {})
+
+            -- css
+            setup("cssls", {})
         end,
     },
 

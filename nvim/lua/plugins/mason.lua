@@ -22,6 +22,9 @@ return {
             "json-lsp",
             "taplo",
             "yaml-language-server",
+            "prettier",
+            "html-lsp",
+            "css-lsp",
         },
     },
     config = function(_, opts)

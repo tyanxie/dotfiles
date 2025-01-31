@@ -27,6 +27,7 @@ return {
                 "c",
                 "diff",
                 "html",
+                "css",
                 "javascript",
                 "jsdoc",
                 "json",
@@ -136,5 +137,12 @@ return {
             }):map("<leader>ut")
             return { mode = "cursor", max_lines = 3 }
         end,
+    },
+
+    -- 使用treesitter自动合并html标签，同时提供修改标签名称时同步修改对应的开/闭标签
+    {
+        "windwp/nvim-ts-autotag",
+        event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+        opts = {},
     },
 }
