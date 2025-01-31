@@ -20,7 +20,6 @@ return {
     -- Neovim Debug Adapter Protocol
     {
         "mfussenegger/nvim-dap",
-        recommended = true,
         desc = "Debugging support. Requires language specific adapters to be configured. (see lang extras)",
 
         dependencies = {
@@ -104,6 +103,7 @@ return {
     -- go语言dap支持
     {
         "leoluz/nvim-dap-go",
+        event = "VeryLazy",
         opts = {},
     },
 }
