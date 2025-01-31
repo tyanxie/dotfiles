@@ -123,21 +123,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter-context",
         event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-        opts = function()
-            local tsc = require("treesitter-context")
-            Snacks.toggle({
-                name = "Treesitter Context",
-                get = tsc.enabled,
-                set = function(state)
-                    if state then
-                        tsc.enable()
-                    else
-                        tsc.disable()
-                    end
-                end,
-            }):map("<leader>ut")
-            return { mode = "cursor", max_lines = 3 }
-        end,
+        opts = { mode = "cursor", max_lines = 3 },
     },
 
     -- 使用treesitter自动合并html标签，同时提供修改标签名称时同步修改对应的开/闭标签
