@@ -56,6 +56,12 @@ return {
                 "gotmpl",
                 "proto",
                 "vue",
+                "git_config",
+                "git_rebase",
+                "gitattributes",
+                "gitcommit",
+                "gitignore",
+                "ssh_config",
             },
             incremental_selection = {
                 enable = true,
