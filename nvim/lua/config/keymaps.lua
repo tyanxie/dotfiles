@@ -38,21 +38,6 @@ set("v", ">", ">gv")
 -- lazy
 set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
--- bufferline
-set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
-set("n", "<leader>bd", function()
-    Snacks.bufdelete()
-end, { desc = "Delete Buffer" })
-set("n", "<leader>bo", function()
-    Snacks.bufdelete.other()
-end, { desc = "Delete Other Buffers" })
-set("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
-
 -- 诊断
 local diagnostic_goto = function(next, severity)
     local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
