@@ -1,3 +1,4 @@
+-- 初始化wezterm配置
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
@@ -15,10 +16,10 @@ config.hide_tab_bar_if_only_one_tab = true
 config.show_new_tab_button_in_tab_bar = false
 -- 关闭窗口的提示：NerverPrompot代表用不提示
 config.window_close_confirmation = "NeverPrompt"
--- 隐藏底部状态栏
-config.window_decorations = "RESIZE"
+-- 顶部状态栏设置
+config.window_decorations = "TITLE | RESIZE"
 -- 默认光标风格
-config.default_cursor_style = "BlinkingBar"
+config.default_cursor_style = "SteadyBlock"
 
 -- 默认背景透明度
 config.window_background_opacity = 0.9
@@ -32,8 +33,7 @@ config.background = {
 	-- 背景图片
 	{
 		source = {
-			-- TODO: 兼容windows系统的USERPROFILE
-			File = os.getenv("HOME") .. "/.config/wezterm/background.jpg",
+			File = wezterm.config_dir .. "/background.jpg",
 		},
 		hsb = {
 			-- 色相
