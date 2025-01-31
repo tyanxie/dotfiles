@@ -28,6 +28,7 @@ return {
             "html-lsp",
             "css-lsp",
             "vtsls",
+            "vue-language-server",
         },
     },
     config = function(_, opts)

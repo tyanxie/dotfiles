@@ -63,7 +63,7 @@ return {
             use_libuv_file_watcher = true,
             filtered_items = {
                 hide_by_name = {
-                    --"node_modules"
+                    "node_modules",
                 },
                 hide_by_pattern = { -- uses glob style patterns
                     --"*.meta",

@@ -14,16 +14,6 @@ return {
             desc = "Format",
         },
     },
-    config = function(_, opts)
-        -- 初始化conform
-        local conform = require("conform")
-        conform.setup(opts)
-        -- 个性化定制prettier
-        conform.formatters.prettier = {
-            -- 末尾增加参数，tab宽度为4个space
-            append_args = { "--tab-width", "4" },
-        }
-    end,
     opts = {
         default_format_opts = {
             timeout_ms = 3000,
@@ -40,6 +30,7 @@ return {
             css = { "prettier", lsp_format = "fallback" },
             javascript = { "prettier", lsp_format = "fallback" },
             typescript = { "prettier", lsp_format = "fallback" },
+            vue = { "prettier", lsp_format = "fallback" },
         },
         formatters = {
             -- 参考官方 clang-format 进行定制：https://github.com/stevearc/conform.nvim/blob/master/lua/conform/formatters/clang-format.lua

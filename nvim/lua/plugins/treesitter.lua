@@ -55,6 +55,7 @@ return {
                 "gosum",
                 "gotmpl",
                 "proto",
+                "vue",
             },
             incremental_selection = {
                 enable = true,
