@@ -30,6 +30,8 @@ return {
             "css-lsp", -- npm:vscode-langservers-extracted
             "vtsls", -- npm:@vtsls/language-server
             "vue-language-server", -- npm:@vue/language-server
+            "clangd", -- github:clangd/clangd
+            "clang-format", -- pypi:clang-format
         },
     },
     config = function(_, opts)

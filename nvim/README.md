@@ -16,6 +16,7 @@
 - [Lua](https://www.lua.org/)
 - [Node.js](https://nodejs.org) 与 [npm](https://www.npmjs.com/)
 - [Rust](https://www.rust-lang.org/)：国内推荐按照 [RsProxy](https://rsproxy.cn/) 的流程进行安装。
+- [Python](https://www.python.org/)
 
 ## 快捷键
 

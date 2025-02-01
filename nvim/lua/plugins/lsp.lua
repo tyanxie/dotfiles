@@ -271,6 +271,16 @@ return {
 
             -- vue
             setup("volar", {})
+
+            -- c/c++
+            setup("clangd", {
+                capabilities = {
+                    offsetEncoding = "utf-8",
+                },
+                cmd = { "clangd" },
+                -- 强制配置filetypes，关闭proto支持
+                filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+            })
         end,
     },
 

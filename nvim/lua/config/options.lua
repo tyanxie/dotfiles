@@ -57,12 +57,12 @@ vim.opt.cursorline = true
 
 -- TAB宽度
 vim.opt.tabstop = 4
--- 使用空格代替TAB
-vim.opt.expandtab = true
 -- 插入模式下按下TAB插入的空格数量
 vim.opt.softtabstop = 4
 -- 缩进宽度
 vim.opt.shiftwidth = 4
+-- 使用空格代替TAB
+vim.opt.expandtab = true
 -- 缩进时将缩进量取整
 vim.opt.shiftround = true
 -- 自动插入缩进

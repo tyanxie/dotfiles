@@ -25,17 +25,19 @@ return {
             lua = { "stylua" },
             sh = { "shfmt" },
             go = { "goimports", lsp_format = "fallback" },
-            proto = { "common_protobuf", lsp_format = "fallback" },
+            proto = { "protobuf_formatter", lsp_format = "fallback" },
             html = { "prettier", lsp_format = "fallback" },
             css = { "prettier", lsp_format = "fallback" },
             javascript = { "prettier", lsp_format = "fallback" },
             typescript = { "prettier", lsp_format = "fallback" },
             vue = { "prettier", lsp_format = "fallback" },
             markdown = { "prettier", lsp_format = "fallback" },
+            c = { "clang-format", lsp_format = "fallback" },
+            cpp = { "clang-format", lsp_format = "fallback" },
         },
         formatters = {
             -- 参考官方 clang-format 进行定制：https://github.com/stevearc/conform.nvim/blob/master/lua/conform/formatters/clang-format.lua
-            common_protobuf = {
+            protobuf_formatter = {
                 command = "clang-format",
                 args = function()
                     -- 尝试向上查找 .clang-format 文件，如果找到则格式类型为 file，否则为预定义格式
