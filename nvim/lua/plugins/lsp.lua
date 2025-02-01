@@ -277,7 +277,15 @@ return {
                 capabilities = {
                     offsetEncoding = "utf-8",
                 },
-                cmd = { "clangd" },
+                cmd = {
+                    "clangd",
+                    "--background-index", -- 启用后台索引功能
+                    "--clang-tidy", -- 启用clang-tidy的代码格式检查和静态分析
+                    "--header-insertion=iwyu", -- 头文件插入策略，iwyu(Include What You Use)-只插入当前文件中实际使用的头文件
+                    "--completion-style=detailed", -- 代码补全的样式，detail-详细模式
+                    "--function-arg-placeholders", -- 选择函数补全项时，自动插入参数占位符
+                    "--query-driver=/usr/bin/clang++,/usr/bin/g++,/usr/bin/c++", -- 指定用于查询编译器驱动程序的路径列表
+                },
                 -- 强制配置filetypes，关闭proto支持
                 filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
             })
