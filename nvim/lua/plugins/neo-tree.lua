@@ -5,7 +5,6 @@ return {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
-        "3rd/image.nvim",
     },
     keys = {
         {
@@ -96,10 +95,9 @@ return {
                     desc = "Open with System Application",
                 },
                 -- 预览内容
-                -- 非Linux系统才预览图片
                 ["P"] = {
                     "toggle_preview",
-                    config = { use_float = false, use_image_nvim = require("util").not_linux() },
+                    config = { use_float = false },
                 },
                 -- 使用e命令递归打开所有文件夹
                 ["e"] = "expand_all_nodes",
