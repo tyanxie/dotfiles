@@ -134,6 +134,7 @@
 | `<leader>l`       | 打开 Lazy 控制台                                | n        |
 | `<leader>e`       | 打开/关闭 Neo-tree 文件树                       | n        |
 | `<leader>fh`      | 以当前 Buffer 所在目录打开/关闭 Neo-tree 文件树 | n        |
+| `<leader>;`       | 快捷选择 winbar 中的内容                        | n        |
 
 ## 窗口命令
 

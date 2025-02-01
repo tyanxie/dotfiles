@@ -292,26 +292,18 @@ return {
         end,
     },
 
-    -- 基于lsp支持的美化工具，提供代码位置面包屑等功能
-    -- https://nvimdev.github.io/lspsaga/
+    -- IDE风格的winbar（顶部面包屑）
     {
-        "nvimdev/lspsaga.nvim",
+        "Bekaboo/dropbar.nvim",
         event = "LspAttach",
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-            "nvim-tree/nvim-web-devicons",
-        },
-        opts = {
-            -- 在有code_action的位置显示电灯泡
-            -- https://nvimdev.github.io/lspsaga/lightbulb/
-            lightbulb = {
-                enable = false,
-                sign = false,
-            },
-            -- 代码位置面包屑
-            -- https://nvimdev.github.io/lspsaga/breadcrumbs/
-            symbol_in_winbar = {
-                enable = true,
+        opts = {},
+        keys = {
+            {
+                "<leader>;",
+                function()
+                    require("dropbar.api").pick()
+                end,
+                desc = "Pick symbols in winbar",
             },
         },
     },
