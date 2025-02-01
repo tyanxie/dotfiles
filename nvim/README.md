@@ -2,29 +2,30 @@
 
 个人 [Neovim](https://github.com/neovim/neovim) 配置。
 
+- [依赖环境](#依赖环境)
 - [快捷键](#快捷键)
 - [注意事项](#注意事项)
-  - [Protocol Buffers (Protobuf)](#protocol-buffers-protobuf)
   - [3rd/image.nvim](#3rdimagenvim)
     - [LuaRocks](#luarocks)
     - [ImageMagick](#imagemagick)
 - [问题记录](#问题记录)
   - [Go](#go)
 
+## 依赖环境
+
+使用本仓库的 Neovim 配置需要至少配置好如下的开发环境，以确保依赖能够正常安装。
+
+- c/c++：推荐使用 [LLVM](https://llvm.org/)。
+- [Go](https://go.dev/)
+- [Lua](https://www.lua.org/)
+- [Node.js](https://nodejs.org) 与 [npm](https://www.npmjs.com/)
+- [Rust](https://www.rust-lang.org/)：国内推荐按照 [RsProxy](https://rsproxy.cn/) 的流程进行安装。
+
 ## 快捷键
 
 本仓库 Neovim 配置涉及的常用快捷键可以参考：[KEYMAPS.md](KEYMAPS.md)。
 
 ## 注意事项
-
-### Protocol Buffers (Protobuf)
-
-当前配置使用 [protols](https://github.com/coder3101/protols) 作为
-[Protobuf](https://protobuf.dev/) 协议的 LSP 服务器，
-安装 protols 需要 [rust](https://www.rust-lang.org/) 开发环境，
-国内可以使用 [rsproxy](https://rsproxy.cn) 安装并配置 rust 开发环境。
-
-配置好 rust 开发环境后，即可直接打开 Protobuf 文件进行使用，本项目使用的 Mason 会自动安装 protols 依赖。
 
 ### 3rd/image.nvim
 

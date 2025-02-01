@@ -7,28 +7,29 @@ return {
     opts = {
         -- mason名称和lsp的对应关系可以参考mason-lspconfig中的配置：
         --  https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/mappings/server.lua
+        -- 可以参考mason-registry来确认软件包的安装方式：https://github.com/mason-org/mason-registry
         ensure_installed = {
-            "stylua",
-            "lua-language-server",
-            "shfmt",
-            "gopls",
-            "goimports",
-            "gofumpt",
-            "gomodifytags",
-            "impl",
-            "delve",
-            "protols",
-            "bash-language-server",
-            "shellcheck",
-            "marksman",
-            "json-lsp",
-            "taplo",
-            "yaml-language-server",
-            "prettier",
-            "html-lsp",
-            "css-lsp",
-            "vtsls",
-            "vue-language-server",
+            "stylua", -- github:johnnymorganz/stylua
+            "lua-language-server", -- github:LuaLS/lua-language-server
+            "shfmt", -- github:mvdan/sh
+            "gopls", -- golang:golang.org/x/tools/gopls
+            "goimports", -- golang:golang.org/x/tools/cmd/goimports
+            "gofumpt", -- golang:mvdan.cc/gofumpt
+            "gomodifytags", -- golang:github.com/fatih/gomodifytags
+            "impl", -- golang:github.com/josharian/impl
+            "delve", -- golang:github.com/go-delve/delve/cmd/dlv
+            "protols", -- cargo:protols
+            "bash-language-server", -- npm:bash-language-server
+            "shellcheck", -- github:vscode-shellcheck/shellcheck-binaries
+            "marksman", -- github:artempyanykh/marksman
+            "json-lsp", -- npm:vscode-langservers-extracted
+            "taplo", -- github:tamasfe/taplo
+            "yaml-language-server", -- npm:yaml-language-server
+            "prettier", -- npm:prettier
+            "html-lsp", -- npm:vscode-langservers-extracted
+            "css-lsp", -- npm:vscode-langservers-extracted
+            "vtsls", -- npm:@vtsls/language-server
+            "vue-language-server", -- npm:@vue/language-server
         },
     },
     config = function(_, opts)
