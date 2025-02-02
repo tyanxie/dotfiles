@@ -289,6 +289,17 @@ return {
                 -- 强制配置filetypes，关闭proto支持
                 filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
             })
+
+            -- python
+            setup("basedpyright", {
+                settings = {
+                    basedpyright = {
+                        analysis = {
+                            typeCheckingMode = "off", -- 关闭类型检查，否则大部分工程都会有大量的错误提示
+                        },
+                    },
+                },
+            })
         end,
     },
 

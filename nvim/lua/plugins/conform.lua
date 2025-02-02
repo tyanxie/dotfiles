@@ -34,6 +34,7 @@ return {
             markdown = { "prettier", lsp_format = "fallback" },
             c = { "clang-format", lsp_format = "fallback" },
             cpp = { "clang-format", lsp_format = "fallback" },
+            python = { "yapf", lsp_format = "fallback" },
         },
         formatters = {
             -- 参考官方 clang-format 进行定制：https://github.com/stevearc/conform.nvim/blob/master/lua/conform/formatters/clang-format.lua

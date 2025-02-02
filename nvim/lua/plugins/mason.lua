@@ -32,6 +32,8 @@ return {
             "vue-language-server", -- npm:@vue/language-server
             "clangd", -- github:clangd/clangd
             "clang-format", -- pypi:clang-format
+            "basedpyright", -- pypi:basedpyright
+            "yapf", -- pypi:yapf
         },
     },
     config = function(_, opts)
