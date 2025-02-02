@@ -26,7 +26,8 @@ config.window_background_opacity = 0.9
 -- macOS下窗口背景模糊
 config.macos_window_background_blur = 70
 -- 文字背景透明度
-config.text_background_opacity = 0.9
+-- 在Neovim中相当于colorscheme相对于wezterm背景图的不透明度
+config.text_background_opacity = 0.8
 
 -- 背景，配置参考：https://www.bilibili.com/video/BV1miWMe9Esq?vd_source=66989d6205583753c78874fada7f0721
 config.background = {
