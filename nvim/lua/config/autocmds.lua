@@ -102,7 +102,10 @@ vim.api.nvim_create_autocmd("BufReadPost", {
             local cwd = vim.fn.getcwd()
             -- 判断当前文件是否是当前工作目录的子文件，如果不是则设置为不可编辑
             if string.sub(bufname, 1, string.len(cwd)) ~= cwd then
-                vim.notify("文件不在当前工作目录下，已被设置为不可编辑：" .. bufname)
+                vim.notify(
+                    "文件不在当前工作目录下，已被设置为不可编辑：" .. bufname,
+                    vim.log.levels.WARN
+                )
                 -- 将缓冲区设置为只读
                 vim.bo.readonly = true
                 -- 将缓冲区设置为不可编辑
@@ -123,7 +126,10 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         for _, line in ipairs(lines) do
             -- 忽略大小写进行判断
             if string.lower(line):match("do not edit") then
-                vim.notify("文件被标记为 'DO NOT EDIT'，已被设置为不可编辑：" .. bufname)
+                vim.notify(
+                    "文件被标记为 'DO NOT EDIT'，已被设置为不可编辑：" .. bufname,
+                    vim.log.levels.WARN
+                )
                 -- 将缓冲区设置为只读
                 vim.bo.readonly = true
                 -- 将缓冲区设置为不可编辑
