@@ -83,6 +83,9 @@ for arg in "$@"; do
     wezterm)
         setup "$arg" "$(pwd)/wezterm" "$HOME/.config/wezterm"
         ;;
+    golangci)
+        setup "$arg" "$(pwd)/golangci.yml" "$HOME/.golangci.yml"
+        ;;
     *)
         echo "不支持的参数：$arg" >&2
         ;;

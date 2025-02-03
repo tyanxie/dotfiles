@@ -1,0 +1,16 @@
+linters:
+  enable:
+    - revive # 代码风格检查
+    - errcheck # 错误未处理检查
+    - gosec # 安全检查
+  disable:
+    - gocyclo # 禁用圈复杂度检查
+
+issues:
+  exclude-use-default: false # 不排除默认忽略的规则
+  max-issues-per-linter: 50 # 每个 linter 最大报告问题数
+  max-same-issues: 10 # 同类问题最大报告数
+
+run:
+  timeout: 5m # 超时时间
+  tests: false # 不检查测试文件

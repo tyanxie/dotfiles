@@ -10,6 +10,7 @@
 - [tmux](https://github.com/tmux/tmux)
 - [wezterm](https://github.com/wez/wezterm)
 - [ideavim](https://github.com/JetBrains/ideavim)
+- [golangci-lint](https://github.com/golangci/golangci-lint)
 
 ## 依赖安装
 
