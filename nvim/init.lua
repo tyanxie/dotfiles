@@ -33,7 +33,10 @@ require("lazy").setup({
         { import = "plugins" },
     },
     -- 自动校验插件更新
-    checker = { enabled = true },
+    checker = {
+        enabled = true, -- 启动自动校验
+        notify = false, -- 有更新时不做提醒
+    },
 })
 
 -- 设置colorscheme
