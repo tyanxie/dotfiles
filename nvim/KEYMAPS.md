@@ -125,7 +125,9 @@
 | `K`               | 向上移动 5 屏幕行                               | n, x     |
 | `s`               | 使用 flash 插件快速移动                         | n, o, x  |
 | `<leader><space>` | 使用 fzf-lua 全局搜索文件                       | n        |
+| `<leader>sF`      | 使用 fzf-lua 输入目录来搜索目标目录下的文件     | n        |
 | `<leader>/`       | 使用 fzf-lua 全局搜索文本                       | n        |
+| `<leader>sG`      | 使用 fzf-lua 输入目录来搜索目标目录下的文本     | n        |
 | `<esc>`           | ESC 并清空高亮                                  | i, n, s  |
 | `gcc`             | 切换当前行注释状态                              | n        |
 | `gc`              | 切换选中内容注释状态                            | v, x, s  |

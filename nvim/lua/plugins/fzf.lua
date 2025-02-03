@@ -46,6 +46,8 @@ return {
                     ["alt-i"] = { actions.toggle_ignore },
                     ["alt-h"] = { actions.toggle_hidden },
                 },
+                rg_opts = "--sort-files --column --line-number --no-heading "
+                    .. "--color=always --smart-case --max-columns=4096 -e ",
             },
             lsp = {
                 symbols = {
@@ -64,8 +66,8 @@ return {
         }
     end,
     keys = {
-        -- 快捷查找内容
-        -- 全局搜索
+        -- 搜索
+        -- 搜索当前工作目录
         {
             "<leader>/",
             function()
@@ -73,7 +75,11 @@ return {
             end,
             desc = "Grep",
         },
-        -- 全局查找文件
+        -- 输入目标目录进行搜索
+        { "<leader>sG", ":FzfLua live_grep cwd=", desc = "Grep (input cwd)" },
+
+        -- 查找文件
+        -- 查找工作目录下的文件
         {
             "<leader><space>",
             function()
@@ -81,6 +87,9 @@ return {
             end,
             desc = "Find Files",
         },
+        -- 输入目标目录进行查找
+        { "<leader>sF", ":FzfLua files cwd=", desc = "Find Files (input cwd)" },
+
         -- git
         -- 查看git commit列表
         {
