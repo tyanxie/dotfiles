@@ -63,6 +63,7 @@ return {
                 "gitcommit",
                 "gitignore",
                 "ssh_config",
+                "ron",
             },
             incremental_selection = {
                 enable = true,
