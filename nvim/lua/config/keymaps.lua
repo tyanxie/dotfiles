@@ -12,6 +12,10 @@ set({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = tru
 set({ "n", "x" }, "J", "v:count == 0 ? '5gj' : '5j'", { desc = "Fast Down", expr = true, silent = true })
 set({ "n", "x" }, "K", "v:count == 0 ? '5gk' : '5k'", { desc = "Fast Up", expr = true, silent = true })
 
+-- c/C命令使用黑洞寄存器执行，使得其不会进入系统剪切板
+set({ "n", "x" }, "c", '"_c', { desc = "Delete And Enter Insert Mode", noremap = true, silent = true })
+set({ "n", "x" }, "C", '"_C', { desc = "Delete To Line End And Enter Insert Mode", noremap = true, silent = true })
+
 -- 使用 <ctrl> - h/j/k/l 移动窗口
 set("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
 set("n", "<C-j>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
