@@ -18,6 +18,7 @@ return {
             "gomodifytags", -- golang:github.com/fatih/gomodifytags
             "impl", -- golang:github.com/josharian/impl
             "delve", -- golang:github.com/go-delve/delve/cmd/dlv
+            "golangci-lint", -- github:golangci/golangci-lint
             "protols", -- cargo:protols
             "bash-language-server", -- npm:bash-language-server
             "shellcheck", -- github:vscode-shellcheck/shellcheck-binaries
