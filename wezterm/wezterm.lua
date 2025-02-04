@@ -3,7 +3,7 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- 字体
-config.font = wezterm.font("Maple Mono NF CN", { weight = "Medium" })
+config.font = wezterm.font("Maple Mono NF CN", { weight = "DemiBold" })
 config.font_size = 18
 
 -- 窗口打开时的默认大小
@@ -21,8 +21,6 @@ config.window_decorations = "TITLE | RESIZE"
 -- 默认光标风格
 config.default_cursor_style = "SteadyBlock"
 
--- 默认背景透明度
-config.window_background_opacity = 0.9
 -- macOS下窗口背景模糊
 config.macos_window_background_blur = 70
 -- 文字背景透明度
