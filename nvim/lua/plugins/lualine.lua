@@ -23,6 +23,8 @@ return {
         return {
             options = {
                 theme = "auto",
+                section_separators = { left = "", right = "" }, -- 模块之间的分隔符
+                component_separators = { left = "|", right = "|" }, -- 组件之间的分隔符
                 globalstatus = vim.o.laststatus == 3, -- 全局状态栏模式时才启用
                 disabled_filetypes = { statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" } },
             },
