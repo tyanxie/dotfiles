@@ -42,6 +42,17 @@ return {
                 },
                 -- 菜单栏绘制
                 menu = {
+                    scrollbar = false,
+                    border = {
+                        { "󱐋", "WarningMsg" },
+                        "─",
+                        "╮",
+                        "│",
+                        "╯",
+                        "─",
+                        "╰",
+                        "│",
+                    },
                     draw = {
                         -- 使用treesitter对菜单栏的代码进行上色提示
                         treesitter = { "lsp" },
@@ -84,6 +95,18 @@ return {
                 documentation = {
                     auto_show = true,
                     auto_show_delay_ms = 200,
+                    window = {
+                        border = {
+                            { "", "DiagnosticHint" },
+                            "─",
+                            "╮",
+                            "│",
+                            "╯",
+                            "─",
+                            "╰",
+                            "│",
+                        },
+                    },
                 },
                 ghost_text = {
                     -- 不显示预览文字
