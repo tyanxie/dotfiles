@@ -1,13 +1,4 @@
 return {
-    -- mini.pairs自动补全字符对，例如输入左括号自动补全右括号
-    {
-        "echasnovski/mini.pairs",
-        event = "VeryLazy",
-        opts = {
-            modes = { insert = true, command = true, terminal = false },
-        },
-    },
-
     -- mini.icons提供各种图标
     {
         "echasnovski/mini.icons",
