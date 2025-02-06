@@ -24,8 +24,7 @@
   - [maple-font](https://github.com/subframe7536/maple-font): 推荐的等宽字体，支持中文等宽字体，可以安装 MapleMono-NF-CN-unhinted 版本。
   - [imagemagick](https://imagemagick.org/index.php): 用于在终端中展示图片的工具库。_(optional in Linux)_
   - [lazygit](https://github.com/jesseduffield/lazygit): 强大的终端git用户界面。
-- tmux
-  - [tmux-mem-cpu-load](https://github.com/thewtex/tmux-mem-cpu-load): 显示cpu、内存使用量的工具。
+- tmux：参考 [tmux/README.md](tmux/README.md)
 - IdeaVim
   - IdeaVim
   - IdeaVimExtension
