@@ -29,6 +29,15 @@ return {
             "echasnovski/mini.icons",
         },
         ft = { "markdown" },
-        opts = {},
+        opts = {
+            heading = {
+                -- 控制是否在signcolumn展示标题标签
+                sign = false,
+            },
+            code = {
+                -- 控制是否在signcolumn展示代码标签
+                sign = false,
+            },
+        },
     },
 }
