@@ -86,6 +86,9 @@ for arg in "$@"; do
     golangci)
         setup "$arg" "$(pwd)/golangci.yml" "$HOME/.golangci.yml"
         ;;
+    btop)
+        setup "$arg" "$(pwd)/btop" "$HOME/.config/btop"
+        ;;
     *)
         echo "不支持的参数：$arg" >&2
         ;;

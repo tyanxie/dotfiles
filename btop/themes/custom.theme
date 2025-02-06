@@ -1,0 +1,48 @@
+# 基于 nightfox 调色板配置通过 Deepseek 生成的主题配置
+# https://github.com/EdenEast/nightfox.nvim/blob/main/lua/nightfox/palette/nightfox.lua
+
+# 主要颜色设置
+theme[main_bg]="#192330"       # bg1
+theme[main_fg]="#cdcecf"       # fg1
+theme[title]="#d6d6d7"         # fg0
+theme[hi_fg]="#9d79d6"         # magenta.base
+theme[selected_bg]="#2b3b51"   # sel0
+theme[selected_fg]="#dfdfe0"   # white.base
+theme[inactive_fg]="#71839b"   # fg3
+theme[graph_text]="#aeafb0"    # fg2
+theme[border]="#39506d"        # bg4
+
+# 主题颜色
+theme[cpu_color]="#81b29a"      # green.base
+theme[mem_color]="#719cd6"      # blue.base
+theme[net_color]="#63cdcf"      # cyan.base
+theme[proc_color]="#dbc074"     # yellow.base
+theme[temp_color]="#f4a261"     # orange.base
+theme[box_color]="#29394f"      # bg3
+theme[free_color]="#738091"     # comment
+theme[cached_color]="#39506d"   # bg4
+theme[available_color]="#81b29a"# green.base
+theme[used_color]="#9d79d6"     # magenta.base
+
+# 高精度图形颜色（从浅到深）
+theme[hires_graph_1]="#81b29a"  # green.base
+theme[hires_graph_2]="#81b29a55"
+theme[hires_graph_3]="#81b29a22"
+
+# 电池颜色梯度
+theme[battery_color]="#81b29a"  # green.base
+theme[low_battery_color]="#c94f6d" # red.base
+
+# 文本高亮
+theme[text_hi]="#dfdfe0"        # white.base
+theme[text_error]="#c94f6d"     # red.base
+theme[text_warn]="#dbc074"      # yellow.base
+
+# 分隔符和边框
+theme[div_line]="#39506d"       # bg4
+theme[border]="#39506d"         # bg4
+
+# 进程框设置
+theme[proc_misc]="#738091"      # comment
+theme[proc_gradient]="#719cd6"  # blue.base
+theme[proc_state]="#81b29a"     # green.base

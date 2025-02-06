@@ -6,11 +6,12 @@
 
 本仓库包含我个人使用的如下软件的相关配置：
 
+- [btop](https://github.com/aristocratos/btop)
+- [golangci-lint](https://github.com/golangci/golangci-lint)
+- [ideavim](https://github.com/JetBrains/ideavim)
 - [neovim](https://github.com/neovim/neovim)
 - [tmux](https://github.com/tmux/tmux)
 - [wezterm](https://github.com/wez/wezterm)
-- [ideavim](https://github.com/JetBrains/ideavim)
-- [golangci-lint](https://github.com/golangci/golangci-lint)
 
 ## 依赖安装
 
