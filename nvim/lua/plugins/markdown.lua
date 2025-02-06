@@ -20,4 +20,15 @@ return {
             vim.cmd([[do FileType]])
         end,
     },
+
+    -- 在neovim中渲染markdown的工具
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "echasnovski/mini.icons",
+        },
+        ft = { "markdown" },
+        opts = {},
+    },
 }
