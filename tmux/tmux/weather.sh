@@ -1,6 +1,6 @@
 #!/bin/bash
 
-filename="${TMPDIR:-/tmp}tmux-weather.tmp"                # 天气信息存放路径
+filename="${TMPDIR:-/tmp/}tmux-weather.tmp"               # 天气信息存放路径
 url="https://wttr.in/Shenzhen?format=%l:%C+%t&lang=zh-cn" # 天气信息API接口
 
 # 如果文件不存在或文件超过10分钟未修改就更新其中的内容
