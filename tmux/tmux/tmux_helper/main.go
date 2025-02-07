@@ -5,6 +5,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"math"
 	"strings"
 	"time"
 
@@ -52,11 +53,11 @@ func main() {
 	}
 
 	// 一行输出最终信息
-	fmt.Printf(" %.2f%%  %.2f%%  %dB/s  %dB/s",
+	fmt.Printf(" %.2f%%  %.2f%%  %s/s  %s/s",
 		cpuPercent[0],
 		memStat.UsedPercent,
-		endSent-beginSent/uint64(interval),
-		endRecv-beginRecv/uint64(interval),
+		humanateBytes(endSent-beginSent/uint64(interval)),
+		humanateBytes(endRecv-beginRecv/uint64(interval)),
 	)
 }
 
@@ -79,4 +80,27 @@ func getNetIOStat() (sent, recv uint64, err error) {
 		recv += stat.BytesRecv
 	}
 	return sent, recv, nil
+}
+
+// humanateBytes 基于Byte单位生成易读的带宽单位，计算标准：1KB=1000B
+// from: https://github.com/dustin/go-humanize/blob/961771c7ab9992c55cd100b0562246e970925856/bytes.go#L68
+func humanateBytes(s uint64) string {
+	// 小数字直接返回
+	if s < 10 {
+		return fmt.Sprintf("%dB", s)
+	}
+	// 计算基数
+	e := math.Floor(math.Log(float64(s)) / math.Log(1000))
+	// 获取单位
+	sizes := []string{"B", "KB", "MB", "GB", "TB", "PB", "EB"}
+	suffix := sizes[int(e)]
+	// 计算在单位下的数值
+	val := math.Floor(float64(s)/math.Pow(1000, e)*10+0.5) / 10
+	// 格式化方式
+	f := "%.0f%s"
+	if val < 10 {
+		f = "%.2f%s"
+	}
+	// 返回结果
+	return fmt.Sprintf(f, val, suffix)
 }
