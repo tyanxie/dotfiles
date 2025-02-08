@@ -7,6 +7,12 @@ os=$(uname -s | tr '[:upper:]' '[:lower:]')
 
 # 使用uname -m获取系统架构
 arch=$(uname -m)
+# arch取值兼容
+case "$arch" in
+x86_64)
+    arch="amd64"
+    ;;
+esac
 
 # 使用os和arch拼接文件路径
 filename="$HOME/.config/tmux/tmux_helper/tmux_helper.$os.$arch"
