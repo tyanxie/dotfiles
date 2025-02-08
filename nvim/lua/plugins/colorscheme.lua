@@ -5,6 +5,7 @@ return {
     -- 3. do not disable tokyonight because of this is default installed theme with lazyvim
     {
         "folke/tokyonight.nvim",
+        enabled = false,
         lazy = true,
         priority = 1000,
     },
@@ -12,6 +13,7 @@ return {
     -- cyberdream
     {
         "scottmckendry/cyberdream.nvim",
+        enabled = false,
         lazy = true,
         priority = 1000,
         opts = {
@@ -23,6 +25,7 @@ return {
     -- recommend light: dayfox
     {
         "EdenEast/nightfox.nvim",
+        enabled = false,
         lazy = false,
         priority = 1000,
         opts = {
@@ -32,6 +35,16 @@ return {
                     comments = "italic",
                 },
             },
+        },
+    },
+
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        lazy = false,
+        priority = 1000,
+        opts = {
+            flavour = "mocha", -- 可用的主题类型：latte, frappe, macchiato, mocha
         },
     },
 
