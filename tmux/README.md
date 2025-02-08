@@ -34,6 +34,14 @@ tmux 缓冲区监控脚本，用于在远程服务器上复制内容的时候可
 3. 以 OSC52 协议格式向上述获得的 pts 句柄发送内容。
 4. 此时只要用户使用的终端模拟器支持 OSC52 协议（如 wezterm），则内容可以正常出现在系统剪切板。
 
+### tmux_helper
+
+使用 [go](https://go.dev/) 语言编写的 tmux 帮助程序。
+
+特性：
+
+1. 获取一段时间内的 CPU 使用率、内存使用率、网络上传/下载速率。
+
 ### sensible.tmux
 
 来源于 [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible) 的 tmux 基本配置。
