@@ -23,5 +23,10 @@ return {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "VeryLazy",
     priority = 1000,
-    opts = {},
+    opts = {
+        preset = "ghost",
+        options = {
+            show_source = true, -- 显示诊断来源
+        },
+    },
 }
