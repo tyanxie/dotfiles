@@ -2,6 +2,9 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
+-- 主题
+config.color_scheme = "Catppuccin Mocha"
+
 -- 字体
 config.font = wezterm.font("Maple Mono NF CN", { weight = "DemiBold" })
 config.font_size = 18
