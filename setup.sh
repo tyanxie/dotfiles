@@ -70,8 +70,11 @@ fi
 #遍历所有参数并进行处理
 for arg in "$@"; do
     case $arg in
-    ideavimrc)
-        setup "$arg" "$(pwd)/ideavimrc" "$HOME/.ideavimrc"
+    btop)
+        setup "$arg" "$(pwd)/btop" "$HOME/.config/btop"
+        ;;
+    kitty)
+        setup "$arg" "$(pwd)/kitty" "$HOME/.config/kitty"
         ;;
     neovim | nvim)
         setup "$arg" "$(pwd)/nvim" "$HOME/.config/nvim"
@@ -86,8 +89,8 @@ for arg in "$@"; do
     golangci)
         setup "$arg" "$(pwd)/golangci.yml" "$HOME/.golangci.yml"
         ;;
-    btop)
-        setup "$arg" "$(pwd)/btop" "$HOME/.config/btop"
+    ideavimrc)
+        setup "$arg" "$(pwd)/ideavimrc" "$HOME/.ideavimrc"
         ;;
     *)
         echo "不支持的参数：$arg" >&2
