@@ -28,7 +28,7 @@ return {
         "f-person/git-blame.nvim",
         event = "VeryLazy",
         opts = {
-            enabled = true,
+            enabled = false, -- 默认不展示git-blame信息，需要的时候通过`:GitBlameToggle`命令切换开关
             message_template = " <summary> • <date> • <author> • <<sha>>",
             date_format = "%m-%d-%Y %H:%M:%S",
             virtual_text_column = 1,
