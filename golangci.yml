@@ -2,43 +2,42 @@
 linters:
   disable-all: true
   enable:
-    - bodyclose
-    - copyloopvar
-    - dogsled
-    - dupl
-    - errcheck
-    - errorlint
-    - funlen
-    - gocheckcompilerdirectives
-    - gochecknoinits
-    - goconst
-    - gocritic
-    - gocyclo
-    - godox
-    - gofmt
-    - goimports
-    - goprintffuncname
-    - gosec
-    - gosimple
-    - govet
-    - intrange
-    - ineffassign
-    - lll
-    - misspell
-    - nakedret
-    - noctx
-    - nolintlint
-    - revive
-    - rowserrcheck
-    - sqlclosecheck
-    - staticcheck
-    - stylecheck
-    - testifylint
-    - typecheck
-    - unconvert
-    - unparam
-    - unused
-    - whitespace
+    - bodyclose # 检查是否关闭 HTTP 响应体（如 resp.Body.Close()），防止资源泄漏
+    - copyloopvar # 检测循环变量在闭包或协程中未正确拷贝的问题，避免意外引用同一变量
+    - dogsled # 检查下划线变量 _ 的过度使用（如 _, _, _, _ := someFunc()），建议减少忽略的参数数量
+    - dupl # 检测重复代码，若代码块重复超过阈值（默认 50 行），则提示重构
+    - errcheck # 确保函数返回的错误被显式处理，避免忽略错误
+    - errorlint # 检查错误的比较和类型断言是否正确使用 errors.Is 和 errors.As（而非 == 或类型断言）
+    - funlen # 限制函数长度，过长的函数会降低可读性（默认超过 60 行触发警告）
+    - gocheckcompilerdirectives # 检查编译器指令（如 //go:）的格式是否正确
+    - gochecknoinits # 禁止使用 init 函数，除非明确允许
+    - goconst # 建议将重复出现的字符串或数字提取为常量
+    - gocritic # 提供高级代码建议，涵盖性能、可读性、潜在错误等改进点
+    - gocyclo # 计算函数的圈复杂度（条件分支数），过高时提示拆分函数（默认复杂度 ≥ 10）
+    - gofmt # 检查代码是否符合 gofmt 格式化标准
+    - goimports # 检查导入语句的分组和排序是否符合规范（自动分组标准库、第三方库等）
+    - goprintffuncname # printf 风格函数的命名需以 f 结尾（如 log.Printf）
+    - gosec # 代码安全扫描，检测硬编码密码、不安全的加密算法、文件权限等问题
+    - gosimple # 建议简化冗余代码（如 if x == true → if x）
+    - govet # 运行 go vet 检查潜在错误
+    - intrange # 建议使用 range 迭代切片/数组（如 for i := range s），替代传统的索引循环
+    - ineffassign # 检查无效的变量赋值（如变量赋值后未被使用）
+    - lll # 限制单行长度（默认 120 字符），避免过长代码行
+    - misspell # 检查单词拼写错误（如将 necessary 写成 neccessary）
+    - nakedret # 禁止函数末尾的裸返回（即 return 不带返回值），要求显式返回值
+    - noctx # 检查 HTTP 请求是否传递 context.Context（如使用 NewRequestWithContext 替代 NewRequest）
+    - nolintlint # 检查 //nolint 注释是否合法（如对应的 Linter 是否存在）
+    - revive # 可配置的代码风格检查器（替代 golint），支持自定义规则
+    - rowserrcheck # 确保 database/sql.Rows 的错误在遍历后被检查（如 rows.Err()）
+    - sqlclosecheck # 检查 SQL 对象（如 Rows、Stmt）是否被正确关闭，防止资源泄漏
+    - staticcheck # 高级静态分析，涵盖未使用代码、可疑逻辑、性能问题等
+    - stylecheck # 扩展的代码风格检查（如驼峰命名、上下文参数位置等）
+    - testifylint # 针对 testify 测试框架的检查（如优先使用 assert.Equal(t, expected, actual) 而非 assert.True(t, ...)）
+    - typecheck # 类型检查
+    - unconvert # 检测不必要的类型转换（如 int(x) 当 x 已是 int 类型时）
+    - unparam # 检查未使用的函数参数或返回值
+    - unused # 报告未使用的变量、常量、函数等
+    - whitespace # 检查多余的空行或空格（如文件末尾的空行、行首尾空格）
 
 linters-settings:
   errcheck:
