@@ -1,3 +1,7 @@
+-- 获取图标信息
+local icons = require("util.icons")
+
+-- 返回插件信息
 return {
     "nvim-neo-tree/neo-tree.nvim",
     cmd = "Neotree",
@@ -122,6 +126,14 @@ return {
                 symbols = {
                     unstaged = "󰄱",
                     staged = "󰱒",
+                },
+            },
+            diagnostics = {
+                symbols = {
+                    hint = icons.diagnostics.Hint,
+                    info = icons.diagnostics.Info,
+                    warn = icons.diagnostics.Warn,
+                    error = icons.diagnostics.Error,
                 },
             },
         },
