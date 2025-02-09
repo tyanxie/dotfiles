@@ -86,6 +86,9 @@ for arg in "$@"; do
     wezterm)
         setup "$arg" "$(pwd)/wezterm" "$HOME/.config/wezterm"
         ;;
+    yazi)
+        setup "$arg" "$(pwd)/yazi" "$HOME/.config/yazi"
+        ;;
     golangci)
         setup "$arg" "$(pwd)/golangci.yml" "$HOME/.golangci.yml"
         ;;
