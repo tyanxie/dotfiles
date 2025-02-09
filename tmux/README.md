@@ -5,6 +5,8 @@
 - [依赖安装](#依赖安装)
 - [内置工具介绍](#内置工具介绍)
   - [tmux_buffer_monitor](#tmux_buffer_monitor)
+  - [tmux_helper](#tmux_helper)
+  - [tmux_jump](#tmux_jump)
   - [sensible.tmux](#sensibletmux)
   - [weather.sh](#weathersh)
 
@@ -41,6 +43,13 @@ tmux 缓冲区监控脚本，用于在远程服务器上复制内容的时候可
 特性：
 
 1. 获取一段时间内的 CPU 使用率、内存使用率、网络上传/下载速率。
+
+### tmux_jump
+
+来源于 [schasse/tmux-jump](https://github.com/schasse/tmux-jump) 的 tmux 插件，
+使用该插件使得无需使用鼠标即可快速跳转到终端中的任意位置。
+
+使用方式：通过 `<C-Space>j` 启动并输入一个字符来进行跳转。
 
 ### sensible.tmux
 
