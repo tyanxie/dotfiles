@@ -35,8 +35,18 @@ return {
             c = { "clang-format", lsp_format = "fallback" },
             cpp = { "clang-format", lsp_format = "fallback" },
             python = { "yapf", lsp_format = "fallback" },
+            toml = { "taplo", lsp_format = "fallback" },
         },
         formatters = {
+            -- 覆盖默认的 taplo 格式化配置：https://github.com/stevearc/conform.nvim/blob/master/lua/conform/formatters/taplo.lua
+            taplo = {
+                meta = {
+                    url = "https://github.com/tamasfe/taplo",
+                    description = "A TOML toolkit written in Rust.",
+                },
+                command = "taplo",
+                args = { "format", "--option", "align_entries=true", "-" },
+            },
             -- 参考官方 clang-format 进行定制：https://github.com/stevearc/conform.nvim/blob/master/lua/conform/formatters/clang-format.lua
             protobuf_formatter = {
                 command = "clang-format",
