@@ -102,6 +102,14 @@ issues:
   exclude-use-default: false # 不排除默认忽略的规则
   max-issues-per-linter: 50 # 每个 linter 最大报告问题数
   max-same-issues: 10 # 同类问题最大报告数
+  # 不报告错误的规则列表
+  exclude-rules:
+    # defer执行函数不报告未校验错误
+    # defer的常见使用习惯就是忽略错误，这里没必要报告
+    # 方法来源：https://github.com/kisielk/errcheck/issues/101#issuecomment-2561722380
+    - linters:
+        - errcheck
+      source: "^\\s*defer\\s+"
 
 run:
   timeout: 5m # 超时时间
