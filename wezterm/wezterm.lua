@@ -12,6 +12,13 @@ config.font_size = 18
 -- 窗口打开时的默认大小
 config.initial_cols = 135
 config.initial_rows = 35
+-- 窗口padding
+config.window_padding = {
+	left = 20,
+	right = 20,
+	top = 20,
+	bottom = 5,
+}
 
 -- tab栏配置
 config.use_fancy_tab_bar = false
@@ -29,7 +36,6 @@ config.macos_window_background_blur = 70
 -- 文字背景透明度
 -- 在Neovim中相当于colorscheme相对于wezterm背景图的不透明度
 config.text_background_opacity = 0.8
-
 -- 背景，配置参考：https://www.bilibili.com/video/BV1miWMe9Esq
 config.background = {
 	-- 背景图片
@@ -57,12 +63,7 @@ config.background = {
 	},
 }
 
--- 窗口padding
-config.window_padding = {
-	left = 20,
-	right = 20,
-	top = 20,
-	bottom = 5,
-}
+-- 蜂鸣提示音
+config.audible_bell = "Disabled"
 
 return config
