@@ -24,6 +24,12 @@ return -- This is what powers LazyVim's fancy-looking
             desc = "Delete Other Buffers",
         },
     },
+    config = function(_, opts)
+        -- 设置catppuccin作为主题色
+        opts.highlights = require("catppuccin.groups.integrations.bufferline").get()
+        -- 初始化bufferline
+        require("bufferline").setup(opts)
+    end,
     opts = {
         options = {
             close_command = function(n)
