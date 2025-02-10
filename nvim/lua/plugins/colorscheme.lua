@@ -50,6 +50,9 @@ return {
                     enabled = true,
                     color_mode = true, -- enable color for kind's texts, not just kind's icons
                 },
+                noice = true,
+                snacks = true,
+                which_key = true,
             },
         },
     },
