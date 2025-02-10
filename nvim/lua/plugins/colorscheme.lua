@@ -45,6 +45,12 @@ return {
         priority = 1000,
         opts = {
             flavour = "mocha", -- 可用的主题类型：latte, frappe, macchiato, mocha
+            integrations = {
+                dropbar = {
+                    enabled = true,
+                    color_mode = true, -- enable color for kind's texts, not just kind's icons
+                },
+            },
         },
     },
 
