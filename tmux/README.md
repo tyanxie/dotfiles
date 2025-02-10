@@ -10,9 +10,9 @@
   - [sensible.tmux](#sensibletmux)
   - [weather.sh](#weathersh)
 
-## 依赖安装
+## 依赖要求
 
-- [tmux-mem-cpu-load](https://github.com/thewtex/tmux-mem-cpu-load): 显示cpu、内存使用量的工具。
+- [ruby](https://www.ruby-lang.org/): 版本需要大于或等于 2.3，主要用于 [tmux_jump](#tmux_jump) 插件。
 
 ## 内置工具介绍
 
