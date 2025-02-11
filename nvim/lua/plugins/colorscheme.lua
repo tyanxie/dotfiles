@@ -45,6 +45,7 @@ return {
         priority = 1000,
         opts = {
             flavour = "mocha", -- 可用的主题类型：latte, frappe, macchiato, mocha
+            transparent_background = true, -- 是否开启透明背景
             integrations = {
                 dropbar = {
                     enabled = true,
