@@ -26,7 +26,6 @@ linters:
     - misspell # 检查单词拼写错误（如将 necessary 写成 neccessary）
     - nakedret # 禁止函数末尾的裸返回（即 return 不带返回值），要求显式返回值
     - noctx # 检查 HTTP 请求是否传递 context.Context（如使用 NewRequestWithContext 替代 NewRequest）
-    - nolintlint # 检查 //nolint 注释是否合法（如对应的 Linter 是否存在）
     - revive # 可配置的代码风格检查器（替代 golint），支持自定义规则
     - rowserrcheck # 确保 database/sql.Rows 的错误在遍历后被检查（如 rows.Err()）
     - sqlclosecheck # 检查 SQL 对象（如 Rows、Stmt）是否被正确关闭，防止资源泄漏
@@ -41,62 +40,100 @@ linters:
 
 linters-settings:
   errcheck:
-    check-type-assertions: true
+    check-type-assertions: true # 对类型断言中错误处理的检查
   errorlint:
-    asserts: false
+    asserts: false # 对断言的检查
   funlen:
-    lines: 80
-    statements: 80
+    lines: 80 # 限制函数行数
+    statements: 80 # 限制函数语句数
   goconst:
-    min-len: 2
-    min-occurrences: 2
+    min-len: 2 # 长度阈值
+    min-occurrences: 2 # 出现次数阈值
   gocritic:
     enabled-checks:
-      - nestingReduce
+      - nestingReduce # 代码嵌套层级检查
     settings:
       nestingReduce:
-        bodyWidth: 5
+        bodyWidth: 5 # 限制函数嵌套层级
   gocyclo:
-    min-complexity: 20
+    min-complexity: 20 # 圈复杂度阈值
   gofmt:
     rewrite-rules:
+      # 建议将interface{}替换为any
       - pattern: "interface{}"
         replacement: "any"
   govet:
     enable:
-      - nilness
-      - shadow
+      - nilness # 检查可能的nil指针问题
+      - shadow # 检查变量被重新声明的问题，防止变量被意外覆盖
   lll:
-    line-length: 120
+    line-length: 120 # 代码行最大长度
   misspell:
-    locale: US
-    ignore-words:
-  nolintlint:
-    allow-unused: false # report any unused nolint directives
-    require-explanation: true # require an explanation for nolint directives
-    require-specific: true # require nolint directives to be specific about which linter is being skipped
+    locale: US # 英语拼写检查
+    ignore-words: [] # 忽略检查列表
   revive:
+    # 失败置信度，置信度不到该值的错误将被忽略
     confidence: 0
+    # 校验规则列表
+    # 官方文档：https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
     rules:
-      - name: var-declaration
-      - name: package-comments
-      - name: dot-imports
+      # 空白导入只能在main包或测试包中，或者使用注释详细解释。
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#blank-imports
       - name: blank-imports
-      - name: exported
-      - name: var-naming
-      - name: indent-error-flow
-      - name: range
-      - name: errorf
-      - name: error-naming
-      - name: error-strings
-      - name: receiver-naming
-      - name: increment-decrement
-      - name: error-return
-      - name: time-naming
-      - name: context-keys-type
+      # context.Context作为入参时必须位于函数的第一个位置
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#context-as-argument
       - name: context-as-argument
+      # 基本类型不应该作为context.WithValue的key
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#context-keys-type
+      - name: context-keys-type
+      # 不允许使用`.`导入
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#dot-imports
+      - name: dot-imports
+      # error变量必须以前缀err命名
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#error-naming
+      - name: error-naming
+      # error作为返回值时必须位于最后一个位置
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#error-return
+      - name: error-return
+      # 错误消息不应该大写开头或者以标点符号结尾
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#error-strings
+      - name: error-strings
+      # error.New(fmt.Sprintf())替换为fmt.Errorf()
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#errorf
+      - name: errorf
+      # 导出内容应该有注释
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#exported
+      - name: exported
+      # 建议使用`++`/`--`运算符，会识别出`i += 1`或`i -= 1`并提示替换
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#increment-decrement
+      - name: increment-decrement
+      # 尽量减少缩进，会突出显示代码中可以移除的else块：https://go.dev/wiki/CodeReviewComments#indent-error-flow
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#indent-error-flow
+      - name: indent-error-flow
+      # 要求对Package进行注释
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#package-comments
+      - name: package-comments
+      # 建议使用忽略第二个值的for range使用方法
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#range
+      - name: range
+      # 方法的接受者（receiver）明明建议，例如对于结构体Parts建议其方法接受者为p，而不是this或self
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#receiver-naming
+      - name: receiver-naming
+      # 对于time.Duration变量的命名不宜使用Unix风格的后缀，例如不可以使用Secs、Mins后缀
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#time-naming
+      - name: time-naming
+      # 警告参数未使用
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#unused-parameter
       - name: unused-parameter
+      # 警告方法接受者未使用
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#unused-receiver
       - name: unused-receiver
+      # 简化变量声明，例如`var i int = 99`可以简化为`i := 99`
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#var-declaration
+      - name: var-declaration
+      # 变量命名检查，例如对于特殊名词需要全大写命名，如`rawUrl`需要改为`rawURL`
+      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#var-naming
+      - name: var-naming
 
 issues:
   exclude-use-default: false # 不排除默认忽略的规则
