@@ -26,8 +26,8 @@ config.hide_tab_bar_if_only_one_tab = true
 config.show_new_tab_button_in_tab_bar = false
 -- 关闭窗口的提示：NerverPrompot代表用不提示
 config.window_close_confirmation = "NeverPrompt"
--- 顶部状态栏设置
-config.window_decorations = "TITLE | RESIZE"
+-- 顶部标题栏设置
+config.window_decorations = "RESIZE"
 -- 默认光标风格
 config.default_cursor_style = "SteadyBlock"
 
