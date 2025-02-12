@@ -19,8 +19,8 @@ title_format   = "Yazi: {cwd}"
 [preview]
 wrap            = "no"
 tab_size        = 2
-max_width       = 5000         # 图片最大宽度，修改后需要执行`yazi --clear-cache`来清除缓存
-max_height      = 5000         # 图片最大高度，修改后需要执行`yazi --clear-cache`来清除缓存
+max_width       = 1600         # 图片最大宽度，修改后需要执行`yazi --clear-cache`来清除缓存
+max_height      = 1600         # 图片最大高度，修改后需要执行`yazi --clear-cache`来清除缓存
 cache_dir       = ""
 image_delay     = 30
 image_filter    = "triangle"
