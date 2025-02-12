@@ -50,6 +50,7 @@ return {
                     .. "--color=always --smart-case --max-columns=4096 -e ",
             },
             lsp = {
+                jump1 = true, -- 当只有一个目标时跳过UI直接打开目标
                 symbols = {
                     symbol_hl = function(s)
                         return "TroubleIcon" .. s
