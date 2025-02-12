@@ -9,6 +9,7 @@
 - [btop](https://github.com/aristocratos/btop)
 - [kitty](https://github.com/kovidgoyal/kitty)
 - [neovim](https://github.com/neovim/neovim)
+- [sketchybar](https://github.com/FelixKratz/SketchyBar)
 - [tmux](https://github.com/tmux/tmux)
 - [wezterm](https://github.com/wez/wezterm)
 - [yazi](https://github.com/sxyazi/yazi)

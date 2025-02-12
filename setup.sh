@@ -79,6 +79,9 @@ for arg in "$@"; do
     neovim | nvim)
         setup "$arg" "$(pwd)/nvim" "$HOME/.config/nvim"
         ;;
+    sbar | sketchybar)
+        setup "$arg" "$(pwd)/sketchybar" "$HOME/.config/sketchybar"
+        ;;
     tmux)
         setup "$arg" "$(pwd)/tmux/tmux.conf" "$HOME/.tmux.conf"
         setup "$arg" "$(pwd)/tmux/tmux" "$HOME/.config/tmux"
