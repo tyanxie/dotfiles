@@ -95,9 +95,6 @@ for arg in "$@"; do
     ideavimrc)
         setup "$arg" "$(pwd)/ideavimrc" "$HOME/.ideavimrc"
         ;;
-    starship)
-        setup "$arg" "$(pwd)/starship.toml" "$HOME/.config/starship.toml"
-        ;;
     *)
         echo "不支持的参数：$arg" >&2
         ;;
