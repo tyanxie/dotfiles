@@ -46,10 +46,22 @@ return {
         opts = {
             flavour = "mocha", -- 可用的主题类型：latte, frappe, macchiato, mocha
             transparent_background = true, -- 是否开启透明背景
+            -- 自定义高亮组
+            -- 默认高亮组定义：https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups
+            highlight_overrides = {
+                -- 自定义mocha配色高亮组
+                mocha = function(mocha)
+                    return {
+                        Visual = { bg = mocha.surface2 },
+                        VisualNOS = { bg = mocha.surface2 },
+                    }
+                end,
+            },
+            -- Neovim生态中其它插件的主题支持
             integrations = {
                 dropbar = {
                     enabled = true,
-                    color_mode = true, -- enable color for kind's texts, not just kind's icons
+                    color_mode = true,
                 },
                 noice = true,
                 snacks = true,
