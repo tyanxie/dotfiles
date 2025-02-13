@@ -64,10 +64,16 @@ return {
                 end,
                 -- 自定义mocha配色高亮组
                 mocha = function(mocha)
+                    local utils = require("catppuccin.utils.colors")
                     return {
                         -- visual
                         Visual = { bg = mocha.surface2 },
                         VisualNOS = { bg = mocha.surface2 },
+                        -- 搜索
+                        Search = { bg = utils.darken(mocha.red, 0.30, mocha.base) },
+                        IncSearch = { bg = utils.darken(mocha.red, 0.90, mocha.base) },
+                        -- line number
+                        LineNr = { fg = mocha.overlay0 },
                     }
                 end,
             },
