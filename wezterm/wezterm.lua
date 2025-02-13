@@ -9,6 +9,15 @@ config.color_scheme = "Catppuccin Mocha"
 config.font = wezterm.font("Maple Mono NF CN", { weight = "DemiBold" })
 config.font_size = 18
 
+-- 每秒绘制的最大帧数
+config.max_fps = 60
+-- 闪烁等动画效果的最大帧数
+config.animation_fps = 60
+-- 渲染前端
+config.front_end = "WebGpu"
+-- 渲染前端为WebGpu时的功率偏好
+config.webgpu_power_preference = "HighPerformance"
+
 -- 窗口打开时的默认大小
 config.initial_cols = 135
 config.initial_rows = 35
