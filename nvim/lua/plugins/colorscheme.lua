@@ -49,9 +49,23 @@ return {
             -- 自定义高亮组
             -- 默认高亮组定义：https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups
             highlight_overrides = {
+                -- 自定义覆盖所有配色高亮组
+                all = function(colors)
+                    return {
+                        -- blink.cmp
+                        BlinkCmpMenu = { fg = colors.text },
+                        BlinkCmpMenuBorder = { fg = colors.blue },
+                        BlinkCmpMenuSelection = { bg = colors.surface2 },
+                        BlinkCmpKind = { fg = colors.blue },
+                        BlinkCmpDocBorder = { fg = colors.blue },
+                        BlinkCmpSignatureHelpBorder = { fg = colors.blue },
+                        BlinkCmpSignatureHelpActiveParameter = { fg = colors.mauve },
+                    }
+                end,
                 -- 自定义mocha配色高亮组
                 mocha = function(mocha)
                     return {
+                        -- visual
                         Visual = { bg = mocha.surface2 },
                         VisualNOS = { bg = mocha.surface2 },
                     }
@@ -59,6 +73,7 @@ return {
             },
             -- Neovim生态中其它插件的主题支持
             integrations = {
+                blink_cmp = true,
                 dropbar = {
                     enabled = true,
                     color_mode = true,
