@@ -14,6 +14,7 @@
 - [yazi](https://github.com/sxyazi/yazi)
 - [golangci-lint](https://github.com/golangci/golangci-lint)
 - [ideavim](https://github.com/JetBrains/ideavim)
+- [starship](https://github.com/starship/starship)
 
 ## 依赖安装
 
