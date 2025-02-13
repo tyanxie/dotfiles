@@ -1,7 +1,7 @@
 local set = vim.keymap.set
 
 -- 设置 Alt(Option) - Backspace 为删除单个单词的快捷键
-set("i", "<M-BS>", "<C-w>", { desc = "Delete Word", noremap = true })
+set({ "i", "c" }, "<M-BS>", "<C-w>", { desc = "Delete Word", noremap = true })
 
 -- 智能翻页
 set({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
