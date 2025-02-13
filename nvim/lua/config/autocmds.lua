@@ -140,3 +140,13 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         end
     end,
 })
+
+-- 针对Git提交信息自动设置选项
+-- git commit时会自动生成.git/COMMIT_EDITMSG文件并自动设置一些选项，例如textwidth=72
+-- 在该自动命令中可以实现修改这些选项
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "gitcommit",
+    callback = function()
+        vim.opt_local.textwidth = 0 -- 禁用自动换行
+    end,
+})
