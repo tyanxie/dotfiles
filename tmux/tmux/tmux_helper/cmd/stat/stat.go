@@ -21,7 +21,7 @@ var command = &cli.Command{
 	Name:    "stat",
 	Aliases: []string{"s"},
 	Usage:   "Get the current system status information",
-	Action:  statAction,
+	Action:  action,
 	Flags: []cli.Flag{
 		&cli.IntFlag{
 			Name:        "interval",
@@ -34,40 +34,40 @@ var command = &cli.Command{
 	},
 }
 
-// Command 创建新的获取系统状态命令实现
+// Command 获取命令实现
 func Command() *cli.Command {
 	return command
 }
 
-// statAction 系统状态执行函数
-func statAction(_ *cli.Context) error {
+// action 执行函数
+func action(_ *cli.Context) error {
 	// 参数校验
 	if interval <= 0 {
-		panic(errors.New("interval must greeter than 0"))
+		return errors.New("interval must greeter than 0")
 	}
 
 	// 获取当前总上传/下载字节数
 	beginSent, beginRecv, err := getNetIOStat()
 	if err != nil {
-		panic(fmt.Errorf("get begin net io stat failed: %w", err))
+		return fmt.Errorf("get begin net io stat failed: %w", err)
 	}
 
 	// 获取cpu整体利用率，此时会等待一段时间收集cpu信息
 	cpuPercent, err := cpu.Percent(time.Duration(interval)*time.Second, false)
 	if err != nil {
-		panic(fmt.Errorf("get cpu percent failed: %w", err))
+		return fmt.Errorf("get cpu percent failed: %w", err)
 	}
 
 	// 等待一段时间后在获取一次总上传/下载字节数
 	endSent, endRecv, err := getNetIOStat()
 	if err != nil {
-		panic(fmt.Errorf("get end net io stat failed: %w", err))
+		return fmt.Errorf("get end net io stat failed: %w", err)
 	}
 
 	// 获取内存状态
 	memStat, err := mem.VirtualMemory()
 	if err != nil {
-		panic(fmt.Errorf("get virtual memory stat failed: %w", err))
+		return fmt.Errorf("get virtual memory stat failed: %w", err)
 	}
 
 	// 一行输出最终信息

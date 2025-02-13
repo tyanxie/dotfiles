@@ -1,6 +1,6 @@
 module github.com/tyanxie/dotfiles/tmux/tmux/tmux_helper
 
-go 1.23.3
+go 1.24.0
 
 require (
 	github.com/shirou/gopsutil/v4 v4.25.1
