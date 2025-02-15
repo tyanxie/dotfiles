@@ -28,12 +28,27 @@ set("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
 set("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
 set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
 
--- Clear search and stop snippet on escape
-set({ "i", "n", "s" }, "<esc>", function()
+-- 清空搜索高亮并继续默认的esc能力
+set({ "i", "s" }, "<esc>", function()
+    -- 清空高亮
     vim.cmd("noh")
-    -- LazyVim.cmp.actions.snippet_stop()
+    -- 继续处理默认的esc
     return "<esc>"
 end, { expr = true, desc = "Escape and Clear hlsearch" })
+-- esc在普通模式下还需要清空multicursor光标
+set("n", "<esc>", function()
+    -- 清空高亮
+    vim.cmd("noh")
+    -- 清空multicursor光标
+    local mc = require("multicursor-nvim")
+    if not mc.cursorsEnabled() then
+        mc.enableCursors()
+    elseif mc.hasCursors() then
+        mc.clearCursors()
+    end
+    -- 继续处理默认的esc
+    return "<esc>"
+end, { expr = true, desc = "Escape and Clear hlsearch and multicursors" })
 
 -- 快速缩进
 set("v", "<", "<gv")

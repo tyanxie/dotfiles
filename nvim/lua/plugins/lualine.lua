@@ -29,24 +29,7 @@ return {
                 disabled_filetypes = { statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" } },
             },
             sections = {
-                lualine_a = {
-                    -- 通用模式信息
-                    { "mode" },
-                    -- 自定义模式信息
-                    {
-                        function()
-                            local ok, hydra = pcall(require, "hydra.statusline")
-                            if ok then
-                                return hydra.get_name()
-                            end
-                            return ""
-                        end,
-                        cond = function()
-                            local ok, hydra = pcall(require, "hydra.statusline")
-                            return ok and hydra.is_active()
-                        end,
-                    },
-                },
+                lualine_a = { "mode" },
                 lualine_b = { "branch" },
                 lualine_c = {
                     {
