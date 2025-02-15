@@ -62,6 +62,10 @@ linters-settings:
       # 建议将interface{}替换为any
       - pattern: "interface{}"
         replacement: "any"
+  gosec:
+    excludes:
+      - G304 # 文件路径可能被污染
+      - G306 # 写入新文件时权限不宜宽松
   govet:
     enable:
       - nilness # 检查可能的nil指针问题
