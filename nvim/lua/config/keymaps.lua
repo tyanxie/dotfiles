@@ -66,3 +66,23 @@ set("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 -- https://github.com/mg979/vim-visual-multi/blob/a6975e7c1ee157615bbc80fc25e4392f71c344d4/autoload/vm/plugs.vim#L11
 set("n", "<C-A-j>", "<cmd>call vm#commands#add_cursor_down(0, v:count1)<cr>")
 set("n", "<C-A-k>", "<cmd>call vm#commands#add_cursor_up(0, v:count1)<cr>")
+
+-- 定制gf命令（打开光标下的文件或链接）
+-- 如果打开的目标是链接并且当前操作系统是macOS，则使用操作系统默认方式打开
+set("n", "gf", function()
+    -- 获取当前光标下的内容
+    local word = vim.fn.expand("<cfile>")
+    -- 如果当前系统是macOS并且打开的目标是一个http/https链接，则使用操作系统默认方式打开
+    if vim.fn.has("macunix") == 1 and word:match("^https?://") then
+        -- 执行macOS系统的open命令使用默认方式打开内容
+        local out = vim.fn.system({ "open", word })
+        -- 如果命令没有发生错误则直接返回
+        if vim.v.shell_error == 0 then
+            return
+        end
+        -- 命令发生错误，打印错误但降级使用neovim默认方式打开
+        vim.notify("open with system default method failed: " .. out, vim.log.levels.ERROR)
+    end
+    -- 其它情况保留原有逻辑
+    vim.cmd("normal! gf")
+end)
