@@ -10,7 +10,10 @@ return {
             auto_save.on()
         else
             auto_save.off()
-            vim.notify("AutoSave is diabled because not in directory")
+            -- 如果不是无参数启动，则输出提示信息
+            if vim.fn.argc() ~= 0 then
+                vim.notify("AutoSave is diabled because not in directory")
+            end
         end
     end,
     opts = {
