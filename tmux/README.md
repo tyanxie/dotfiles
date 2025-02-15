@@ -9,6 +9,9 @@
   - [tmux_jump](#tmux_jump)
   - [sensible.tmux](#sensibletmux)
   - [weather.sh](#weathersh)
+- [常用命令及快捷键](#常用命令及快捷键)
+  - [命令](#命令)
+  - [快捷键](#快捷键)
 
 ## 依赖要求
 
@@ -62,3 +65,41 @@ tmux 缓冲区监控脚本，用于在远程服务器上复制内容的时候可
 由于状态栏每 2 秒就会更新一次，如果直接每次都请求 `wttr.in` 会导致过于频繁的请求，
 因此该脚本的具体逻辑是将获取到的天气信息存储到文件中，并且每次都读取这个文件来获取。
 如此，只有在文件超过一定时间内未更新（通过 `find` 命令实现）或者文件不存在的时候，才会触发发起请求。
+
+## 常用命令及快捷键
+
+本章节记录 tmux 中常用命令和快捷键及其作用，更多内容可以参考 [cheatsheet](https://tmuxcheatsheet.com/)。
+
+### 命令
+
+- 列出当前所有会话：`tmux ls`。
+- 创建新会话
+  - 直接创建会话：`tmux new`。
+  - 创建时指定会话名称：`tmux new -s <session_name>`。
+- 暂离当前会话：`tmux detach`。
+- 恢复会话
+  - 恢复上一次使用的会话：`tmux attach`。
+  - 恢复时指定会话名称：`tmux attach -t <session_name>`，`-t` 即 `--target`。
+- 切换到另一个会话：`tmux switch -t <session>`。
+- 关闭会话
+  - 可以在会话中直接使用 `exit` 命令即可关闭会话。
+  - 在会话外可以使用 `tmux kill-session -t <session_name>` 对会话进行关闭。
+
+### 快捷键
+
+| 快捷键           | 作用                                          |
+| ---------------- | --------------------------------------------- |
+| `C-Space`        | prefix                                        |
+| `prefix-s`       | 查看 session 列表                             |
+| `prefix-d`       | 暂离（detach）当前 session                    |
+| `prefix-$`       | 修改 session 名称                             |
+| `prefix-c`       | 创建新的 window                               |
+| `prefix-w`       | 查看 session-window 列表                      |
+| `prefix-number`  | 切换选择 window                               |
+| `prefix-,`       | 修改 window 名称                              |
+| `prefix-%`       | 垂直分割 window                               |
+| `prefix-"`       | 水平分割 window                               |
+| `prefix-arrow`   | 按照目标方向切换选择 pane                     |
+| `prefix-C-arrow` | 按照目标方向修改当前 pane 大小                |
+| `prefix-[`       | 进入 visual 模式                              |
+| `prefix-j`       | 使用 tmux-jump 进行字符跳转并进入 visual 模式 |
