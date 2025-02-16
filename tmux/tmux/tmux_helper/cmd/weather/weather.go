@@ -23,6 +23,11 @@ const (
 	timeout          = 5 * time.Second       // 超时时间
 )
 
+// descriptionTranslateMap 天气描述翻译map，部分天气描述wttr.in没有汉化，需要手动转换
+var descriptionTranslateMap = map[string]string{
+	"Haze": "雾霾",
+}
+
 // 目标地址信息，可以是城市或地址名称，具体参考wttr.in官方文档：https://github.com/chubin/wttr.in
 var location string
 
@@ -194,6 +199,11 @@ func generateMessage(data *Data) (string, error) {
 	// 当前天气状态中文描述
 	description := current.LangCN.GetFirst()
 	if description != "" {
+		// 部分未汉化描述特殊处理
+		if t, ok := descriptionTranslateMap[description]; ok && t != "" {
+			description = t
+		}
+		// 拼接描述
 		message = description + " " + message
 	}
 
