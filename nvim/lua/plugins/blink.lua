@@ -8,8 +8,7 @@ return {
             "saghen/blink.compat",
             "xzbdmw/colorful-menu.nvim",
         },
-        -- use a release tag to download pre-built binaries
-        version = "*",
+        version = "*", -- 指定为`*`以固定使用最新稳定版本
         opts = {
             -- 当前配置的常用键位
             -- <Tab> - 选择当前内容
@@ -26,13 +25,14 @@ return {
             },
             completion = {
                 accept = {
-                    -- experimental auto-brackets support
+                    -- 自动添加括号
                     auto_brackets = {
                         enabled = true,
                     },
                 },
                 list = {
                     selection = {
+                        -- 自动选择列表中的第一项
                         -- keymap使用super-tab时推荐配置该选项
                         -- https://cmp.saghen.dev/configuration/keymap.html#presets
                         preselect = function(_)
@@ -56,10 +56,10 @@ return {
                     draw = {
                         -- 使用treesitter对菜单栏的代码进行上色提示
                         treesitter = { "lsp" },
-                        -- We don't need label_description now because label and label_description are already
-                        -- combined together in label by colorful-menu.nvim.
                         columns = {
                             { "kind_icon" },
+                            -- 不配置label_description
+                            -- 因为colorful-menu插件已经将label和label_description组合在一起了
                             { "label", gap = 1 },
                         },
                         -- 绘制组件配置
@@ -114,22 +114,18 @@ return {
                 },
             },
             appearance = {
-                -- Sets the fallback highlight groups to nvim-cmp's highlight groups
-                -- Useful for when your theme doesn't support blink.cmp
-                -- Will be removed in a future release
-                use_nvim_cmp_as_default = false,
-                -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-                -- Adjusts spacing to ensure icons are aligned
+                -- 告诉blink当前终端的字体类型，用于调整间距以确保图标对齐
+                -- mono - Nerd Font Mono
+                -- normal - Nerd Font
                 nerd_font_variant = "mono",
                 -- 类型icon列表
                 kind_icons = require("util.icons").kinds,
             },
-            -- Default list of enabled providers defined so that you can extend it
-            -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
+                -- 要启用的代码提示数据源列表
                 default = { "lsp", "path", "snippets", "buffer" },
             },
-            -- cmdline模式补全配置
+            -- cmdline模式补全
             cmdline = {
                 enabled = false,
             },
@@ -144,36 +140,6 @@ return {
     -- 使用colorful-menu完善blink的菜单栏绘制
     {
         "xzbdmw/colorful-menu.nvim",
-        opts = {
-            -- If provided, the plugin truncates the final displayed text to
-            -- this width (measured in display cells). Any highlights that extend
-            -- beyond the truncation point are ignored. When set to a float
-            -- between 0 and 1, it'll be treated as percentage of the width of
-            -- the window: math.floor(max_width * vim.api.nvim_win_get_width(0))
-            -- Default 60.
-            max_width = 60,
-            ls = {
-                lua_ls = {
-                    -- Maybe you want to dim arguments a bit.
-                    arguments_hl = "@comment",
-                },
-                gopls = {
-                    -- By default, we render variable/function's type in the right most side,
-                    -- to make them not to crowd together with the original label.
-
-                    -- when true:
-                    -- foo             *Foo
-                    -- ast         "go/ast"
-
-                    -- when false:
-                    -- foo *Foo
-                    -- ast "go/ast"
-                    align_type_to_right = true,
-                    -- When true, label for field and variable will format like "foo: Foo"
-                    -- instead of go's original syntax "foo Foo".
-                    add_colon_before_type = false,
-                },
-            },
-        },
+        opts = {},
     },
 }
