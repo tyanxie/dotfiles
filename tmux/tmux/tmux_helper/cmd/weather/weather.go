@@ -133,6 +133,19 @@ func action(cCtx *cli.Context) error {
 
 // fetchData 拉取数据
 func fetchData(ctx context.Context) (*WttrRsp, error) {
+	// 获取默认transport
+	defaultTransport, ok := http.DefaultTransport.(*http.Transport)
+	if !ok {
+		return nil, fmt.Errorf("invalid transport type: %T", http.DefaultTransport)
+	}
+	// 克隆transport并关闭proxy能力，以使用最原始的方式发起请求
+	transport := defaultTransport.Clone()
+	transport.Proxy = nil
+	// 用定制的transport构造http客户端
+	client := &http.Client{
+		Transport: transport,
+	}
+
 	// 构造url，使用PathEscape编码location，防止意外参数
 	rawURL := "https://wttr.in/" + url.PathEscape(location)
 
@@ -156,7 +169,7 @@ func fetchData(ctx context.Context) (*WttrRsp, error) {
 	req.URL.RawQuery = query.Encode()
 
 	// 发送请求
-	rsp, err := http.DefaultClient.Do(req)
+	rsp, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("send request failed, url:%s, err:%w", req.URL.String(), err)
 	}
