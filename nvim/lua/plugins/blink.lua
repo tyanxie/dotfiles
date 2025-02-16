@@ -128,8 +128,10 @@ return {
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 default = { "lsp", "path", "snippets", "buffer" },
-                -- 将cmdline选项设置为空table，以禁用cmdline的补全提示
-                cmdline = {},
+            },
+            -- cmdline模式补全配置
+            cmdline = {
+                enabled = false,
             },
         },
         opts_extend = {
