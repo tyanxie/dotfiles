@@ -14,6 +14,7 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
+        image = { enabled = true }, -- 图片展示支持
         indent = { enabled = true }, -- 可视化显示缩进
         input = { enabled = true }, -- 替代vim.input
         scope = { enabled = true },
