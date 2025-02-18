@@ -21,6 +21,9 @@ return {
                         BlinkCmpDocBorder = { fg = colors.blue },
                         BlinkCmpSignatureHelpBorder = { fg = colors.blue },
                         BlinkCmpSignatureHelpActiveParameter = { fg = colors.mauve },
+                        -- snacks.nvim
+                        SnacksIndent = { fg = colors.overlay0 },
+                        SnacksIndentScope = { fg = colors.pink },
                     }
                 end,
                 -- 自定义mocha配色高亮组
@@ -46,7 +49,9 @@ return {
                     color_mode = true,
                 },
                 noice = true,
-                snacks = true,
+                snacks = {
+                    enabled = true,
+                },
                 which_key = true,
             },
         },
