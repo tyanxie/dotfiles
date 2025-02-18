@@ -1,4 +1,4 @@
--- Terminal Mappings
+-- 使用 <ctrl> - h/j/k/l 在终端中移动光标所在的窗口
 local function term_nav(dir)
     ---@param self snacks.terminal
     return function(self)
@@ -31,6 +31,7 @@ return {
         bigfile = { enabled = true },
         quickfile = { enabled = true },
         terminal = {
+            enabled = true,
             win = {
                 keys = {
                     nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window", expr = true, mode = "t" },
@@ -88,6 +89,24 @@ return {
                 Snacks.notifier.show_history()
             end,
             desc = "Notification History",
+        },
+        -- terminal
+        {
+            "<C-/>",
+            function()
+                Snacks.terminal.toggle()
+            end,
+            mode = { "n", "t" },
+            desc = "Toggle Terminal",
+        },
+        -- 部分终端模拟器（如wezterm）会将<C-/>解释为<C-_>，因此这里需要增加<C-_>的快捷键
+        {
+            "<C-_>",
+            function()
+                Snacks.terminal.toggle()
+            end,
+            mode = { "n", "t" },
+            desc = "Toggle Terminal",
         },
     },
 }

@@ -153,6 +153,7 @@
 | `<Ctrl-Down>`  | 降低窗口高度   |
 | `<Ctrl-Left>`  | 降低窗口宽度   |
 | `<Ctrl-Right>` | 增加窗口宽度   |
+| `<Ctrl-/>`     | 显示或隐藏终端 |
 
 ## Bufferline
 
