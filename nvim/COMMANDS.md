@@ -13,5 +13,4 @@
 | `ConformInfo`    | 查看格式化插件 Conform 状态                                                            | 格式化 |
 | `ForceEdit`      | 强制解除当前文件的不可编辑限制                                                         | 编辑   |
 | `CreateTempFile` | 在系统临时目录中创建一个临时文件并打开，并在关闭 buffer 时删除临时文件                 | 文件   |
-| `FzfLua`         | 模糊搜索，具体使用方法查看[官方文档](https://github.com/ibhagwan/fzf-lua)              | 搜索   |
 | `Go*`            | Go 语言相关命令，具体使用方法查看 [go.nvim](https://github.com/ray-x/go.nvim) 插件文档 | Go     |

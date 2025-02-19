@@ -31,7 +31,48 @@ return {
                 git_hl = true, -- use Git Signs hl for fold icons
             },
         },
-        picker = { enabled = true },
+        picker = {
+            enabled = true,
+            layout = {
+                cycle = true,
+                preset = function()
+                    return vim.o.columns >= 120 and "default" or "vertical"
+                end,
+                layout = {
+                    width = 0.9,
+                    height = 0.9,
+                },
+            },
+            win = {
+                input = {
+                    keys = {
+                        ["<a-s>"] = { "flash", mode = { "n", "i" } },
+                        ["s"] = { "flash" },
+                    },
+                },
+            },
+            actions = {
+                -- 使用flash插件快速选择
+                flash = function(picker)
+                    require("flash").jump({
+                        pattern = "^",
+                        label = { after = { 0, 0 } },
+                        search = {
+                            mode = "search",
+                            exclude = {
+                                function(win)
+                                    return vim.bo[vim.api.nvim_win_get_buf(win)].filetype ~= "snacks_picker_list"
+                                end,
+                            },
+                        },
+                        action = function(match)
+                            local idx = picker.list:row2idx(match.pos[1])
+                            picker.list:_move(idx, true, true)
+                        end,
+                    })
+                end,
+            },
+        },
         bigfile = { enabled = true },
         quickfile = { enabled = true },
         terminal = {
@@ -94,6 +135,7 @@ return {
             end,
             desc = "Notification History",
         },
+
         -- terminal
         {
             "<C-/>",
@@ -111,6 +153,82 @@ return {
             end,
             mode = { "n", "t" },
             desc = "Toggle Terminal",
+        },
+
+        -- 搜索
+        -- 搜索当前工作目录
+        {
+            "<leader>/",
+            function()
+                Snacks.picker.grep()
+            end,
+            desc = "Grep",
+        },
+        -- 输入目标目录进行搜索
+        {
+            "<leader>sG",
+            function()
+                vim.ui.input({
+                    prompt = "target directory",
+                    default = vim.fn.getcwd(),
+                }, function(input)
+                    if input and input ~= "" then
+                        Snacks.picker.grep({ cwd = input })
+                    end
+                end)
+            end,
+            desc = "Grep (input target directory)",
+        },
+
+        -- 查找文件
+        -- 查找工作目录下的文件
+        {
+            "<leader><space>",
+            function()
+                Snacks.picker.files()
+            end,
+            desc = "Find Files",
+        },
+        -- 输入目标目录进行查找
+        {
+            "<leader>sF",
+            function()
+                vim.ui.input({
+                    prompt = "target directory",
+                    default = vim.fn.getcwd(),
+                }, function(input)
+                    if input and input ~= "" then
+                        Snacks.picker.files({ cwd = input })
+                    end
+                end)
+            end,
+            desc = "Find Files (input target directory)",
+        },
+
+        -- git
+        -- 查看git commit列表
+        {
+            "<leader>gc",
+            function()
+                Snacks.picker.git_log()
+            end,
+            desc = "Git Log",
+        },
+        -- 查看git diff列表
+        {
+            "<leader>gd",
+            function()
+                Snacks.picker.git_diff()
+            end,
+            desc = "Git Diff (hunks)",
+        },
+        -- 查看git status变化列表
+        {
+            "<leader>gs",
+            function()
+                Snacks.picker.git_status()
+            end,
+            desc = "Git Status",
         },
     },
 }

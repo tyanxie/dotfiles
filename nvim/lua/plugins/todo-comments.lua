@@ -28,14 +28,14 @@ return {
         {
             "<leader>st",
             function()
-                require("todo-comments.fzf").todo()
+                Snacks.picker.todo_comments()
             end,
             desc = "Todo",
         },
         {
             "<leader>sT",
             function()
-                require("todo-comments.fzf").todo({ keywords = { "TODO", "FIX", "FIXME" } })
+                Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } })
             end,
             desc = "Todo/Fix/Fixme",
         },

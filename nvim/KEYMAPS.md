@@ -15,7 +15,8 @@
   - [Todo](#todo)
 - [Git](#git)
 - [Neo-tree](#neo-tree)
-- [Fzf-lua](#fzf-lua)
+- [snacks.nvim](#snacksnvim)
+  - [picker](#picker)
 - [多光标](#多光标)
 
 ## Vim基础
@@ -120,26 +121,26 @@
 > | `c`  | 命令模式（Command mode）：在命令行中输入命令          |
 > | `t`  | 终端模式（Terminal mode）：在终端缓冲区中操作         |
 
-| 快捷键            | 作用                                            | 可用模式 |
-| ----------------- | ----------------------------------------------- | -------- |
-| `j`               | 向下移动 1 屏幕行                               | n, x     |
-| `J`               | 向下移动 5 屏幕行                               | n, x     |
-| `k`               | 向上移动 1 屏幕行                               | n, x     |
-| `K`               | 向上移动 5 屏幕行                               | n, x     |
-| `s`               | 使用 flash 插件快速移动                         | n, o, x  |
-| `<leader><space>` | 使用 fzf-lua 全局搜索文件                       | n        |
-| `<leader>sF`      | 使用 fzf-lua 输入目录来搜索目标目录下的文件     | n        |
-| `<leader>/`       | 使用 fzf-lua 全局搜索文本                       | n        |
-| `<leader>sG`      | 使用 fzf-lua 输入目录来搜索目标目录下的文本     | n        |
-| `<esc>`           | ESC 并清空高亮                                  | i, n, s  |
-| `gcc`             | 切换当前行注释状态                              | n        |
-| `gc`              | 切换选中内容注释状态                            | v, x, s  |
-| `za`              | 切换当前代码折叠状态                            | n        |
-| `<leader>qq`      | 退出所有内容，相当于 `qa` 命令                  | n        |
-| `<leader>l`       | 打开 Lazy 控制台                                | n        |
-| `<leader>e`       | 打开/关闭 Neo-tree 文件树                       | n        |
-| `<leader>fh`      | 以当前 Buffer 所在目录打开/关闭 Neo-tree 文件树 | n        |
-| `<leader>;`       | 快捷选择 winbar 中的内容                        | n        |
+| 快捷键            | 作用                                              | 可用模式 |
+| ----------------- | ------------------------------------------------- | -------- |
+| `j`               | 向下移动 1 屏幕行                                 | n, x     |
+| `J`               | 向下移动 5 屏幕行                                 | n, x     |
+| `k`               | 向上移动 1 屏幕行                                 | n, x     |
+| `K`               | 向上移动 5 屏幕行                                 | n, x     |
+| `s`               | 使用 flash 插件快速移动                           | n, o, x  |
+| `<leader><space>` | 使用 snacks.picker 全局搜索文件                   | n        |
+| `<leader>sF`      | 使用 snacks.picker 输入目录来搜索目标目录下的文件 | n        |
+| `<leader>/`       | 使用 snacks.picker 全局搜索文本                   | n        |
+| `<leader>sG`      | 使用 snacks.picker 输入目录来搜索目标目录下的文本 | n        |
+| `<esc>`           | ESC 并清空高亮                                    | i, n, s  |
+| `gcc`             | 切换当前行注释状态                                | n        |
+| `gc`              | 切换选中内容注释状态                              | v, x, s  |
+| `za`              | 切换当前代码折叠状态                              | n        |
+| `<leader>qq`      | 退出所有内容，相当于 `qa` 命令                    | n        |
+| `<leader>l`       | 打开 Lazy 控制台                                  | n        |
+| `<leader>e`       | 打开/关闭 Neo-tree 文件树                         | n        |
+| `<leader>fh`      | 以当前 Buffer 所在目录打开/关闭 Neo-tree 文件树   | n        |
+| `<leader>;`       | 快捷选择 winbar 中的内容                          | n        |
 
 ## 窗口命令
 
@@ -201,20 +202,21 @@
 
 ### Todo
 
-| 快捷键       | 作用                                  |
-| ------------ | ------------------------------------- |
-| `<leader>st` | 使用 fzf-lua 搜索所有类型的 Todo 列表 |
-| `<leader>sT` | 使用 fzf-lua 搜索 Todo/Fix/Fixme 列表 |
-| `<leader>xt` | 使用 trouble 列出所有类型的 Todo 列表 |
-| `<leader>xT` | 使用 trouble 列出 Todo/Fix/Fixme 列表 |
+| 快捷键       | 作用                                        |
+| ------------ | ------------------------------------------- |
+| `<leader>st` | 使用 snacks.picker 搜索所有类型的 Todo 列表 |
+| `<leader>sT` | 使用 snacks.picker 搜索 Todo/Fix/Fixme 列表 |
+| `<leader>xt` | 使用 trouble 列出所有类型的 Todo 列表       |
+| `<leader>xT` | 使用 trouble 列出 Todo/Fix/Fixme 列表       |
 
 ## Git
 
-| 快捷键       | 作用                          |
-| ------------ | ----------------------------- |
-| `<leader>gg` | 打开 Lazygit                  |
-| `<leader>gc` | 使用 fzf-lua 搜索 Git Commits |
-| `<leader>gs` | 使用 fzf-lua 搜索 Git Status  |
+| 快捷键       | 作用                                |
+| ------------ | ----------------------------------- |
+| `<leader>gg` | 打开 Lazygit                        |
+| `<leader>gc` | 使用 snacks.picker 搜索 Git Commits |
+| `<leader>gs` | 使用 snacks.picker 搜索 Git Status  |
+| `<leader>gd` | 使用 snacks.picker 搜索 Git Diff    |
 
 ## Neo-tree
 
@@ -243,20 +245,40 @@
 | `i`    | 显示文件详情                                         |
 | `/`    | 模糊查找文件                                         |
 
-## Fzf-lua
+## snacks.nvim
 
-本章节列出的快捷键为在 fzf-lua 中的相关快捷键。
+[snacks.nvim](https://github.com/folke/snacks.nvim) 是一个非常强大的插件集合，
+它实现了非常多的小型插件使得只需要安装 snacks.nvim 即可使用非常多的功能。
 
-| 快捷键       | 作用                            |
-| ------------ | ------------------------------- |
-| `f1`         | 查看所有快捷键                  |
-| `Ctrl-j`     | 查看下一个项目                  |
-| `Ctrl-k`     | 查看上一个项目                  |
-| `Enter`      | 选择当前光标所在项目            |
-| `Shift-Up`   | 预览框向上翻页                  |
-| `Shift-Down` | 预览框向下翻页                  |
-| `Alt-h`      | 切换是否查找隐藏文件            |
-| `Alt-i`      | 切换是否查找gitignore忽略的文件 |
+### picker
+
+[snacks.picker](https://github.com/folke/snacks.nvim/blob/main/docs/picker.md) 是一个现代化的模糊查找器，
+本章节介绍在使用该模糊查找器时的相关常用快捷键。
+
+首先需要知道的是，在 snacks.picker 中存在三个子窗口：输入框（input）、结果列表窗口（list）以及预览窗口（preview），
+输入框存在插入模式（insert）和普通模式（normal），其它的两个子窗口则只有普通模式。
+snacks.picker 所有的快捷键都是围绕这三个子窗口和两种模式展开的，具体每个子窗口及其模式下的快捷键可以参考[官方默认配置](https://github.com/folke/snacks.nvim/blob/main/docs/picker.md#%EF%B8%8F-config)。
+
+| 快捷键    | 作用                                               | 可用窗口             | 可用模式 |
+| --------- | -------------------------------------------------- | -------------------- | -------- |
+| `esc`     | 如果在插入模式则进入普通模式，否则退出picker       | input, list, preview | n, i     |
+| `Alt-w`   | 光标在各个子窗口中切换                             | input, list, preview | n, i     |
+| `/`       | 光标在输入框和结果列表窗口中切换                   | input, list          | n        |
+| `?`       | 查看当前支持的所有快捷键                           | input, list          | n        |
+| `Ctrl-j`  | 查看下一个项目                                     | input, list          | n, i     |
+| `j`       | 查看下一个项目                                     | input, list          | n        |
+| `Ctrl-k`  | 查看上一个项目                                     | input, list          | n, i     |
+| `k`       | 查看上一个项目                                     | input, list          | n        |
+| `Enter`   | 选择当前光标所在项目                               | input, list          | n, i     |
+| `Ctrl-b`  | 预览框向上翻页                                     | input, list          | n, i     |
+| `Ctrl-f`  | 预览框向下翻页                                     | input, list          | n, i     |
+| `Alt-h`   | 切换是否查找隐藏文件                               | input, list          | n, i     |
+| `Alt-i`   | 切换是否查找gitignore忽略的文件                    | input, list          | n, i     |
+| `Ctrl-Up` | 复用前一次搜索                                     | input, list          | n        |
+| `Ctrl-Up` | 复用后一次搜索                                     | input, list          | n        |
+| `Ctrl-q`  | 将搜索结果固定在底部窗口（方便处理连续的多个结果） | input, list          | n        |
+| `Alt-s`   | 使用flash插件快速移动选择内容                      | input, list          | n, i     |
+| `s`       | 使用flash插件快速移动选择内容                      | input, list          | n        |
 
 ## 多光标
 
