@@ -18,6 +18,7 @@
 - [snacks.nvim](#snacksnvim)
   - [picker](#picker)
 - [多光标](#多光标)
+- [grug-far.nvim](#grug-farnvim)
 
 ## Vim基础
 
@@ -292,3 +293,14 @@ snacks.picker 所有的快捷键都是围绕这三个子窗口和两种模式展
 | `<leader>-Down`  | 跳过当前位置，不添加光标并将光标向下移动 |
 | `Ctrl-Leftmouse` | 在鼠标点击位置添加或删除光标             |
 | `Ctrl-Leftdrag`  | 鼠标左键点击并拖动以快速添加或删除光标   |
+
+## grug-far.nvim
+
+[grug-far.nvim](https://github.com/MagicDuck/grug-far.nvim) 是一个强大的搜索并替换文本的插件，其基本使用方式如下：
+
+- 通过快捷键 `<leader>-sr` 打开面板。
+- 面板中存在如下内容需要填写：
+  - Search：要搜索的内容，支持正则表达式。
+  - Replace：要替换的内容。
+  - Files Filter：文件过滤器，通过 [glob](<https://en.wikipedia.org/wiki/Glob_(programming)>) 进行模式匹配。
+- 填写完成后通过快捷键 `\r` 执行即可。
