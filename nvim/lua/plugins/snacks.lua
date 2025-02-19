@@ -46,6 +46,9 @@ return {
             win = {
                 input = {
                     keys = {
+                        -- Alt-Backspace删除单词
+                        ["<a-bs>"] = { "<c-s-w>", mode = { "i" }, expr = true, desc = "delete word" },
+                        -- 使用flash插件快速选择
                         ["<a-s>"] = { "flash", mode = { "n", "i" } },
                         ["s"] = { "flash" },
                     },

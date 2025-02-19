@@ -260,26 +260,27 @@
 输入框存在插入模式（insert）和普通模式（normal），其它的两个子窗口则只有普通模式。
 snacks.picker 所有的快捷键都是围绕这三个子窗口和两种模式展开的，具体每个子窗口及其模式下的快捷键可以参考[官方默认配置](https://github.com/folke/snacks.nvim/blob/main/docs/picker.md#%EF%B8%8F-config)。
 
-| 快捷键    | 作用                                               | 可用窗口             | 可用模式 |
-| --------- | -------------------------------------------------- | -------------------- | -------- |
-| `esc`     | 如果在插入模式则进入普通模式，否则退出picker       | input, list, preview | n, i     |
-| `Alt-w`   | 光标在各个子窗口中切换                             | input, list, preview | n, i     |
-| `/`       | 光标在输入框和结果列表窗口中切换                   | input, list          | n        |
-| `?`       | 查看当前支持的所有快捷键                           | input, list          | n        |
-| `Ctrl-j`  | 查看下一个项目                                     | input, list          | n, i     |
-| `j`       | 查看下一个项目                                     | input, list          | n        |
-| `Ctrl-k`  | 查看上一个项目                                     | input, list          | n, i     |
-| `k`       | 查看上一个项目                                     | input, list          | n        |
-| `Enter`   | 选择当前光标所在项目                               | input, list          | n, i     |
-| `Ctrl-b`  | 预览框向上翻页                                     | input, list          | n, i     |
-| `Ctrl-f`  | 预览框向下翻页                                     | input, list          | n, i     |
-| `Alt-h`   | 切换是否查找隐藏文件                               | input, list          | n, i     |
-| `Alt-i`   | 切换是否查找gitignore忽略的文件                    | input, list          | n, i     |
-| `Ctrl-Up` | 复用前一次搜索                                     | input, list          | n        |
-| `Ctrl-Up` | 复用后一次搜索                                     | input, list          | n        |
-| `Ctrl-q`  | 将搜索结果固定在底部窗口（方便处理连续的多个结果） | input, list          | n        |
-| `Alt-s`   | 使用flash插件快速移动选择内容                      | input, list          | n, i     |
-| `s`       | 使用flash插件快速移动选择内容                      | input, list          | n        |
+| 快捷键          | 作用                                               | 可用窗口             | 可用模式 |
+| --------------- | -------------------------------------------------- | -------------------- | -------- |
+| `esc`           | 如果在插入模式则进入普通模式，否则退出picker       | input, list, preview | n, i     |
+| `Alt-w`         | 光标在各个子窗口中切换                             | input, list, preview | n, i     |
+| `/`             | 光标在输入框和结果列表窗口中切换                   | input, list          | n        |
+| `?`             | 查看当前支持的所有快捷键                           | input, list          | n        |
+| `Ctrl-j`        | 查看下一个项目                                     | input, list          | n, i     |
+| `j`             | 查看下一个项目                                     | input, list          | n        |
+| `Ctrl-k`        | 查看上一个项目                                     | input, list          | n, i     |
+| `k`             | 查看上一个项目                                     | input, list          | n        |
+| `Enter`         | 选择当前光标所在项目                               | input, list          | n, i     |
+| `Ctrl-b`        | 预览框向上翻页                                     | input, list          | n, i     |
+| `Ctrl-f`        | 预览框向下翻页                                     | input, list          | n, i     |
+| `Alt-h`         | 切换是否查找隐藏文件                               | input, list          | n, i     |
+| `Alt-i`         | 切换是否查找gitignore忽略的文件                    | input, list          | n, i     |
+| `Ctrl-Up`       | 复用前一次搜索                                     | input, list          | n        |
+| `Ctrl-Up`       | 复用后一次搜索                                     | input, list          | n        |
+| `Ctrl-q`        | 将搜索结果固定在底部窗口（方便处理连续的多个结果） | input, list          | n        |
+| `Alt-s`         | 使用flash插件快速移动选择内容                      | input, list          | n, i     |
+| `s`             | 使用flash插件快速移动选择内容                      | input, list          | n        |
+| `Alt-Backspace` | 删除单词                                           | input                | i        |
 
 ## 多光标
 
