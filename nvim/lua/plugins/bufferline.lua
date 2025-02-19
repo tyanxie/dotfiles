@@ -23,6 +23,13 @@ return -- This is what powers LazyVim's fancy-looking
             end,
             desc = "Delete Other Buffers",
         },
+        {
+            "<leader>bA",
+            function()
+                Snacks.bufdelete.all()
+            end,
+            desc = "Delete All Buffers",
+        },
     },
     config = function(_, opts)
         -- 设置catppuccin作为主题色

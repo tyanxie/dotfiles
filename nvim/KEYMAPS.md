@@ -167,6 +167,7 @@
 | `<leader>br` | 删除右侧所有 Buffer |
 | `<leader>bl` | 删除左侧所有 Buffer |
 | `<leader>bD` | 删除 Buffer 和窗口  |
+| `<leader>bA` | 删除所有 Buffer     |
 
 ## 编码相关
 
