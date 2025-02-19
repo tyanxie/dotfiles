@@ -77,9 +77,9 @@ if enableBackgroundImage then
 else
 	-- 使用透明背景模糊模式
 	-- 窗口背景不透明度
-	config.window_background_opacity = 0.8
+	config.window_background_opacity = 0.75
 	-- macOS下窗口背景模糊
-	config.macos_window_background_blur = 30
+	config.macos_window_background_blur = 20
 end
 
 -- 蜂鸣提示音
