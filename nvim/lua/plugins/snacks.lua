@@ -14,7 +14,11 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
-        image = { enabled = true }, -- 图片展示支持
+        -- 图片展示支持
+        image = {
+            enabled = true,
+            force = true, -- 一般都会使用wezterm或kitty，因此直接强制展示
+        },
         indent = { enabled = true }, -- 可视化显示缩进
         input = { enabled = true }, -- 替代vim.input
         scope = { enabled = true },
