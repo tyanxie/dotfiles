@@ -38,6 +38,8 @@ return {
                         IncSearch = { bg = utils.darken(mocha.red, 0.90, mocha.base) },
                         -- line number
                         LineNr = { fg = mocha.overlay0 },
+                        -- lsp
+                        LspInlayHint = { fg = mocha.overlay2 },
                     }
                 end,
             },
