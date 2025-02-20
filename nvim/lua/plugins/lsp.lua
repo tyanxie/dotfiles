@@ -136,7 +136,7 @@ return {
                         },
                         usePlaceholders = false, -- 设置是否自动补全函数参数
                         completeUnimported = true,
-                        staticcheck = true,
+                        staticcheck = false, -- 是否使用staticcheck进行代码检查
                         directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
                         semanticTokens = true,
                     },
