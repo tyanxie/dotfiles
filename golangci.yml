@@ -129,9 +129,6 @@ linters-settings:
       # 警告参数未使用
       # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#unused-parameter
       - name: unused-parameter
-      # 警告方法接受者未使用
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#unused-receiver
-      - name: unused-receiver
       # 简化变量声明，例如`var i int = 99`可以简化为`i := 99`
       # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#var-declaration
       - name: var-declaration
