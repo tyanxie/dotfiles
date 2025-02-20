@@ -94,5 +94,7 @@ tmux 缓冲区监控脚本，用于在远程服务器上复制内容的时候可
 | `prefix-"`       | 水平分割 window                               |
 | `prefix-arrow`   | 按照目标方向切换选择 pane                     |
 | `prefix-C-arrow` | 按照目标方向修改当前 pane 大小                |
+| `prefix-{`       | 向左移动当前 pane                             |
+| `prefix-}`       | 向右移动当前 pane                             |
 | `prefix-[`       | 进入 visual 模式                              |
 | `prefix-j`       | 使用 tmux-jump 进行字符跳转并进入 visual 模式 |
