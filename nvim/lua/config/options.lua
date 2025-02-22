@@ -10,8 +10,8 @@ vim.g.autoformat = false
 
 -- 同步系统剪切板
 vim.opt.clipboard = "unnamedplus"
--- ssh链接时使用OSC52传输剪切板数据
-if os.getenv("SSH_CLIENT") ~= nil or os.getenv("SSH_TTY") ~= nil then
+-- ssh链接或使用wsl时使用OSC52传输剪切板数据
+if os.getenv("SSH_CLIENT") ~= nil or os.getenv("SSH_TTY") ~= nil or os.getenv("WSL_DISTRO_NAME") ~= "" then
     -- wezterm不支持读取系统剪切板，因此需要自己实现一个paste函数取代原有的paste函数，否则会导致粘贴时卡住
     -- https://github.com/neovim/neovim/discussions/28010#discussioncomment-10187140
     local function paste()
