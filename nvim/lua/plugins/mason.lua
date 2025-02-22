@@ -1,9 +1,6 @@
--- cmdline tools and lsp servers
 return {
     "williamboman/mason.nvim",
     cmd = "Mason",
-    build = ":MasonUpdate",
-    opts_extend = { "ensure_installed" },
     opts = {
         -- mason名称和lsp的对应关系可以参考mason-lspconfig中的配置：
         --  https://github.com/williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/mappings/server.lua
