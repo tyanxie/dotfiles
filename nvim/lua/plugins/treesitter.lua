@@ -47,6 +47,7 @@ return {
                 "gitignore",
                 "ssh_config",
                 "ron",
+                "http",
             },
             incremental_selection = {
                 enable = true,

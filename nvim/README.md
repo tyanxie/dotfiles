@@ -3,14 +3,17 @@
 个人 [Neovim](https://github.com/neovim/neovim) 配置。
 
 - [依赖环境](#依赖环境)
+- [依赖要求](#依赖要求)
+  - [依赖开发环境](#依赖开发环境)
+  - [依赖工具](#依赖工具)
 - [快捷键](#快捷键)
 - [命令](#命令)
 - [问题记录](#问题记录)
   - [Go](#go)
 
-## 依赖环境
+## 依赖要求
 
-使用本仓库的 Neovim 配置需要至少配置好如下的开发环境，以确保依赖能够正常安装。
+### 依赖开发环境
 
 - c/c++：推荐使用 [LLVM](https://llvm.org/)。
 - [Go](https://go.dev/)
@@ -18,6 +21,13 @@
 - [Node.js](https://nodejs.org) 与 [npm](https://www.npmjs.com/)
 - [Rust](https://www.rust-lang.org/)：国内推荐按照 [RsProxy](https://rsproxy.cn/) 的流程进行安装。
 - [Python](https://www.python.org/)
+
+### 依赖工具
+
+- [cURL](https://curl.se/)：命令行数据传输工具，支持 HTTP、WS 等协议发送数据。
+- [gRPCurl](https://github.com/fullstorydev/grpcurl)：适用于 gRPC 协议的 cURL。
+- [jq](https://jqlang.org)：轻量且灵活的命令行 JSON 处理工具。
+- xmllint：命令行 XML 处理工具。
 
 ## 快捷键
 

@@ -19,6 +19,7 @@
   - [picker](#picker)
 - [多光标](#多光标)
 - [grug-far.nvim](#grug-farnvim)
+- [Kulala](#kulala)
 
 ## Vim基础
 
@@ -304,3 +305,21 @@ snacks.picker 所有的快捷键都是围绕这三个子窗口和两种模式展
   - Replace：要替换的内容。
   - Files Filter：文件过滤器，通过 [glob](<https://en.wikipedia.org/wiki/Glob_(programming)>) 进行模式匹配。
 - 填写完成后通过快捷键 `\r` 执行即可。
+
+## Kulala
+
+[kulala.nvim](https://github.com/mistweaverco/kulala.nvim) 是一个极简的 HTTP 客户端工具，
+此外它还能支持 gRPC 等类型的请求，
+例如可以编写以下内容的 http 文件，按下回车键即可发送 http 请求并看到响应数据，
+更详细的使用方式可以查看[官方文档](https://neovim.getkulala.net)。
+
+```http
+### GET baidu
+GET https://www.baidu.com
+```
+
+| 快捷键       | 作用                                                       |
+| ------------ | ---------------------------------------------------------- |
+| `<leader>Rs` | 发送当前光标下或选中的请求                                 |
+| `<CR>`       | 回车键发送当前光标下或选中的请求（仅在 http 类型文件生效） |
+| `<leader>Ro` | 打开 kulala 的 ui 界面                                     |
