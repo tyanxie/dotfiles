@@ -10,6 +10,6 @@ import (
 
 func main() {
 	if err := cmd.New().Run(os.Args); err != nil {
-		fmt.Printf("<执行错误：%v>\n", err)
+		fmt.Println("<执行错误>")
 	}
 }
