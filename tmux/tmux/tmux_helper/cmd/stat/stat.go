@@ -14,7 +14,10 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var interval int // 统计的秒级时间间隔
+var (
+	interval       int  // 统计的秒级时间间隔
+	ignoreNetspeed bool // 是否忽略网速信息
+)
 
 // command 命令实例
 var command = &cli.Command{
@@ -30,6 +33,14 @@ var command = &cli.Command{
 			Value:       1,
 			Destination: &interval,
 			DefaultText: "1",
+		},
+		&cli.BoolFlag{
+			Name:        "ignore-netspeed",
+			Aliases:     []string{"is"},
+			Usage:       "If set, network speed information will not be output",
+			Value:       false,
+			Destination: &ignoreNetspeed,
+			DefaultText: "false",
 		},
 	},
 }
@@ -70,13 +81,20 @@ func action(_ *cli.Context) error {
 		return fmt.Errorf("get virtual memory stat failed: %w", err)
 	}
 
-	// 一行输出最终信息
-	fmt.Printf(" %.2f%%  %.2f%%  %s/s  %s/s",
-		cpuPercent[0],
-		memStat.UsedPercent,
-		humanateBytes(endSent-beginSent/uint64(interval)),
-		humanateBytes(endRecv-beginRecv/uint64(interval)),
-	)
+	// 构造基本结果
+	result := fmt.Sprintf(" %.2f%%  %.2f%%", cpuPercent[0], memStat.UsedPercent)
+
+	// 拼接网速信息
+	if !ignoreNetspeed {
+		result = fmt.Sprintf("%s  %s/s  %s/s",
+			result,
+			humanateBytes(endSent-beginSent/uint64(interval)),
+			humanateBytes(endRecv-beginRecv/uint64(interval)),
+		)
+	}
+
+	// 输出结果
+	fmt.Println(result)
 	return nil
 }
 
