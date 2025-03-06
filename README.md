@@ -34,8 +34,9 @@ wezterm 的更新频率非常快，但是一直没有发布新的 release 版本
 # 安装 nightly 版本
 brew install --cask wezterm@nightly
 
-# 更新 nightly 版本（正常情况下 brew upgrade 不会自动更新 nightly 版本）
-brew upgrade --cask wezterm@nightly --no-quarantine --greedy-latest
+# 更新 nightly 版本需要卸载后重新安装（正常情况下 brew upgrade 不会自动更新 nightly 版本）
+brew uninstall --cask wezterm@nightly
+brew install --cask wezterm@nightly
 ```
 
 ## 依赖安装
