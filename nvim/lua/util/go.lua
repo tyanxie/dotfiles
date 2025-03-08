@@ -46,7 +46,8 @@ function M.write_package(filepath)
     package_name = dirname:gsub("[- ]", "_")
   end
   -- 插入首行并自动保存
-  file_util.write_to_file(filepath, "package " .. package_name)
+  -- 这里必须在最后插入换行符，否则代码格式化的时候会在最后一行出现空行，破坏了gofmt的规则
+  file_util.write_to_file(filepath, "package " .. package_name .. "\n")
 end
 
 --- 获取go文件列表中获取的package名称，返回收个匹配到的包名
