@@ -30,24 +30,24 @@ set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window W
 
 -- 清空搜索高亮并继续默认的esc能力
 set({ "i", "s" }, "<esc>", function()
-    -- 清空高亮
-    vim.cmd("noh")
-    -- 继续处理默认的esc
-    return "<esc>"
+  -- 清空高亮
+  vim.cmd("noh")
+  -- 继续处理默认的esc
+  return "<esc>"
 end, { expr = true, desc = "Escape and Clear hlsearch" })
 -- esc在普通模式下还需要清空multicursor光标
 set("n", "<esc>", function()
-    -- 清空高亮
-    vim.cmd("noh")
-    -- 清空multicursor光标
-    local mc = require("multicursor-nvim")
-    if not mc.cursorsEnabled() then
-        mc.enableCursors()
-    elseif mc.hasCursors() then
-        mc.clearCursors()
-    end
-    -- 继续处理默认的esc
-    return "<esc>"
+  -- 清空高亮
+  vim.cmd("noh")
+  -- 清空multicursor光标
+  local mc = require("multicursor-nvim")
+  if not mc.cursorsEnabled() then
+    mc.enableCursors()
+  elseif mc.hasCursors() then
+    mc.clearCursors()
+  end
+  -- 继续处理默认的esc
+  return "<esc>"
 end, { expr = true, desc = "Escape and Clear hlsearch and multicursors" })
 
 -- 快速缩进
@@ -59,11 +59,11 @@ set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 -- 诊断
 local diagnostic_goto = function(next, severity)
-    local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-    severity = severity and vim.diagnostic.severity[severity] or nil
-    return function()
-        go({ severity = severity })
-    end
+  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+  severity = severity and vim.diagnostic.severity[severity] or nil
+  return function()
+    go({ severity = severity })
+  end
 end
 set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 set("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
@@ -85,19 +85,19 @@ set("n", "<C-A-k>", "<cmd>call vm#commands#add_cursor_up(0, v:count1)<cr>")
 -- 定制gf命令（打开光标下的文件或链接）
 -- 如果打开的目标是链接并且当前操作系统是macOS，则使用操作系统默认方式打开
 set("n", "gf", function()
-    -- 获取当前光标下的内容
-    local word = vim.fn.expand("<cfile>")
-    -- 如果当前系统是macOS并且打开的目标是一个http/https链接，则使用操作系统默认方式打开
-    if vim.fn.has("macunix") == 1 and word:match("^https?://") then
-        -- 执行macOS系统的open命令使用默认方式打开内容
-        local out = vim.fn.system({ "open", word })
-        -- 如果命令没有发生错误则直接返回
-        if vim.v.shell_error == 0 then
-            return
-        end
-        -- 命令发生错误，打印错误但降级使用neovim默认方式打开
-        vim.notify("open with system default method failed: " .. out, vim.log.levels.ERROR)
+  -- 获取当前光标下的内容
+  local word = vim.fn.expand("<cfile>")
+  -- 如果当前系统是macOS并且打开的目标是一个http/https链接，则使用操作系统默认方式打开
+  if vim.fn.has("macunix") == 1 and word:match("^https?://") then
+    -- 执行macOS系统的open命令使用默认方式打开内容
+    local out = vim.fn.system({ "open", word })
+    -- 如果命令没有发生错误则直接返回
+    if vim.v.shell_error == 0 then
+      return
     end
-    -- 其它情况保留原有逻辑
-    vim.cmd("normal! gf")
+    -- 命令发生错误，打印错误但降级使用neovim默认方式打开
+    vim.notify("open with system default method failed: " .. out, vim.log.levels.ERROR)
+  end
+  -- 其它情况保留原有逻辑
+  vim.cmd("normal! gf")
 end)

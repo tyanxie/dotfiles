@@ -12,28 +12,28 @@ vim.g.autoformat = false
 vim.opt.clipboard = "unnamedplus"
 -- ssh链接或使用wsl时使用OSC52传输剪切板数据
 if os.getenv("SSH_CLIENT") ~= nil or os.getenv("SSH_TTY") ~= nil or os.getenv("WSL_DISTRO_NAME") ~= "" then
-    -- wezterm不支持读取系统剪切板，因此需要自己实现一个paste函数取代原有的paste函数，否则会导致粘贴时卡住
-    -- https://github.com/neovim/neovim/discussions/28010#discussioncomment-10187140
-    local function paste()
-        return {
-            vim.split(vim.fn.getreg(""), "\n"),
-            vim.fn.getregtype(""),
-        }
-    end
-
-    -- 使用OSC52支持ssh复制内容到本机剪切板
-    -- 注意使用的终端仿真器需要支持OSC52
-    vim.g.clipboard = {
-        name = "OSC 52",
-        copy = {
-            ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-            ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-        },
-        paste = {
-            ["+"] = paste,
-            ["*"] = paste,
-        },
+  -- wezterm不支持读取系统剪切板，因此需要自己实现一个paste函数取代原有的paste函数，否则会导致粘贴时卡住
+  -- https://github.com/neovim/neovim/discussions/28010#discussioncomment-10187140
+  local function paste()
+    return {
+      vim.split(vim.fn.getreg(""), "\n"),
+      vim.fn.getregtype(""),
     }
+  end
+
+  -- 使用OSC52支持ssh复制内容到本机剪切板
+  -- 注意使用的终端仿真器需要支持OSC52
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = paste,
+      ["*"] = paste,
+    },
+  }
 end
 
 -- 配置补全选项
@@ -70,12 +70,12 @@ vim.opt.smartindent = true
 
 -- 折叠代码
 vim.opt.fillchars = {
-    foldopen = "",
-    foldclose = "",
-    fold = " ",
-    foldsep = " ",
-    diff = "╱",
-    eob = " ",
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
 }
 -- 设置为99使得打开时不自动缩进
 vim.opt.foldlevel = 99
