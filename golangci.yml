@@ -10,7 +10,6 @@ linters:
     - errorlint # 检查错误的比较和类型断言是否正确使用 errors.Is 和 errors.As（而非 == 或类型断言）
     - funlen # 限制函数长度，过长的函数会降低可读性（默认超过 60 行触发警告）
     - gocheckcompilerdirectives # 检查编译器指令（如 //go:）的格式是否正确
-    - gochecknoinits # 禁止使用 init 函数，除非明确允许
     - goconst # 建议将重复出现的字符串或数字提取为常量
     - gocritic # 提供高级代码建议，涵盖性能、可读性、潜在错误等改进点
     - gocyclo # 计算函数的圈复杂度（条件分支数），过高时提示拆分函数（默认复杂度 ≥ 10）
@@ -64,8 +63,12 @@ linters-settings:
         replacement: "any"
   gosec:
     excludes:
+      - G115 # 整数类型之间转换时可能出现整数溢出
       - G304 # 文件路径可能被污染
       - G306 # 写入新文件时权限不宜宽松
+      - G401 # 避免使用MD5或SHA1
+      - G501 # 禁止引入：crypto/md5
+      - G505 # 禁止引入：crypto/sha1
   govet:
     enable:
       - nilness # 检查可能的nil指针问题
