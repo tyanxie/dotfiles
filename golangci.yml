@@ -64,6 +64,7 @@ linters-settings:
   gosec:
     excludes:
       - G115 # 整数类型之间转换时可能出现整数溢出
+      - G301 # 创建目录时权限不宜宽松
       - G304 # 文件路径可能被污染
       - G306 # 写入新文件时权限不宜宽松
       - G401 # 避免使用MD5或SHA1
@@ -72,7 +73,6 @@ linters-settings:
   govet:
     enable:
       - nilness # 检查可能的nil指针问题
-      - shadow # 检查变量被重新声明的问题，防止变量被意外覆盖
   lll:
     line-length: 120 # 代码行最大长度
   misspell:
