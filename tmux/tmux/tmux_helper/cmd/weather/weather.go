@@ -17,10 +17,12 @@ import (
 )
 
 const (
-	filename         = "tmux-weather-go.tmp" // 存储数据的文件名称
-	validPeriod      = 10 * time.Minute      // 数据有效时间
-	errorValidPeriod = 15 * time.Second      // 错误有效时间
-	timeout          = 5 * time.Second       // 超时时间
+	filename           = "tmux-weather-go.tmp" // 存储数据的文件名称
+	validPeriod        = 10 * time.Minute      // 数据有效时间
+	errorValidPeriod   = 15 * time.Second      // 错误有效时间
+	timeout            = 5 * time.Second       // 超时时间
+	tempUnit           = "°C"                  // 温度单位
+	defaultDescription = "未知"                  // 默认天气状态描述
 )
 
 // descriptionTranslateMap 天气描述翻译map，部分天气描述wttr.in没有汉化，需要手动转换
@@ -199,6 +201,18 @@ func fetchData(ctx context.Context) (*WttrRsp, error) {
 
 // generateMessage 构造输出消息
 func generateMessage(data *Data) (string, error) {
+	// 获取当前时间
+	now := time.Now()
+	// 如果当前为21点后，则返回明日天气状态，否则返回今日天气状态
+	hour := now.Hour()
+	if hour >= 21 {
+		return generateTomorrowMessage(data)
+	}
+	return generateCurrentMessage(data)
+}
+
+// generateCurrentMessage 生成当前天气状态
+func generateCurrentMessage(data *Data) (string, error) {
 	// 当前数据
 	if len(data.SourceRsp.CurrentCondition) != 1 {
 		return "", fmt.Errorf("invalid current condition length: %d", len(data.SourceRsp.CurrentCondition))
@@ -209,8 +223,7 @@ func generateMessage(data *Data) (string, error) {
 		return "", fmt.Errorf("current TempC is empty")
 	}
 	// 构造输出消息
-	message := current.TempC + "°C"
-	// 当前天气状态中文描述
+	message := current.TempC + tempUnit
 	description := current.LangCN.GetFirst()
 	if description != "" {
 		// 部分未汉化描述特殊处理
@@ -223,6 +236,51 @@ func generateMessage(data *Data) (string, error) {
 
 	// 返回结果
 	return message, nil
+}
+
+// generateTomorrowMessage 生成明天天气状态
+func generateTomorrowMessage(data *Data) (string, error) {
+	// 获取明日时间
+	date := time.Now().AddDate(0, 0, 1).Format(time.DateOnly)
+	// 获取明日天气
+	var daily *WttrRspDaily
+	for _, w := range data.SourceRsp.Weather {
+		if w.Date == date {
+			daily = w
+			break
+		}
+	}
+	if daily == nil {
+		return "", fmt.Errorf("tomorrow weather info not found: %s", date)
+	}
+	// 天气状态描述仅获取9点和21点的描述
+	morning := defaultDescription
+	evening := defaultDescription
+	for _, hourly := range daily.Hourly {
+		description := hourly.LangCN.GetFirst()
+		if description == "" {
+			continue
+		}
+		switch hourly.Time {
+		case "900":
+			morning = description
+		case "2100":
+			evening = description
+		}
+	}
+	// 如果早晚描述信息一致，则仅使用其中一个
+	description := morning
+	if evening != morning {
+		description = description + "～" + evening
+	}
+	// 拼接结果
+	return fmt.Sprintf(
+		"明日：%s %s/%s%s",
+		description,
+		daily.MintempC,
+		daily.MaxtempC,
+		tempUnit,
+	), nil
 }
 
 // saveFile 保存数据到文件
