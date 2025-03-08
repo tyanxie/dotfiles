@@ -15,8 +15,8 @@ return {
             -- <CR> - 选择当前内容
             -- <C-space> - 查看文档内容
             -- <C-e> - 关闭选择列表
-            -- <Up> / <C-p> - 选择上一个目标
-            -- <Down> / <C-n> - 选择下一个目标
+            -- <Up> / <C-p> / <C-k> - 选择上一个目标
+            -- <Down> / <C-n> / <C-j> - 选择下一个目标
             -- <C-b> - 文档向上滑动
             -- <C-f> - 文档向下滑动
             keymap = {
@@ -24,6 +24,9 @@ return {
                 preset = "super-tab",
                 -- 回车键优先用于补全
                 ["<CR>"] = { "accept", "fallback" },
+                -- Ctrl-j和Ctrl-k优先用于上下选择目标
+                ["<C-j>"] = { "select_next", "fallback_to_mappings" },
+                ["<C-k>"] = { "select_prev", "fallback_to_mappings" },
             },
             completion = {
                 accept = {
