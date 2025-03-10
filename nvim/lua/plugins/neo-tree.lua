@@ -4,7 +4,7 @@ local icons = require("util.icons")
 -- 返回插件信息
 return {
   "nvim-neo-tree/neo-tree.nvim",
-  cmd = "Neotree",
+  lazy = false,
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
