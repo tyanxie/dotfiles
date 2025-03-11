@@ -27,8 +27,9 @@ const (
 
 // descriptionTranslateMap 天气描述翻译map，部分天气描述wttr.in没有汉化，需要手动转换
 var descriptionTranslateMap = map[string]string{
-	"Haze":     "雾霾",
-	"小雨, rain": "小雨",
+	"Haze":               "雾霾",
+	"小雨, rain":           "小雨",
+	"Patchy rain nearby": "局部降雨",
 }
 
 // 目标地址信息，可以是城市或地址名称，具体参考wttr.in官方文档：https://github.com/chubin/wttr.in
@@ -226,10 +227,8 @@ func generateCurrentMessage(data *Data) (string, error) {
 	message := current.TempC + tempUnit
 	description := current.LangCN.GetFirst()
 	if description != "" {
-		// 部分未汉化描述特殊处理
-		if t, ok := descriptionTranslateMap[description]; ok && t != "" {
-			description = t
-		}
+		// 解析描述信息
+		description = parseDescription(description)
 		// 拼接描述
 		message = description + " " + message
 	}
@@ -257,10 +256,14 @@ func generateTomorrowMessage(data *Data) (string, error) {
 	morning := defaultDescription
 	evening := defaultDescription
 	for _, hourly := range daily.Hourly {
+		// 获取描述
 		description := hourly.LangCN.GetFirst()
 		if description == "" {
 			continue
 		}
+		// 解析描述
+		description = parseDescription(description)
+		// 按照时间获取信息
 		switch hourly.Time {
 		case "900":
 			morning = description
@@ -281,6 +284,14 @@ func generateTomorrowMessage(data *Data) (string, error) {
 		daily.MaxtempC,
 		tempUnit,
 	), nil
+}
+
+// parseDescription 解析描述信息，部分未汉化描述返回映射描述信息
+func parseDescription(description string) string {
+	if t, ok := descriptionTranslateMap[description]; ok && t != "" {
+		return t
+	}
+	return description
 }
 
 // saveFile 保存数据到文件
