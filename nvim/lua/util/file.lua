@@ -37,4 +37,21 @@ function M.write_to_file(filepath, content)
   end
 end
 
+--- 判断文件内容是否为空
+--- @param filepath string 文件名称
+--- @return boolean 文件内容是否为空，如果文件不存在则返回false
+function M.is_file_empty(filepath)
+  -- 读取文件内容
+  local file = io.open(filepath, "r")
+  if not file then
+    return false
+  end
+  -- 获取文件大小
+  local size = file:seek("end")
+  -- 关闭文件
+  file:close()
+  -- 返回文件是否为空
+  return size == 0
+end
+
 return M

@@ -16,6 +16,10 @@ function M.write_package(filepath)
   if file_util.get_extension(filepath) ~= "go" then
     return
   end
+  -- 判断文件内容是否为空，如果文件非空则直接返回不处理，仅处理新增的空文件
+  if not file_util.is_file_empty(filepath) then
+    return
+  end
   -- 获取文件所在目录名称
   local dirpath = file_util.get_dirpath(filepath)
   -- 查找目录下所有.go文件，区分test文件和普通文件
