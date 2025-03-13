@@ -56,11 +56,6 @@ linters-settings:
         bodyWidth: 5 # 限制函数嵌套层级
   gocyclo:
     min-complexity: 20 # 圈复杂度阈值
-  gofmt:
-    rewrite-rules:
-      # 建议将interface{}替换为any
-      - pattern: "interface{}"
-        replacement: "any"
   gosec:
     excludes:
       - G115 # 整数类型之间转换时可能出现整数溢出
