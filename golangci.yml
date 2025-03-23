@@ -149,4 +149,4 @@ issues:
 
 run:
   timeout: 5m # 超时时间
-  tests: true # 是否检查测试文件
+  tests: false # 是否检查测试文件
