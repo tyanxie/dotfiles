@@ -77,6 +77,8 @@ return {
             ".golangci.json",
             ".bazelrc",
             "compile_commands.json",
+            "protols.toml",
+            ".protols.toml",
           },
           always_show_by_pattern = { -- uses glob style patterns
             ".env*",
