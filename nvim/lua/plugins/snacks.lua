@@ -170,9 +170,17 @@ return {
     {
       "<leader>sG",
       function()
+        -- 搜索的默认路径为当前工作目录
+        local default = vim.fn.getcwd()
+        -- 如果buffer路径存在，则搜索的默认路径改为buffer所处的目录
+        local buffer = vim.api.nvim_buf_get_name(0)
+        if buffer ~= "" then
+          default = vim.fn.fnamemodify(buffer, ":h")
+        end
+        -- 打开输入框提示用户输入目标目录
         vim.ui.input({
           prompt = "target directory",
-          default = vim.fn.getcwd(),
+          default = default,
         }, function(input)
           if input and input ~= "" then
             Snacks.picker.grep({ cwd = input })
