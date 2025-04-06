@@ -1,6 +1,8 @@
-# 官方文档：https://golangci-lint.run/usage/configuration/
+version: "2" # golangci-lint v2
+run:
+  tests: false # 是否检查测试文件
 linters:
-  disable-all: true
+  default: none # 默认不开启任何linter
   enable:
     - bodyclose # 检查是否关闭 HTTP 响应体（如 resp.Body.Close()），防止资源泄漏
     - copyloopvar # 检测循环变量在闭包或协程中未正确拷贝的问题，避免意外引用同一变量
@@ -13,14 +15,11 @@ linters:
     - goconst # 建议将重复出现的字符串或数字提取为常量
     - gocritic # 提供高级代码建议，涵盖性能、可读性、潜在错误等改进点
     - gocyclo # 计算函数的圈复杂度（条件分支数），过高时提示拆分函数（默认复杂度 ≥ 10）
-    - gofmt # 检查代码是否符合 gofmt 格式化标准
-    - goimports # 检查导入语句的分组和排序是否符合规范（自动分组标准库、第三方库等）
     - goprintffuncname # printf 风格函数的命名需以 f 结尾（如 log.Printf）
     - gosec # 代码安全扫描，检测硬编码密码、不安全的加密算法、文件权限等问题
-    - gosimple # 建议简化冗余代码（如 if x == true → if x）
     - govet # 运行 go vet 检查潜在错误
-    - intrange # 建议使用 range 迭代切片/数组（如 for i := range s），替代传统的索引循环
     - ineffassign # 检查无效的变量赋值（如变量赋值后未被使用）
+    - intrange # 建议使用 range 迭代切片/数组（如 for i := range s），替代传统的索引循环
     - lll # 限制单行长度（默认 120 字符），避免过长代码行
     - misspell # 检查单词拼写错误（如将 necessary 写成 neccessary）
     - nakedret # 禁止函数末尾的裸返回（即 return 不带返回值），要求显式返回值
@@ -29,124 +28,135 @@ linters:
     - rowserrcheck # 确保 database/sql.Rows 的错误在遍历后被检查（如 rows.Err()）
     - sqlclosecheck # 检查 SQL 对象（如 Rows、Stmt）是否被正确关闭，防止资源泄漏
     - staticcheck # 高级静态分析，涵盖未使用代码、可疑逻辑、性能问题等
-    - stylecheck # 扩展的代码风格检查（如驼峰命名、上下文参数位置等）
     - testifylint # 针对 testify 测试框架的检查（如优先使用 assert.Equal(t, expected, actual) 而非 assert.True(t, ...)）
-    - typecheck # 类型检查
     - unconvert # 检测不必要的类型转换（如 int(x) 当 x 已是 int 类型时）
     - unparam # 检查未使用的函数参数或返回值
     - unused # 报告未使用的变量、常量、函数等
     - whitespace # 检查多余的空行或空格（如文件末尾的空行、行首尾空格）
-
-linters-settings:
-  errcheck:
-    check-type-assertions: true # 对类型断言中错误处理的检查
-  errorlint:
-    asserts: false # 对断言的检查
-  funlen:
-    lines: 80 # 限制函数行数
-    statements: 80 # 限制函数语句数
-  goconst:
-    min-len: 2 # 长度阈值
-    min-occurrences: 2 # 出现次数阈值
-  gocritic:
-    enabled-checks:
-      - nestingReduce # 代码嵌套层级检查
-    settings:
-      nestingReduce:
-        bodyWidth: 5 # 限制函数嵌套层级
-  gocyclo:
-    min-complexity: 20 # 圈复杂度阈值
-  gosec:
-    excludes:
-      - G115 # 整数类型之间转换时可能出现整数溢出
-      - G301 # 创建目录时权限不宜宽松
-      - G304 # 文件路径可能被污染
-      - G306 # 写入新文件时权限不宜宽松
-      - G401 # 避免使用MD5或SHA1
-      - G501 # 禁止引入：crypto/md5
-      - G505 # 禁止引入：crypto/sha1
-  govet:
-    enable:
-      - nilness # 检查可能的nil指针问题
-  lll:
-    line-length: 120 # 代码行最大长度
-  misspell:
-    locale: US # 英语拼写检查
-    ignore-words: [] # 忽略检查列表
-  revive:
-    # 失败置信度，置信度不到该值的错误将被忽略
-    confidence: 0
-    # 校验规则列表
-    # 官方文档：https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
+  settings:
+    errcheck:
+      check-type-assertions: true # 对类型断言中错误处理的检查
+    errorlint:
+      asserts: false # 对断言的检查
+    funlen:
+      lines: 80 # 限制函数行数
+      statements: 80 # 限制函数语句数
+    goconst:
+      min-len: 2 # 长度阈值
+      min-occurrences: 2 # 出现次数阈值
+    gocritic:
+      enabled-checks:
+        - nestingReduce # 代码嵌套层级检查
+      settings:
+        nestingReduce:
+          bodyWidth: 5 # 限制函数嵌套层级
+    gocyclo:
+      min-complexity: 20 # 圈复杂度阈值
+    gosec:
+      excludes:
+        - G115 # 整数类型之间转换时可能出现整数溢出
+        - G301 # 创建目录时权限不宜宽松
+        - G304 # 文件路径可能被污染
+        - G306 # 写入新文件时权限不宜宽松
+        - G401 # 避免使用MD5或SHA1
+        - G501 # 禁止引入：crypto/md5
+        - G505 # 禁止引入：crypto/sha1
+    govet:
+      enable:
+        - nilness # 检查可能的nil指针问题
+    lll:
+      line-length: 120 # 代码行最大长度
+    misspell:
+      locale: US # 英语拼写检查
+    revive:
+      # 失败置信度，置信度不到该值的错误将被忽略
+      confidence: 0
+      # 校验规则列表
+      # 官方文档：https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
+      rules:
+        # 空白导入只能在main包或测试包中，或者使用注释详细解释。
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#blank-imports
+        - name: blank-imports
+        # context.Context作为入参时必须位于函数的第一个位置
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#context-as-argument
+        - name: context-as-argument
+        # 基本类型不应该作为context.WithValue的key
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#context-keys-type
+        - name: context-keys-type
+        # 不允许使用`.`导入
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#dot-imports
+        - name: dot-imports
+        # error变量必须以前缀err命名
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#error-naming
+        - name: error-naming
+        # error作为返回值时必须位于最后一个位置
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#error-return
+        - name: error-return
+        # 错误消息不应该大写开头或者以标点符号结尾
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#error-strings
+        - name: error-strings
+        # error.New(fmt.Sprintf())替换为fmt.Errorf()
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#errorf
+        - name: errorf
+        # 导出内容应该有注释
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#exported
+        - name: exported
+        # 建议使用`++`/`--`运算符，会识别出`i += 1`或`i -= 1`并提示替换
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#increment-decrement
+        - name: increment-decrement
+        # 尽量减少缩进，会突出显示代码中可以移除的else块：https://go.dev/wiki/CodeReviewComments#indent-error-flow
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#indent-error-flow
+        - name: indent-error-flow
+        # 要求对Package进行注释
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#package-comments
+        - name: package-comments
+        # 建议使用忽略第二个值的for range使用方法
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#range
+        - name: range
+        # 方法的接受者（receiver）命名建议，例如对于结构体Parts建议其方法接受者为p，而不是this或self
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#receiver-naming
+        - name: receiver-naming
+        # 对于time.Duration变量的命名不宜使用Unix风格的后缀，例如不可以使用Secs、Mins后缀
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#time-naming
+        - name: time-naming
+        # 警告参数未使用
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#unused-parameter
+        - name: unused-parameter
+        # 简化变量声明，例如`var i int = 99`可以简化为`i := 99`
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#var-declaration
+        - name: var-declaration
+        # 变量命名检查，例如对于特殊名词需要全大写命名，如`rawUrl`需要改为`rawURL`
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#var-naming
+        - name: var-naming
+  # 排除检查规则
+  exclusions:
+    # 如果文件中包含`autogenerated file`、`code generated`、`do not edit`等内容，则认为是自动生成文件，需要排除检查
+    generated: lax
+    # 排除检查规则列表
     rules:
-      # 空白导入只能在main包或测试包中，或者使用注释详细解释。
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#blank-imports
-      - name: blank-imports
-      # context.Context作为入参时必须位于函数的第一个位置
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#context-as-argument
-      - name: context-as-argument
-      # 基本类型不应该作为context.WithValue的key
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#context-keys-type
-      - name: context-keys-type
-      # 不允许使用`.`导入
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#dot-imports
-      - name: dot-imports
-      # error变量必须以前缀err命名
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#error-naming
-      - name: error-naming
-      # error作为返回值时必须位于最后一个位置
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#error-return
-      - name: error-return
-      # 错误消息不应该大写开头或者以标点符号结尾
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#error-strings
-      - name: error-strings
-      # error.New(fmt.Sprintf())替换为fmt.Errorf()
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#errorf
-      - name: errorf
-      # 导出内容应该有注释
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#exported
-      - name: exported
-      # 建议使用`++`/`--`运算符，会识别出`i += 1`或`i -= 1`并提示替换
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#increment-decrement
-      - name: increment-decrement
-      # 尽量减少缩进，会突出显示代码中可以移除的else块：https://go.dev/wiki/CodeReviewComments#indent-error-flow
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#indent-error-flow
-      - name: indent-error-flow
-      # 要求对Package进行注释
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#package-comments
-      - name: package-comments
-      # 建议使用忽略第二个值的for range使用方法
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#range
-      - name: range
-      # 方法的接受者（receiver）明明建议，例如对于结构体Parts建议其方法接受者为p，而不是this或self
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#receiver-naming
-      - name: receiver-naming
-      # 对于time.Duration变量的命名不宜使用Unix风格的后缀，例如不可以使用Secs、Mins后缀
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#time-naming
-      - name: time-naming
-      # 警告参数未使用
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#unused-parameter
-      - name: unused-parameter
-      # 简化变量声明，例如`var i int = 99`可以简化为`i := 99`
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#var-declaration
-      - name: var-declaration
-      # 变量命名检查，例如对于特殊名词需要全大写命名，如`rawUrl`需要改为`rawURL`
-      # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#var-naming
-      - name: var-naming
-
+      # defer执行函数不报告未校验错误
+      # defer的常见使用习惯就是忽略错误，这里没必要报告
+      # 方法来源：https://github.com/kisielk/errcheck/issues/101#issuecomment-2561722380
+      - linters:
+          - errcheck
+        source: ^\s*defer\s+
+    # 需要排除的文件路径列表
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt # 检查代码是否符合 gofmt 格式化标准
+    - goimports # 检查导入语句的分组和排序是否符合规范（自动分组标准库、第三方库等）
+  exclusions:
+    # 如果文件中包含`autogenerated file`、`code generated`、`do not edit`等内容，则认为是自动生成文件，需要排除检查
+    generated: lax
+    # 需要排除的文件路径列表
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
 issues:
-  exclude-use-default: false # 不排除默认忽略的规则
-  max-issues-per-linter: 50 # 每个 linter 最大报告问题数
+  max-issues-per-linter: 50 # 每个linter最大报告问题数
   max-same-issues: 10 # 同类问题最大报告数
-  # 不报告错误的规则列表
-  exclude-rules:
-    # defer执行函数不报告未校验错误
-    # defer的常见使用习惯就是忽略错误，这里没必要报告
-    # 方法来源：https://github.com/kisielk/errcheck/issues/101#issuecomment-2561722380
-    - linters:
-        - errcheck
-      source: "^\\s*defer\\s+"
-
-run:
-  timeout: 5m # 超时时间
-  tests: false # 是否检查测试文件
