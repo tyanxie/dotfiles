@@ -12,6 +12,7 @@ return -- which-key helps you remember key bindings by showing a popup
         { "<leader><tab>", group = "tabs" },
         { "<leader>;", icon = { icon = "" } },
         { "<leader>m", icon = { icon = "", color = "cyan" } },
+        { "<leader>a", group = "avante", icon = "󰚩" },
         { "<leader>c", group = "code" },
         { "<leader>d", group = "debug" },
         { "<leader>f", group = "file/find" },

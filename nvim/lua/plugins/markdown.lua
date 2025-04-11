@@ -28,8 +28,9 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "echasnovski/mini.icons",
     },
-    ft = { "markdown" },
+    ft = { "markdown", "Avante" },
     opts = {
+      file_types = { "markdown", "Avante" }, -- 控制运行渲染的文件类型
       heading = {
         -- 控制是否在signcolumn展示标题标签
         sign = false,
