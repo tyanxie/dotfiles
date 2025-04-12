@@ -12,14 +12,22 @@ return {
     "MunifTanjim/nui.nvim",
   },
   opts = {
-    provider = "deepseek",
+    provider = "deepseek-reasoner",
     vendors = {
-      deepseek = {
+      -- deepseek r1 推理模型
+      ["deepseek-reasoner"] = {
         __inherited_from = "openai",
         api_key_name = api_key_name,
         endpoint = "https://api.deepseek.com",
-        model = "deepseek-reasoner", -- 使用deepseek推理模型
+        model = "deepseek-reasoner",
         disable_tools = true, -- deepseek-reasoner不支持工具，因此需要禁用
+      },
+      -- deepseek v3
+      ["deepseek-chat"] = {
+        __inherited_from = "openai",
+        api_key_name = api_key_name,
+        endpoint = "https://api.deepseek.com",
+        model = "deepseek-chat",
       },
     },
     hints = {
