@@ -78,6 +78,7 @@ for arg in "$@"; do
         ;;
     neovim | nvim)
         setup "$arg" "$(pwd)/nvim" "$HOME/.config/nvim"
+        setup "$arg/mcphub" "$(pwd)/mcphub" "$HOME/.config/mcphub"
         ;;
     sbar | sketchybar)
         setup "$arg" "$(pwd)/sketchybar" "$HOME/.config/sketchybar"
