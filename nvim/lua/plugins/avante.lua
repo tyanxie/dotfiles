@@ -12,14 +12,14 @@ return {
     "MunifTanjim/nui.nvim",
   },
   opts = {
-    provider = "deepseek-reasoner",
+    provider = "deepseek-reasoner", -- 默认使用的模型提供者
     vendors = {
       -- deepseek r1 推理模型
       ["deepseek-reasoner"] = {
         __inherited_from = "openai",
-        api_key_name = api_key_name,
+        api_key_name = api_key_name, -- api key存储在环境变量中的名称
         endpoint = "https://api.deepseek.com",
-        model = "deepseek-reasoner",
+        model = "deepseek-reasoner", -- 模型名称
         disable_tools = true, -- deepseek-reasoner不支持工具，因此需要禁用
       },
       -- deepseek v3
@@ -29,6 +29,9 @@ return {
         endpoint = "https://api.deepseek.com",
         model = "deepseek-chat",
       },
+    },
+    file_selector = {
+      provider = "snacks", -- 指定文件选择器工具
     },
     hints = {
       enabled = false,
