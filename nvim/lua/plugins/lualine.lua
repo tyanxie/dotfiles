@@ -116,9 +116,6 @@ return {
               end
             end,
           },
-          {
-            require("mcphub.extensions.lualine"),
-          },
         },
         lualine_y = {
           { "progress", separator = " ", padding = { left = 1, right = 0 } },

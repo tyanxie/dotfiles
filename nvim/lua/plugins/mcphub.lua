@@ -1,5 +1,6 @@
 return {
   "ravitemer/mcphub.nvim",
+  enabled = require("util.ai").enable(),
   dependencies = {
     "nvim-lua/plenary.nvim",
   },

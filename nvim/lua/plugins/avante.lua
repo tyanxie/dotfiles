@@ -1,8 +1,9 @@
-local api_key_name = "DEEPSEEK_API_KEY" -- deepseek api key在环境变量中的名称
+-- 引入ai工具包
+local ai_util = require("util.ai")
 
 return {
   "yetone/avante.nvim",
-  enabled = os.getenv(api_key_name) ~= nil, -- 只有在环境变量中存在deepseek api key时才启用
+  enabled = ai_util.enable(),
   event = "VeryLazy",
   version = false,
   build = "make",
@@ -18,7 +19,7 @@ return {
       -- deepseek r1 推理模型
       ["deepseek-reasoner"] = {
         __inherited_from = "openai",
-        api_key_name = api_key_name, -- api key存储在环境变量中的名称
+        api_key_name = ai_util.deepseek_api_key_name, -- api key存储在环境变量中的名称
         endpoint = "https://api.deepseek.com",
         model = "deepseek-reasoner", -- 模型名称
         disable_tools = true, -- deepseek-reasoner不支持工具，因此需要禁用，也因此r1模型将无法使用mcp能力
@@ -26,7 +27,7 @@ return {
       -- deepseek v3
       ["deepseek-chat"] = {
         __inherited_from = "openai",
-        api_key_name = api_key_name,
+        api_key_name = ai_util.deepseek_api_key_name,
         endpoint = "https://api.deepseek.com",
         model = "deepseek-chat",
       },
