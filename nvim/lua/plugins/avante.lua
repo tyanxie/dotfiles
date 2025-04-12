@@ -18,7 +18,8 @@ return {
         __inherited_from = "openai",
         api_key_name = api_key_name,
         endpoint = "https://api.deepseek.com",
-        model = "deepseek-coder",
+        model = "deepseek-reasoner", -- 使用deepseek推理模型
+        disable_tools = true, -- deepseek-reasoner不支持工具，因此需要禁用
       },
     },
     hints = {
