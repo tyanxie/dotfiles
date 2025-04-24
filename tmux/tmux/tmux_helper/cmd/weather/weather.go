@@ -27,9 +27,10 @@ const (
 
 // descriptionTranslateMap 天气描述翻译map，部分天气描述wttr.in没有汉化，需要手动转换
 var descriptionTranslateMap = map[string]string{
-	"Haze":               "雾霾",
-	"小雨, rain":           "小雨",
-	"Patchy rain nearby": "局部降雨",
+	"Haze":                         "雾霾",
+	"小雨, rain":                     "小雨",
+	"Patchy rain nearby":           "局部降雨",
+	"Light rain with thunderstorm": "小雨伴雷阵雨",
 }
 
 // 目标地址信息，可以是城市或地址名称，具体参考wttr.in官方文档：https://github.com/chubin/wttr.in
