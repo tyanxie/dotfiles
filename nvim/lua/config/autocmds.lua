@@ -3,6 +3,16 @@ local function augroup(name)
   return vim.api.nvim_create_augroup(name, { clear = true })
 end
 
+-- 进入buffer时设置formatoptions
+-- 由于在options.lua中配置不能保证进入buffer时不失效，因此通过autocmd进行设置
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = augroup("formatoptions"),
+  callback = function()
+    -- 不配置c/r/o选项，实现在注释行换行时不会自动增加注释符号
+    vim.opt.formatoptions:remove({ "c", "r", "o" })
+  end,
+})
+
 -- 文件有变动的时候重载文件
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   group = augroup("checktime"),
