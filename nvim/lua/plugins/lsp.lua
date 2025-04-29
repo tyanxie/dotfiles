@@ -19,8 +19,10 @@ local function setup(server, opts)
     capabilities = vim.deepcopy(capabilities),
   }, opts)
 
-  -- 初始化lsp
-  require("lspconfig")[server].setup(opts)
+  -- 启用lsp
+  vim.lsp.enable(server)
+  -- 配置lsp
+  vim.lsp.config(server, opts)
 end
 
 return {
