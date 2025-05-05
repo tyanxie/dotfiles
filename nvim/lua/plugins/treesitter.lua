@@ -48,6 +48,7 @@ return {
         "ssh_config",
         "ron",
         "http",
+        "cmake",
       },
       incremental_selection = {
         enable = true,

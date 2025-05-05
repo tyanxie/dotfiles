@@ -36,6 +36,7 @@ return {
       cpp = { "clang-format", lsp_format = "fallback" },
       python = { "yapf", lsp_format = "fallback" },
       toml = { "taplo", lsp_format = "fallback" },
+      cmake = { "cmake_format", lsp_format = "fallback" },
     },
     formatters = {
       -- 覆盖默认的 taplo 格式化配置：https://github.com/stevearc/conform.nvim/blob/master/lua/conform/formatters/taplo.lua

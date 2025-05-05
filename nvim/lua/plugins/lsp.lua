@@ -271,6 +271,9 @@ return {
           },
         },
       })
+
+      -- cmake
+      setup("cmake", {})
     end,
   },
 
