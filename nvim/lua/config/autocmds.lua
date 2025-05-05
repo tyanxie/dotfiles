@@ -102,6 +102,10 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   callback = function()
     -- 当前缓冲区序列
     local bufnr = vim.api.nvim_get_current_buf()
+    -- 如果当前缓冲区不是普通文件，则不进行处理
+    if vim.bo[bufnr].buftype ~= "" then
+      return
+    end
     -- 当前缓冲区文件绝对路径
     local bufname = vim.api.nvim_buf_get_name(bufnr)
 
