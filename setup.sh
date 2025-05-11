@@ -61,6 +61,30 @@ setup() {
     fi
 }
 
+#初始化lazygit配置
+setup_lazygit() {
+    #名称
+    local name="$1"
+
+    #本地路径
+    local source_dir
+    source_dir="$(pwd)/lazygit"
+
+    #目标路径
+    local target_dir
+    if ! target_dir="$(lazygit --print-config-dir)"; then
+        echo "获取 lazygit 配置目录失败"
+        return 0
+    fi
+
+    #创建目标路径目录
+    mkdir -p "$target_dir"
+
+    #链接配置文件
+    setup "$name" "$source_dir/config-catppuccin-latte-blue.yml" "$target_dir/config.yml"
+    return $?
+}
+
 #初始化yazi配置
 setup_yazi() {
     #名称
@@ -110,6 +134,9 @@ for arg in "$@"; do
         ;;
     kitty)
         setup "$arg" "$(pwd)/kitty" "$HOME/.config/kitty"
+        ;;
+    lazygit)
+        setup_lazygit "$arg"
         ;;
     neovim | nvim)
         setup "$arg" "$(pwd)/nvim" "$HOME/.config/nvim"
