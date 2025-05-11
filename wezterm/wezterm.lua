@@ -3,7 +3,22 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- 主题
-config.color_scheme = "Catppuccin Mocha"
+-- 定义浅色与深色主题
+local color_scheme_light = "Catppuccin Latte"
+local color_scheme_dark = "Catppuccin Mocha"
+-- 获取颜色主题的函数
+local function scheme_for_appearance()
+	-- 尝试判断系统当前是否是深色主题，如果是则使用深色主题
+	if wezterm.gui then
+		if wezterm.gui.get_appearance():find("Dark") then
+			return color_scheme_dark
+		end
+	end
+	-- 默认使用浅色主题
+	return color_scheme_light
+end
+-- 设置颜色主题
+config.color_scheme = scheme_for_appearance()
 
 -- 字体
 config.font = wezterm.font("Maple Mono NF CN", { weight = "DemiBold" })
