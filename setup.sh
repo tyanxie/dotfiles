@@ -1,34 +1,5 @@
 #!/bin/bash
 
-#初始化函数，负责判断对应配置文件路径是否存在，如果存在则提示是否需要删除，并作出相应动作
-setup() {
-    #名称
-    local name="$1"
-    #原始路径和目标路径
-    local source="$2"
-    local target="$3"
-
-    #判断文件是否不存在且不为软链接
-    if [ ! -e "$target" ] && [ ! -L "$target" ]; then
-        #文件不存在则直接创建链接
-        create_link "$name" "$source" "$target"
-        return $?
-    else
-        #文件存在则询问用户是否删除文件
-        echo -n "[$name] 文件已经存在（\"$target\"），是否删除并重新创建？（y/n）："
-        #等待用户输入
-        read -r input
-        #如果用户输入是y或Y，则删除原始配置并重新创建
-        if [[ "$input" =~ ^[Yy]$ ]]; then
-            create_link "$name" "$source" "$target"
-            return $?
-        else
-            echo "[$name] 跳过处理"
-            return 0
-        fi
-    fi
-}
-
 #创建软链接的函数
 create_link() {
     #名称
@@ -61,6 +32,70 @@ create_link() {
     return 0
 }
 
+#初始化函数，负责判断对应配置文件路径是否存在，如果存在则提示是否需要删除，并作出相应动作
+setup() {
+    #名称
+    local name="$1"
+    #原始路径和目标路径
+    local source="$2"
+    local target="$3"
+
+    #判断文件是否不存在且不为软链接
+    if [ ! -e "$target" ] && [ ! -L "$target" ]; then
+        #文件不存在则直接创建链接
+        create_link "$name" "$source" "$target"
+        return $?
+    else
+        #文件存在则询问用户是否删除文件
+        echo -n "[$name] 文件已经存在（\"$target\"），是否删除并重新创建？（y/n）："
+        #等待用户输入
+        read -r input
+        #如果用户输入是y或Y，则删除原始配置并重新创建
+        if [[ "$input" =~ ^[Yy]$ ]]; then
+            create_link "$name" "$source" "$target"
+            return $?
+        else
+            echo "[$name] 跳过处理"
+            return 0
+        fi
+    fi
+}
+
+#初始化yazi配置
+setup_yazi() {
+    #名称
+    local name="$1"
+    #本地路径
+    local source_dir
+    source_dir="$(pwd)/yazi"
+    #目标路径
+    local target_dir="$HOME/.config/yazi"
+
+    #如果目标目录存在或为软连接，则询问用户是否要删除
+    if [ -e "$target_dir" ] || [ -L "$target_dir" ]; then
+        echo -n "[$name] 文件已经存在（\"$target_dir\"），是否删除并重新创建？（y/n）："
+        #等待用户输入
+        read -r input
+        #如果用户输入是y或Y，则删除原始路径并重新创建
+        if [[ "$input" =~ ^[Yy]$ ]]; then
+            rm -rf "$target_dir"
+        else
+            echo "[$name] 跳过处理"
+            return 0
+        fi
+    fi
+
+    #创建目标路径
+    mkdir "$target_dir"
+
+    #创建必要的软连接
+    create_link "$name" "$source_dir/yazi.toml" "$target_dir/yazi.toml"
+    create_link "$name" "$source_dir/keymap.toml" "$target_dir/keymap.toml"
+    create_link "$name" "$source_dir/catppuccin_latte.toml" "$target_dir/theme.toml"
+    create_link "$name" "$source_dir/catppuccin_latte.tmTheme" "$target_dir/catppuccin_latte.tmTheme"
+    create_link "$name" "$source_dir/catppuccin_mocha.tmTheme" "$target_dir/catppuccin_mocha.tmTheme"
+}
+
 #如果一个参数都没有，需要报错
 if [ "$#" -eq "0" ]; then
     echo "至少需要一个参数" >&2
@@ -91,7 +126,7 @@ for arg in "$@"; do
         setup "$arg" "$(pwd)/wezterm" "$HOME/.config/wezterm"
         ;;
     yazi)
-        setup "$arg" "$(pwd)/yazi" "$HOME/.config/yazi"
+        setup_yazi "$arg"
         ;;
     golangci)
         setup "$arg" "$(pwd)/golangci.yml" "$HOME/.golangci.yml"
