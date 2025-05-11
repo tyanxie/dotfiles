@@ -39,5 +39,3 @@ require("lazy").setup({
   },
 })
 
--- 设置colorscheme
-vim.cmd.colorscheme("catppuccin")
