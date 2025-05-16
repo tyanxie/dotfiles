@@ -66,6 +66,7 @@ func process() {
 
 	// 执行处理
 	processTmux(appearance)
+	processYazi(appearance)
 
 	// 修改实际外观
 	slog.Info("change appearance complete", "before", currentAppearance, "now", appearance)
@@ -92,7 +93,7 @@ func processTmux(appearance Appearance) {
 		filename = home + "/.config/tmux/themes/catppuccin-mocha.conf"
 	}
 	// 创建主题配置文件命令
-	cmd := exec.Command("tmux", "source-file", filename)
+	cmd := exec.Command("tmux", "source-file", filename) // nolint
 	// 执行命令
 	output, err := cmd.CombinedOutput()
 	if err != nil {
@@ -100,4 +101,27 @@ func processTmux(appearance Appearance) {
 		return
 	}
 	slog.Info("process tmux theme complete", "cmd", cmd)
+}
+
+// processYazi 处理yazi主题
+func processYazi(appearance Appearance) {
+	// 获取需要加载的主题配置文件路径
+	filename := home + "/.config/yazi/catppuccin_latte.toml"
+	if appearance == AppearanceDark {
+		filename = home + "/.config/yazi/catppuccin_mocha.toml"
+	}
+	// 软连接路径
+	linkName := home + "/.config/yazi/theme.toml"
+	// 尝试删除原有的软连接
+	err := os.Remove(linkName)
+	if err != nil {
+		// 失败仅报错，仍然尝试后续步骤
+		slog.Error("remove yazi exists theme file failed", "name", linkName, "err", err)
+	}
+	err = os.Symlink(filename, linkName)
+	if err != nil {
+		slog.Error("link yazi theme file failed", "filename", filename, "linkName", linkName, "err", err)
+		return
+	}
+	slog.Info("process yazi theme complete", "filename", filename, "linkName", linkName)
 }

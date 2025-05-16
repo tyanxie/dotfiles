@@ -117,7 +117,9 @@ setup_yazi() {
     create_link "$name" "$source_dir/keymap.toml" "$target_dir/keymap.toml"
     create_link "$name" "$source_dir/catppuccin_latte.toml" "$target_dir/theme.toml"
     create_link "$name" "$source_dir/catppuccin_latte.tmTheme" "$target_dir/catppuccin_latte.tmTheme"
+    create_link "$name" "$source_dir/catppuccin_latte.toml" "$target_dir/catppuccin_latte.toml"
     create_link "$name" "$source_dir/catppuccin_mocha.tmTheme" "$target_dir/catppuccin_mocha.tmTheme"
+    create_link "$name" "$source_dir/catppuccin_mocha.toml" "$target_dir/catppuccin_mocha.toml"
 }
 
 #如果一个参数都没有，需要报错
