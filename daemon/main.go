@@ -3,9 +3,11 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"log/slog"
 	"os"
 	"os/exec"
+	"strings"
 	"sync"
 	"time"
 )
@@ -67,6 +69,7 @@ func process() {
 	// 执行处理
 	processTmux(appearance)
 	processYazi(appearance)
+	processLazygit(appearance)
 
 	// 修改实际外观
 	slog.Info("change appearance complete", "before", currentAppearance, "now", appearance)
@@ -112,16 +115,53 @@ func processYazi(appearance Appearance) {
 	}
 	// 软连接路径
 	linkName := home + "/.config/yazi/theme.toml"
-	// 尝试删除原有的软连接
-	err := os.Remove(linkName)
+	// 重新建立软连接
+	err := relink(filename, linkName)
 	if err != nil {
-		// 失败仅报错，仍然尝试后续步骤
-		slog.Error("remove yazi exists theme file failed", "name", linkName, "err", err)
-	}
-	err = os.Symlink(filename, linkName)
-	if err != nil {
-		slog.Error("link yazi theme file failed", "filename", filename, "linkName", linkName, "err", err)
+		slog.Error("relink yazi theme file failed", "filename", filename, "linkName", linkName, "err", err)
 		return
 	}
 	slog.Info("process yazi theme complete", "filename", filename, "linkName", linkName)
+}
+
+// processLazygit 处理lazygit主题
+func processLazygit(appearance Appearance) {
+	// 获取lazygit配置目录
+	cmd := exec.Command("lazygit", "--print-config-dir")
+	output, err := cmd.Output()
+	if err != nil {
+		slog.Error("get lazygit config directory failed", "cmd", cmd, "err", err)
+		return
+	}
+	// 移除输出末尾的换行符
+	dir := strings.TrimSpace(string(output))
+	// 获取需要加载的主题配置文件路径
+	filename := dir + "/config-catppuccin-latte-blue.yml"
+	if appearance == AppearanceDark {
+		filename = dir + "/config-catppuccin-mocha-blue.yml"
+	}
+	// 软连接路径
+	linkName := dir + "/config.yml"
+	// 重新建立软链接
+	err = relink(filename, linkName)
+	if err != nil {
+		slog.Error("relink lazygit config failed", "filename", filename, "linkName", linkName, "err", err)
+		return
+	}
+	slog.Info("process lazygit config complete", "filename", filename, "linkName", linkName)
+}
+
+// relink 删除原始文件并将目标文件软链接
+func relink(filename, linkName string) error {
+	// 尝试删除原有的软连接
+	err := os.Remove(linkName)
+	if err != nil {
+		return fmt.Errorf("remove link failed: %w", err)
+	}
+	// 创建软连接
+	err = os.Symlink(filename, linkName)
+	if err != nil {
+		return fmt.Errorf("create symlink failed: %w", err)
+	}
+	return nil
 }

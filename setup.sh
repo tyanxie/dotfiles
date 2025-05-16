@@ -82,6 +82,8 @@ setup_lazygit() {
 
     #链接配置文件
     setup "$name" "$source_dir/config-catppuccin-latte-blue.yml" "$target_dir/config.yml"
+    setup "$name" "$source_dir/config-catppuccin-latte-blue.yml" "$target_dir/config-catppuccin-latte-blue.yml"
+    setup "$name" "$source_dir/config-catppuccin-mocha-blue.yml" "$target_dir/config-catppuccin-mocha-blue.yml"
     return $?
 }
 
