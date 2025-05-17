@@ -5,6 +5,8 @@ return {
     -- 指定文件类型展示颜色
     "css",
     "html",
-    "vue",
+    vue = {
+      css = true,
+    },
   },
 }
