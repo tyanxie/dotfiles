@@ -241,7 +241,7 @@ return {
       })
 
       -- vue
-      setup("volar", {})
+      setup("vue_ls", {})
 
       -- c/c++
       setup("clangd", {
