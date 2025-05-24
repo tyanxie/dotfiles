@@ -27,7 +27,7 @@ return {
       "prettier", -- npm:prettier
       "html-lsp", -- npm:vscode-langservers-extracted
       "css-lsp", -- npm:vscode-langservers-extracted
-      "typescript-language-server", -- npm:typescript-language-server
+      "vtsls", -- npm:@vtsls/language-server
       "vue-language-server", -- npm:@vue/language-server
       "clangd", -- github:clangd/clangd
       "clang-format", -- pypi:clang-format
