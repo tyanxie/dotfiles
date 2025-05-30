@@ -2,18 +2,27 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
 	"log/slog"
 	"os"
-	"os/exec"
-	"strings"
+	"path/filepath"
+	"runtime"
+	"strconv"
 	"sync"
-	"time"
+
+	sshconfig "github.com/kevinburke/ssh_config"
 )
 
 // Appearance 外观模式
 type Appearance int32
+
+// parseAppearance 反序列化Appearance
+func parseAppearance(s string) (Appearance, error) {
+	appearance, err := strconv.ParseInt(s, 10, 32)
+	if err != nil {
+		return AppearanceUnknown, err
+	}
+	return Appearance(appearance), nil
+}
 
 // 外观模式枚举
 const (
@@ -22,36 +31,86 @@ const (
 	AppearanceDark
 )
 
+// RunMode 运行模式
+type RunMode int32
+
+// 运行模式
+const (
+	RunModeUnknown = iota // 未知模式
+	RunModeLocal          // 本地运行
+	RunModeRemote         // 远程运行
+)
+
+const defaultPort = 33843 // 默认监听和请求的端口
+
 var (
+	runMode           RunMode             // 运行模式
 	currentAppearance = AppearanceUnknown // 记录当前使用的外观模式
 	mutex             sync.Mutex          // 处理加锁
 	home              string              // 用户家目录
+	remoteHostnames   []string            // ssh配置中远程机器地址列表
 )
 
 func main() {
-	// 获取用户家目录
+	// 初始化用户家目录
+	initUserHomeDir()
+	// 初始化ssh配置
+	initSSHConfig()
+
+	// 简单按照操作系统进行区分，darwin为本机，linux为远程机
+	switch runtime.GOOS {
+	case "darwin":
+		initSyncLocal()
+	case "linux":
+		initSyncRemote()
+	default:
+		slog.Error("unsupported os", "GOOS", runtime.GOOS)
+		return
+	}
+}
+
+// initUserHomeDir 初始化用户家目录
+func initUserHomeDir() {
 	var err error
 	home, err = os.UserHomeDir()
 	if err != nil {
 		slog.Error("get user home directory failed", "err", err)
-	} else {
-		slog.Info("user home directory", "dir", home, "path", os.Getenv("PATH"))
+		return
 	}
-
-	// 定时处理
-	ticker := time.NewTicker(350 * time.Millisecond)
-	defer ticker.Stop()
-	// 循环处理
-	for {
-		// 执行处理
-		process()
-		// 等待下次执行
-		<-ticker.C
-	}
+	slog.Info("user home directory", "dir", home, "path", os.Getenv("PATH"))
 }
 
-// process 执行处理
-func process() {
+// initSSHConfig 初始化ssh配置
+func initSSHConfig() {
+	// 获取ssh配置路径
+	configPath := filepath.Join(home, ".ssh", "config")
+	// 打开文件解析ssh配置
+	file, err := os.Open(configPath)
+	if err != nil {
+		slog.Error("open ssh config file failed", "path", configPath, "err", err)
+		return
+	}
+	defer file.Close()
+	// 解析配置
+	config, err := sshconfig.Decode(file)
+	if err != nil {
+		slog.Error("decode ssh config failed", "path", configPath, "err", err)
+		return
+	}
+	// 读取配置，获取目标地址列表
+	for _, host := range config.Hosts {
+		for _, pattern := range host.Patterns {
+			hostname := sshconfig.Get(pattern.String(), "HostName")
+			if hostname != "" {
+				remoteHostnames = append(remoteHostnames, hostname)
+			}
+		}
+	}
+	slog.Info("get ssh remote hostnames complete", "hostnames", remoteHostnames)
+}
+
+// process 通用处理函数
+func process(appearance Appearance) {
 	// 尝试加锁
 	if !mutex.TryLock() {
 		slog.Info("try lock failed, maybe is processing now")
@@ -59,11 +118,26 @@ func process() {
 	}
 	defer mutex.Unlock()
 
-	// 获取当前实际外观
-	appearance := getAppearance()
 	// 如果实际外观与当前外观一致，则无需继续处理
 	if appearance == currentAppearance {
 		return
+	}
+
+	// 按照运行模式的不同做的额外操作
+	switch runMode {
+	case RunModeLocal:
+		// 将外观同步给远程机器
+		for _, hostname := range remoteHostnames {
+			go sendToRemote(appearance, hostname)
+		}
+	case RunModeRemote:
+		// 将外观写入文件
+		filename := filepath.Join(home, ".dotfiles-daemon-appearance")
+		data := strconv.FormatInt(int64(appearance), 10)
+		err := os.WriteFile(filename, []byte(data), 0666)
+		if err != nil {
+			slog.Error("write appearance to file failed", "appearance", appearance, "filename", filename, "err", err)
+		}
 	}
 
 	// 执行处理
@@ -74,94 +148,4 @@ func process() {
 	// 修改实际外观
 	slog.Info("change appearance complete", "before", currentAppearance, "now", appearance)
 	currentAppearance = appearance
-}
-
-// getAppearance 获取外观
-func getAppearance() Appearance {
-	// macos系统通过读取AppleInterfaceStyle获取
-	output, err := exec.Command("defaults", "read", "-g", "AppleInterfaceStyle").CombinedOutput()
-	// 结果中包含Dark则说明是深色模式
-	if err == nil && bytes.Contains(output, []byte("Dark")) {
-		return AppearanceDark
-	}
-	// 默认使用浅色模式
-	return AppearanceLight
-}
-
-// processTmux 处理tmux主题
-func processTmux(appearance Appearance) {
-	// 获取需要加载的主题配置文件路径
-	filename := home + "/.config/tmux/themes/catppuccin-latte.conf"
-	if appearance == AppearanceDark {
-		filename = home + "/.config/tmux/themes/catppuccin-mocha.conf"
-	}
-	// 创建主题配置文件命令
-	cmd := exec.Command("tmux", "source-file", filename) // nolint
-	// 执行命令
-	output, err := cmd.CombinedOutput()
-	if err != nil {
-		slog.Error("exec command failed", "err", err, "cmd", cmd, "output", output)
-		return
-	}
-	slog.Info("process tmux theme complete", "cmd", cmd)
-}
-
-// processYazi 处理yazi主题
-func processYazi(appearance Appearance) {
-	// 获取需要加载的主题配置文件路径
-	filename := home + "/.config/yazi/catppuccin_latte.toml"
-	if appearance == AppearanceDark {
-		filename = home + "/.config/yazi/catppuccin_mocha.toml"
-	}
-	// 软连接路径
-	linkName := home + "/.config/yazi/theme.toml"
-	// 重新建立软连接
-	err := relink(filename, linkName)
-	if err != nil {
-		slog.Error("relink yazi theme file failed", "filename", filename, "linkName", linkName, "err", err)
-		return
-	}
-	slog.Info("process yazi theme complete", "filename", filename, "linkName", linkName)
-}
-
-// processLazygit 处理lazygit主题
-func processLazygit(appearance Appearance) {
-	// 获取lazygit配置目录
-	cmd := exec.Command("lazygit", "--print-config-dir")
-	output, err := cmd.Output()
-	if err != nil {
-		slog.Error("get lazygit config directory failed", "cmd", cmd, "err", err)
-		return
-	}
-	// 移除输出末尾的换行符
-	dir := strings.TrimSpace(string(output))
-	// 获取需要加载的主题配置文件路径
-	filename := dir + "/config-catppuccin-latte-blue.yml"
-	if appearance == AppearanceDark {
-		filename = dir + "/config-catppuccin-mocha-blue.yml"
-	}
-	// 软连接路径
-	linkName := dir + "/config.yml"
-	// 重新建立软链接
-	err = relink(filename, linkName)
-	if err != nil {
-		slog.Error("relink lazygit config failed", "filename", filename, "linkName", linkName, "err", err)
-		return
-	}
-	slog.Info("process lazygit config complete", "filename", filename, "linkName", linkName)
-}
-
-// relink 删除原始文件并将目标文件软链接
-func relink(filename, linkName string) error {
-	// 尝试删除原有的软连接
-	err := os.Remove(linkName)
-	if err != nil {
-		return fmt.Errorf("remove link failed: %w", err)
-	}
-	// 创建软连接
-	err = os.Symlink(filename, linkName)
-	if err != nil {
-		return fmt.Errorf("create symlink failed: %w", err)
-	}
-	return nil
 }

@@ -32,7 +32,6 @@ create_link() {
     return 0
 }
 
-
 # 使用uname -s获取操作系统，同时通过tr命令将所有字符转为小写
 os=$(uname -s | tr '[:upper:]' '[:lower:]')
 
@@ -63,10 +62,19 @@ if [[ ! -x "$source" ]]; then
     fi
 fi
 
-#创建软连接
-create_link "$(pwd)/dotfiles_daemon.conf" "/opt/homebrew/etc/supervisor.d/dotfiles_daemon.conf"
+#创建可执行文件软连接
 create_link "$source" "$HOME/.dotfiles_daemon"
 
-#刷新supervisor
-supervisorctl reload
-supervisorctl status
+# 按照不同操作系统执行不同指令
+case "$os" in
+darwin)
+    #创建软连接
+    create_link "$(pwd)/dotfiles_daemon.conf" "/opt/homebrew/etc/supervisor.d/dotfiles_daemon.conf"
+    #刷新supervisor
+    supervisorctl reload
+    supervisorctl status
+    ;;
+linux)
+    echo "后续需要自己创建软连接并使用supervisor启动守护进程"
+    ;;
+esac

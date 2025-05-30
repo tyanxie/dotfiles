@@ -29,6 +29,14 @@ build darwin arm64
 # 编译linux amd64版本
 build linux amd64
 
-# 重启supervisor对应服务
-supervisorctl restart dotfiles_daemon
-supervisorctl status dotfiles_daemon
+# 重启supervisor对应服务，如果是linux系统需要使用sudo
+case "$(uname -s | tr '[:upper:]' '[:lower:]')" in
+darwin)
+    supervisorctl restart dotfiles_daemon
+    supervisorctl status dotfiles_daemon
+    ;;
+linux)
+    sudo supervisorctl restart dotfiles_daemon
+    sudo supervisorctl status dotfiles_daemon
+    ;;
+esac
