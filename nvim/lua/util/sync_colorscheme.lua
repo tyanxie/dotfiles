@@ -1,6 +1,7 @@
 local M = {
   timer = vim.uv.new_timer(), -- 定时器
   current_appearance = "", -- 记录当前外观
+  home_dir = vim.fn.expand("~"), -- 家目录
   colorscheme_light = "catppuccin-latte", -- 浅色主题
   colorscheme_dark = "catppuccin-mocha", -- 深色主题
 }
@@ -27,6 +28,9 @@ M.refresh = function()
   if vim.fn.has("macunix") == 1 then
     -- macos
     M.refresh_darwin()
+  elseif vim.fn.has("unix") then
+    -- linux
+    M.refresh_linux()
   else
     -- 其它系统
     M.set(appearance_light)
@@ -44,6 +48,28 @@ M.refresh_darwin = function()
     -- 默认使用浅色模式
     M.set(appearance_light)
   end)
+end
+
+--- linux刷新当前外观
+M.refresh_linux = function()
+  -- 读取文件
+  local file = io.open(M.home_dir .. "/.dotfiles-daemon-appearance", "r")
+  if not file then
+    -- 文件不存在，默认使用浅色模式
+    M.set(appearance_light)
+    return
+  end
+  -- 读取文件内容
+  local content = file:read("*a")
+  -- 关闭文件
+  file:close()
+  -- 判断是否是深色模式，如果是则切换
+  if content == "2" then
+    M.set(appearance_dark)
+    return
+  end
+  -- 默认使用浅色模式
+  M.set(appearance_light)
 end
 
 --- 运行命令并调用callback，如果当前主题为空则命令会被立刻执行
