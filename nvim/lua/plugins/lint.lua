@@ -1,6 +1,5 @@
 return {
-  "tyanxie/nvim-lint",
-  branch = "feat/golangcilint",
+  "mfussenegger/nvim-lint",
   event = { "BufReadPost", "BufNewFile", "BufWritePre" },
   config = function()
     local lint = require("lint")
