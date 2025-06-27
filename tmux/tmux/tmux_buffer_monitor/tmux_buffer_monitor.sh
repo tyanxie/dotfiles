@@ -29,7 +29,7 @@ while true; do
         ssh_sessions=$(who | grep 'pts')
         if [ -n "$ssh_sessions" ]; then
             # 向所有当前活跃的ssh链接中发送通过OSC52发送内容
-            echo "$ssh_sessions" | sort -u -t ' ' -k 5,5 | awk '{print $2}' | while read -r terminal; do
+            echo "$ssh_sessions" | awk '{print $2}' | while read -r terminal; do
                 terminal="/dev/$terminal"
                 printf "\033]52;c;$(echo -n "$content" | base64)\a" >>$terminal
                 printf "send buffer [%s] content to ssh session [%s]\n" "$current_buffer_name" "$terminal"
@@ -37,6 +37,6 @@ while true; do
         fi
     fi
 
-    # 间隔200s进行处理，复制内容尽量快速
+    # 间隔200ms进行处理，复制内容尽量快速
     sleep 0.2
 done
