@@ -2,6 +2,7 @@ require("config.options")
 require("config.keymaps")
 require("config.autocmds")
 require("config.commands")
+require("config.lsp")
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -38,4 +39,3 @@ require("lazy").setup({
     notify = false, -- 有更新时不做提醒
   },
 })
-
