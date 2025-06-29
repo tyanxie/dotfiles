@@ -32,7 +32,8 @@ var descriptionTranslateMap = map[string]string{
 	"Patchy rain nearby":           "局部降雨",
 	"Light rain with thunderstorm": "小雨伴雷阵雨",
 	"Light rain with thunderstorm, rain shower": "小雨伴有雷暴，阵雨",
-	"Rain shower": "阵雨",
+	"Rain shower":      "阵雨",
+	"Rain shower, 小阵雨": "阵雨",
 }
 
 // 目标地址信息，可以是城市或地址名称，具体参考wttr.in官方文档：https://github.com/chubin/wttr.in
