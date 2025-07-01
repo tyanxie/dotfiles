@@ -48,7 +48,7 @@ var (
 	currentAppearance = AppearanceUnknown // 记录当前使用的外观模式
 	mutex             sync.Mutex          // 处理加锁
 	home              string              // 用户家目录
-	remoteHostnames   []string            // ssh配置中远程机器地址列表
+	remoteHosts       []*SSHHost          // ssh配置中远程主机列表
 )
 
 func main() {
@@ -100,13 +100,22 @@ func initSSHConfig() {
 	// 读取配置，获取目标地址列表
 	for _, host := range config.Hosts {
 		for _, pattern := range host.Patterns {
+			// 获取主机地址
 			hostname := sshconfig.Get(pattern.String(), "HostName")
-			if hostname != "" {
-				remoteHostnames = append(remoteHostnames, hostname)
+			if hostname == "" {
+				continue
 			}
+			// 获取端口
+			port := sshconfig.Get(pattern.String(), "Port")
+			if port == "" {
+				// 默认端口
+				port = "22"
+			}
+			// 写入主机信息
+			remoteHosts = append(remoteHosts, NewSSHHost(hostname, port))
 		}
 	}
-	slog.Info("get ssh remote hostnames complete", "hostnames", remoteHostnames)
+	slog.Info("get ssh remote hostnames complete", "hostnames", remoteHosts)
 }
 
 // process 通用处理函数
@@ -127,8 +136,8 @@ func process(appearance Appearance) {
 	switch runMode {
 	case RunModeLocal:
 		// 将外观同步给远程机器
-		for _, hostname := range remoteHostnames {
-			go sendToRemote(appearance, hostname)
+		for _, host := range remoteHosts {
+			go sendToRemote(appearance, host)
 		}
 	case RunModeRemote:
 		// 将外观写入文件

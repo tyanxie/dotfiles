@@ -41,9 +41,14 @@ func getLocalAppearance() Appearance {
 }
 
 // sendToRemote 发送外观信息到远程地址
-func sendToRemote(appearance Appearance, hostname string) {
+func sendToRemote(appearance Appearance, host *SSHHost) {
+	// 判断是否正常链接
+	if !host.IsConnect() {
+		slog.Info("not connect to remote host, skip send appearance", "host", host.String())
+		return
+	}
 	// 拼接地址
-	url := fmt.Sprintf("http://%s:%d/?appearance=%d", hostname, defaultPort, appearance)
+	url := fmt.Sprintf("http://%s:%d/?appearance=%d", host.Hostname, defaultPort, appearance)
 	// 构造context，200ms超时
 	ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
 	defer cancel()

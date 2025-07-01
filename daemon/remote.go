@@ -26,7 +26,7 @@ func initSyncRemote() {
 	})
 	// 监听端口
 	addr := fmt.Sprintf(":%d", defaultPort)
-	if err := http.ListenAndServe(addr, mux); err != nil {
+	if err := http.ListenAndServe(addr, mux); err != nil { //nolint
 		slog.Error("ListenAndServe failed", "addr", addr, "err", err)
 	}
 }
