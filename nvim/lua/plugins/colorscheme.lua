@@ -12,6 +12,10 @@ return {
   opts = {
     flavour = "latte", -- 可用的主题类型：latte, frappe, macchiato, mocha
     transparent_background = true, -- 是否开启透明背景
+    -- 浮动窗口配置
+    float = {
+      transparent = true, -- 是否开启浮动窗口透明背景
+    },
     -- 自定义高亮组
     -- 默认高亮组定义：https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups
     highlight_overrides = {
