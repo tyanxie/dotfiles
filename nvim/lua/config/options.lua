@@ -126,7 +126,7 @@ vim.opt.list = true
 vim.opt.mouse = "a"
 
 -- 弹出菜单透明度
-vim.opt.pumblend = 10
+vim.opt.pumblend = 0
 -- 弹出菜单最大条数
 vim.opt.pumheight = 10
 
