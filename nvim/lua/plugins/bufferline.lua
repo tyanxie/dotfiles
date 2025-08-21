@@ -33,7 +33,7 @@ return -- This is what powers LazyVim's fancy-looking
   },
   config = function(_, opts)
     -- 设置catppuccin作为主题色
-    opts.highlights = require("catppuccin.groups.integrations.bufferline").get()
+    opts.highlights = require("catppuccin.groups.integrations.bufferline").get_theme()
     -- 初始化bufferline
     require("bufferline").setup(opts)
   end,
