@@ -136,6 +136,9 @@ for arg in "$@"; do
     btop)
         setup "$arg" "$(pwd)/btop" "$HOME/.config/btop"
         ;;
+    ghostty)
+        setup "$arg" "$(pwd)/ghostty" "$HOME/.config/ghostty"
+        ;;
     kitty)
         setup "$arg" "$(pwd)/kitty" "$HOME/.config/kitty"
         ;;
