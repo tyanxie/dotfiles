@@ -6,12 +6,13 @@ theme = "light:Catppuccin Latte,dark:Catppuccin Mocha"
 # 字体大小
 font-size = 18
 # 字体 `ghostty +list-fonts`
-font-family = "Maple Mono NF CN SemiBold"
+font-family = "Maple Mono NF CN Medium"
+# 字体绘制加粗
+font-thicken = true
 
 # 窗口
 window-padding-x = 10
 window-padding-y = 10,0
-# window-decoration = false
 macos-titlebar-style = hidden
 
 # 背景透明度
@@ -30,6 +31,9 @@ custom-shader = "~/.config/ghostty/shaders/cursor_smear.glsl"
 
 # 指定全屏时使用的模式
 macos-non-native-fullscreen = "padded-notch"
+
+# 在最后一个窗口关闭后退出
+quit-after-last-window-closed = true
 
 # 快捷键
 keybind = command+shift+N=toggle_fullscreen
