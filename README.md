@@ -3,7 +3,6 @@
 个人配置管理仓库
 
 - [相关软件](#相关软件)
-  - [WezTerm](#wezterm)
 - [依赖安装](#依赖安装)
 - [使用方式](#使用方式)
 
@@ -12,6 +11,7 @@
 本仓库包含我个人使用的如下软件的相关配置：
 
 - [btop](https://github.com/aristocratos/btop)
+- [ghostty](https://ghostty.org/)
 - [kitty](https://github.com/kovidgoyal/kitty)
 - [neovim](https://github.com/neovim/neovim)
 - [sketchybar](https://github.com/FelixKratz/SketchyBar)
@@ -20,24 +20,6 @@
 - [yazi](https://github.com/sxyazi/yazi)
 - [golangci-lint](https://github.com/golangci/golangci-lint)
 - [ideavim](https://github.com/JetBrains/ideavim)
-
-### WezTerm
-
-wezterm 的更新频率非常快，但是一直没有发布新的 release 版本，
-截止 2025 年 02 月 14 日，最新的 release 版本还是 20240203，
-但这段时间内已经修复过非常多的问题了，因此建议安装 nightly 版本进行使用，理论上可以获得更好的体验。
-
-在 macOS 系统上使用 brew 包管理器，可以参考如下命令安装 nightly 版本，
-更多安装方式可以参考[官方文档](https://wezterm.org/installation.html)：
-
-```bash
-# 安装 nightly 版本
-brew install --cask wezterm@nightly
-
-# 更新 nightly 版本需要卸载后重新安装（正常情况下 brew upgrade 不会自动更新 nightly 版本）
-brew uninstall --cask wezterm@nightly
-brew install --cask wezterm@nightly
-```
 
 ## 依赖安装
 
