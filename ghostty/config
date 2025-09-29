@@ -30,7 +30,7 @@ confirm-close-surface = false
 custom-shader = "~/.config/ghostty/shaders/cursor_smear.glsl"
 
 # 指定全屏时使用的模式
-macos-non-native-fullscreen = "padded-notch"
+macos-non-native-fullscreen = "visible-menu"
 
 # 在最后一个窗口关闭后退出
 quit-after-last-window-closed = true
