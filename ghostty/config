@@ -12,7 +12,7 @@ font-thicken = true
 
 # 窗口
 window-padding-x = 10
-window-padding-y = 10,0
+window-padding-y = 10,5
 macos-titlebar-style = hidden
 
 # 背景透明度
