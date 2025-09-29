@@ -1,4 +1,4 @@
-# 官方文档：https://ghostty.org/docs/config/referenceJJJJJJ
+# 官方文档：https://ghostty.org/docs/config/reference
 
 # 主题样式
 theme = "light:Catppuccin Latte,dark:Catppuccin Mocha"
@@ -18,7 +18,7 @@ macos-titlebar-style = hidden
 # 背景透明度
 background-opacity = 0.75
 # 背景模糊
-background-blur = 20
+background-blur = 10
 
 # 输入文本时隐藏鼠标
 mouse-hide-while-typing = true
@@ -34,6 +34,9 @@ macos-non-native-fullscreen = "padded-notch"
 
 # 在最后一个窗口关闭后退出
 quit-after-last-window-closed = true
+
+# 颜色空间
+alpha-blending = "linear-corrected"
 
 # 快捷键
 keybind = command+shift+N=toggle_fullscreen
