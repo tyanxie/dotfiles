@@ -36,7 +36,7 @@ macos-non-native-fullscreen = "padded-notch"
 quit-after-last-window-closed = true
 
 # 颜色空间
-alpha-blending = "linear-corrected"
+alpha-blending = "native"
 
 # 快捷键
 keybind = command+shift+N=toggle_fullscreen
