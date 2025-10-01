@@ -18,7 +18,7 @@ macos-titlebar-style = hidden
 # 背景透明度
 background-opacity = 0.75
 # 背景模糊
-background-blur = 10
+background-blur = 20
 
 # 输入文本时隐藏鼠标
 mouse-hide-while-typing = true
@@ -27,7 +27,7 @@ mouse-hide-while-typing = true
 confirm-close-surface = false
 
 # 自定义着色器配置，通常用于配置光标动画，来源：https://github.com/KroneCorylus/ghostty-shader-playground
-custom-shader = "~/.config/ghostty/shaders/cursor_smear.glsl"
+custom-shader = "~/.config/ghostty/shaders/cursor_smear_rainbow.glsl"
 
 # 指定全屏时使用的模式
 macos-non-native-fullscreen = "visible-menu"
