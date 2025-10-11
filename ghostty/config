@@ -7,6 +7,9 @@ theme = "light:Catppuccin Latte,dark:Catppuccin Mocha"
 font-size = 18
 # 字体 `ghostty +list-fonts`
 font-family = "Maple Mono NF CN SemiBold"
+# 字体特性：https://font.subf.dev/zh-cn/playground
+font-feature = cv01
+font-feature = cv03
 
 # 窗口
 window-padding-x = 10
