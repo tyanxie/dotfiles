@@ -20,6 +20,7 @@
 - [多光标](#多光标)
 - [grug-far.nvim](#grug-farnvim)
 - [Kulala](#kulala)
+- [translate.nvim](#translatenvim)
 
 ## Vim基础
 
@@ -323,3 +324,11 @@ GET https://www.baidu.com
 | `<leader>Rs` | 发送当前光标下或选中的请求                                 |
 | `<CR>`       | 回车键发送当前光标下或选中的请求（仅在 http 类型文件生效） |
 | `<leader>Ro` | 打开 kulala 的 ui 界面                                     |
+
+## translate.nvim
+
+[translate.nvim](https://github.com/uga-rosa/translate.nvim) 是一个简单的翻译插件。
+
+| 快捷键       | 作用                       |
+| ------------ | -------------------------- |
+| `<leader>ts` | 将当前选中的内容翻译为中文 |
