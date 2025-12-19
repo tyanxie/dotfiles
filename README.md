@@ -10,6 +10,7 @@
 
 本仓库包含我个人使用的如下软件的相关配置：
 
+- [aerospace](https://github.com/nikitabobko/AeroSpace)
 - [btop](https://github.com/aristocratos/btop)
 - [ghostty](https://ghostty.org/)
 - [kitty](https://github.com/kovidgoyal/kitty)

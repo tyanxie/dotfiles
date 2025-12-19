@@ -133,6 +133,9 @@ fi
 #遍历所有参数并进行处理
 for arg in "$@"; do
     case $arg in
+    aerospace)
+        setup "$arg" "$(pwd)/aerospace" "$HOME/.config/aerospace"
+        ;;
     btop)
         setup "$arg" "$(pwd)/btop" "$HOME/.config/btop"
         ;;
