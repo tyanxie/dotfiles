@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"sync"
 
-	sshconfig "github.com/kevinburke/ssh_config"
+	"github.com/kevinburke/ssh_config"
 )
 
 // Appearance 外观模式
@@ -92,7 +92,7 @@ func initSSHConfig() {
 	}
 	defer file.Close()
 	// 解析配置
-	config, err := sshconfig.Decode(file)
+	config, err := ssh_config.Decode(file)
 	if err != nil {
 		slog.Error("decode ssh config failed", "path", configPath, "err", err)
 		return
@@ -101,12 +101,12 @@ func initSSHConfig() {
 	for _, host := range config.Hosts {
 		for _, pattern := range host.Patterns {
 			// 获取主机地址
-			hostname := sshconfig.Get(pattern.String(), "HostName")
+			hostname := ssh_config.Get(pattern.String(), "HostName")
 			if hostname == "" {
 				continue
 			}
 			// 获取端口
-			port := sshconfig.Get(pattern.String(), "Port")
+			port := ssh_config.Get(pattern.String(), "Port")
 			if port == "" {
 				// 默认端口
 				port = "22"
@@ -153,6 +153,7 @@ func process(appearance Appearance) {
 	processTmux(appearance)
 	processYazi(appearance)
 	processLazygit(appearance)
+	processKitty(appearance)
 
 	// 修改实际外观
 	slog.Info("change appearance complete", "before", currentAppearance, "now", appearance)

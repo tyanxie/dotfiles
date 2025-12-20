@@ -87,6 +87,40 @@ setup_lazygit() {
     return $?
 }
 
+#初始化kitty配置
+setup_kitty() {
+    #名称
+    local name="$1"
+    #本地路径
+    local source_dir
+    source_dir="$(pwd)/kitty"
+    #目标路径
+    local target_dir="$HOME/.config/kitty"
+
+    #如果目标目录存在或为软连接，则询问用户是否要删除
+    if [ -e "$target_dir" ] || [ -L "$target_dir" ]; then
+        echo -n "[$name] 文件已经存在（\"$target_dir\"），是否删除并重新创建？（y/n）："
+        #等待用户输入
+        read -r input
+        #如果用户输入是y或Y，则删除原始路径并重新创建
+        if [[ "$input" =~ ^[Yy]$ ]]; then
+            rm -rf "$target_dir"
+        else
+            echo "[$name] 跳过处理"
+            return 0
+        fi
+    fi
+
+    #创建目标路径
+    mkdir "$target_dir"
+
+    #创建必要的软连接
+    create_link "$name" "$source_dir/kitty.conf" "$target_dir/kitty.conf"
+    create_link "$name" "$source_dir/catppuccin_latte.conf" "$target_dir/theme.conf"
+    create_link "$name" "$source_dir/catppuccin_latte.conf" "$target_dir/catppuccin_latte.conf"
+    create_link "$name" "$source_dir/catppuccin_mocha.conf" "$target_dir/catppuccin_mocha.conf"
+}
+
 #初始化yazi配置
 setup_yazi() {
     #名称
@@ -143,7 +177,7 @@ for arg in "$@"; do
         setup "$arg" "$(pwd)/ghostty" "$HOME/.config/ghostty"
         ;;
     kitty)
-        setup "$arg" "$(pwd)/kitty" "$HOME/.config/kitty"
+        setup_kitty "$arg"
         ;;
     lazygit)
         setup_lazygit "$arg"
