@@ -11,7 +11,10 @@ import (
 	"strings"
 )
 
-const kittySocketPrefix = "mykitty" // kitty的socket文件前缀
+const (
+	kittySocketPrefix = "mykitty"                                       // kitty的socket文件前缀
+	kittenCommandName = "/Applications/kitty.app/Contents/MacOS/kitten" // kitten命令
+)
 
 // processKitty 处理kitty主题
 func processKitty(appearance Appearance) {
@@ -35,7 +38,7 @@ func processKitty(appearance Appearance) {
 		return
 	}
 	// 发送重载kitty配置命令
-	cmd := exec.Command("kitten", "@", "--to", fmt.Sprintf("unix:%s", socketPath), "load-config") // nolint
+	cmd := exec.Command(kittenCommandName, "@", "--to", fmt.Sprintf("unix:%s", socketPath), "load-config") // nolint
 	// 执行命令
 	output, err := cmd.CombinedOutput()
 	if err != nil {
