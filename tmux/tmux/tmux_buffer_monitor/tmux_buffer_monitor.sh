@@ -31,7 +31,7 @@ while true; do
             # 向所有当前活跃的ssh链接中发送通过OSC52发送内容
             echo "$ssh_sessions" | awk '{print $2}' | while read -r terminal; do
                 terminal="/dev/$terminal"
-                printf "\033]52;c;$(echo -n "$content" | base64)\a" >>$terminal
+                printf "\e]52;c;%s\a" "$(echo -n "$content" | base64 -w 0)" >>"$terminal"
                 printf "send buffer [%s] content to ssh session [%s]\n" "$current_buffer_name" "$terminal"
             done
         fi
