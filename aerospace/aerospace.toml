@@ -194,22 +194,32 @@ alt-shift-l = ['join-with right', 'mode main']
 
 # You can use `on-window-detected` callback to run commands every time a new window is detected.
 # You can use `aerospace list-apps` CLI command to get IDs of running applications
+# Finder
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run       = ['layout floating']
 
+# Clash Verge
 [[on-window-detected]]
 if.app-id = 'io.github.clash-verge-rev.clash-verge-rev'
 run       = ['layout floating']
 
+# 企业微信
 [[on-window-detected]]
 if.app-id = 'com.tencent.WeWorkMac'
 run       = ['layout floating']
 
+# 企业微信 - 腾讯会议
 [[on-window-detected]]
 if.app-id = 'com.tencent.wwmapp'
 run       = ['layout floating']
 
+# QQ
 [[on-window-detected]]
 if.app-id = 'com.tencent.qq'
+run       = ['layout floating']
+
+# 网易云音乐
+[[on-window-detected]]
+if.app-id = 'com.netease.163music'
 run       = ['layout floating']
