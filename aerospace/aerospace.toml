@@ -199,6 +199,16 @@ alt-shift-l = ['join-with right', 'mode main']
 if.app-id = 'com.apple.finder'
 run       = ['layout floating']
 
+# 预览
+[[on-window-detected]]
+if.app-id = 'com.apple.Preview'
+run       = ['layout floating']
+
+# 照片
+[[on-window-detected]]
+if.app-id = 'com.apple.Photos'
+run       = ['layout floating']
+
 # Clash Verge
 [[on-window-detected]]
 if.app-id = 'io.github.clash-verge-rev.clash-verge-rev'
