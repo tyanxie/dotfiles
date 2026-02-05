@@ -52,6 +52,15 @@ return {
         }
       end,
     },
+    -- 自定义高亮组，可使用的key可以通过光标悬停在要高亮的内容上，然后使用 `:Inspect` 命令查看
+    custom_highlights = function(colors)
+      return {
+        -- Go语言格式化字符串占位符，如fmt.Sprintf中的%s等标识
+        ["@lsp.mod.format.go"] = { fg = colors.teal },
+        -- Go语言更精准的格式化字符串占位符，如fmt.Sprintf中的%s等标识
+        ["@lsp.typemod.string.format.go"] = { fg = colors.teal },
+      }
+    end,
     -- Neovim生态中其它插件的主题支持
     integrations = {
       blink_cmp = true,
