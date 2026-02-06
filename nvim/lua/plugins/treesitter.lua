@@ -49,6 +49,8 @@ return {
         "ron",
         "http",
         "cmake",
+        "rust",
+        "ron",
       },
       incremental_selection = {
         enable = true,

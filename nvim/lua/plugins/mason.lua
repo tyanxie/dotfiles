@@ -35,6 +35,7 @@ return {
       "yapf", -- pypi:yapf
       "cmake-language-server", -- pypi:cmake-language-server
       "cmakelang", -- pypi:cmake-annotate pypi:cmake-format pypi:cmake-lint pypi:ctest-to
+      "rust-analyzer", -- github:rust-lang/rust-analyzer
     },
   },
   config = function(_, opts)
