@@ -214,6 +214,11 @@ run       = ['layout floating']
 if.app-id = 'io.github.clash-verge-rev.clash-verge-rev'
 run       = ['layout floating']
 
+# 微信
+[[on-window-detected]]
+if.app-id = 'com.tencent.xinWeChat'
+run       = ['layout floating']
+
 # 企业微信
 [[on-window-detected]]
 if.app-id = 'com.tencent.WeWorkMac'
