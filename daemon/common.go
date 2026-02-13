@@ -5,6 +5,12 @@ import (
 	"os"
 )
 
+// go操作系统枚举
+const (
+	GOOSDarwin = "darwin"
+	GOOSLinux  = "linux"
+)
+
 // relink 删除原始文件并将目标文件软链接
 func relink(filename, linkName string) error {
 	// 尝试删除原有的软连接

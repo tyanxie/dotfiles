@@ -61,30 +61,50 @@ setup() {
     fi
 }
 
-#初始化lazygit配置
-setup_lazygit() {
+#初始化eza配置
+setup_eza() {
     #名称
     local name="$1"
-
     #本地路径
     local source_dir
-    source_dir="$(pwd)/lazygit"
+    source_dir="$(pwd)/eza"
+    #目标路径，按照操作系统区分
+    local target_dir=""
+    case "$(uname -s)" in
+    Linux)
+        target_dir="$HOME/.config"
+        ;;
+    Darwin)
+        target_dir="$HOME/Library/Application Support"
+        ;;
+    *)
+        # 处理未知系统的情况，提示错误并异常退出
+        echo "当前系统不支持配置eza"
+        return 1
+        ;;
+    esac
+    local target_dir="$target_dir/eza"
 
-    #目标路径
-    local target_dir
-    if ! target_dir="$(lazygit --print-config-dir)"; then
-        echo "获取 lazygit 配置目录失败"
-        return 0
+    #如果目标目录存在或为软连接，则询问用户是否要删除
+    if [ -e "$target_dir" ] || [ -L "$target_dir" ]; then
+        echo -n "[$name] 文件已经存在（\"$target_dir\"），是否删除并重新创建？（y/n）："
+        #等待用户输入
+        read -r input
+        #如果用户输入是y或Y，则删除原始路径并重新创建
+        if [[ "$input" =~ ^[Yy]$ ]]; then
+            rm -rf "$target_dir"
+        else
+            echo "[$name] 跳过处理"
+            return 0
+        fi
     fi
 
-    #创建目标路径目录
-    mkdir -p "$target_dir"
+    #创建目标路径
+    mkdir "$target_dir"
 
-    #链接配置文件
-    setup "$name" "$source_dir/config-catppuccin-latte-blue.yml" "$target_dir/config.yml"
-    setup "$name" "$source_dir/config-catppuccin-latte-blue.yml" "$target_dir/config-catppuccin-latte-blue.yml"
-    setup "$name" "$source_dir/config-catppuccin-mocha-blue.yml" "$target_dir/config-catppuccin-mocha-blue.yml"
-    return $?
+    #创建必要的软连接
+    create_link "$name" "$source_dir/themes" "$target_dir/themes"
+    create_link "$name" "$target_dir/themes/catppuccin-latte.yml" "$target_dir/theme.yml"
 }
 
 #初始化kitty配置
@@ -119,6 +139,32 @@ setup_kitty() {
     create_link "$name" "$source_dir/catppuccin_latte.conf" "$target_dir/theme.conf"
     create_link "$name" "$source_dir/catppuccin_latte.conf" "$target_dir/catppuccin_latte.conf"
     create_link "$name" "$source_dir/catppuccin_mocha.conf" "$target_dir/catppuccin_mocha.conf"
+}
+
+#初始化lazygit配置
+setup_lazygit() {
+    #名称
+    local name="$1"
+
+    #本地路径
+    local source_dir
+    source_dir="$(pwd)/lazygit"
+
+    #目标路径
+    local target_dir
+    if ! target_dir="$(lazygit --print-config-dir)"; then
+        echo "获取 lazygit 配置目录失败"
+        return 0
+    fi
+
+    #创建目标路径目录
+    mkdir -p "$target_dir"
+
+    #链接配置文件
+    setup "$name" "$source_dir/config-catppuccin-latte-blue.yml" "$target_dir/config.yml"
+    setup "$name" "$source_dir/config-catppuccin-latte-blue.yml" "$target_dir/config-catppuccin-latte-blue.yml"
+    setup "$name" "$source_dir/config-catppuccin-mocha-blue.yml" "$target_dir/config-catppuccin-mocha-blue.yml"
+    return $?
 }
 
 #初始化yazi配置
@@ -172,6 +218,9 @@ for arg in "$@"; do
         ;;
     btop)
         setup "$arg" "$(pwd)/btop" "$HOME/.config/btop"
+        ;;
+    eza)
+        setup_eza "$arg"
         ;;
     ghostty)
         setup "$arg" "$(pwd)/ghostty" "$HOME/.config/ghostty"

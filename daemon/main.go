@@ -56,12 +56,14 @@ func main() {
 	initUserHomeDir()
 	// 初始化ssh配置
 	initSSHConfig()
+	// 初始化eza配置
+	initEzaConfig()
 
 	// 简单按照操作系统进行区分，darwin为本机，linux为远程机
 	switch runtime.GOOS {
-	case "darwin":
+	case GOOSDarwin:
 		initSyncLocal()
-	case "linux":
+	case GOOSLinux:
 		initSyncRemote()
 	default:
 		slog.Error("unsupported os", "GOOS", runtime.GOOS)
@@ -150,6 +152,7 @@ func process(appearance Appearance) {
 	}
 
 	// 执行处理
+	processEza(appearance)
 	processTmux(appearance)
 	processYazi(appearance)
 	processLazygit(appearance)

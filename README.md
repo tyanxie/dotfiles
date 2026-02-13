@@ -12,6 +12,7 @@
 
 - [aerospace](https://github.com/nikitabobko/AeroSpace)
 - [btop](https://github.com/aristocratos/btop)
+- [eza](https://github.com/eza-community/eza)
 - [ghostty](https://ghostty.org/)
 - [kitty](https://github.com/kovidgoyal/kitty)
 - [neovim](https://github.com/neovim/neovim)
