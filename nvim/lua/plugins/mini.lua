@@ -10,6 +10,8 @@ return {
         ["go.mod"] = { glyph = "" },
         ["go.sum"] = { glyph = "" },
         ["go.work"] = { glyph = "" },
+        ["Cargo.toml"] = { glyph = "󱘗" },
+        ["Cargo.lock"] = { glyph = "󱘗" },
         ["devcontainer.json"] = { glyph = "", hl = "MiniIconsAzure" },
         [".eslintrc.js"] = { glyph = "󰱺", hl = "MiniIconsYellow" },
         [".node-version"] = { glyph = "", hl = "MiniIconsGreen" },
