@@ -21,7 +21,7 @@ return {
   -- rust-analyzer 与 rust-tools.nvim 的增强版插件，提供 rust 的 LSP 初始化
   {
     "mrcjkb/rustaceanvim",
-    version = "^7",
+    version = "^8",
     lazy = false,
   },
 }
