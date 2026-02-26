@@ -2,7 +2,9 @@
 local icons = require("util.icons")
 vim.diagnostic.config({
   bufferline = true,
-  float = true,
+  float = {
+    border = "rounded",
+  },
   hdlr = false,
   underline = true,
   update_in_insert = false,
@@ -24,9 +26,17 @@ return {
   event = "VeryLazy",
   priority = 1000,
   opts = {
-    preset = "ghost",
+    preset = "nonerdfont",
     options = {
-      show_source = true, -- 显示诊断来源
+      add_messages = {
+        display_count = true,
+      },
+      multilines = {
+        enabled = true,
+      },
+      show_source = {
+        enabled = true,
+      },
     },
   },
 }
