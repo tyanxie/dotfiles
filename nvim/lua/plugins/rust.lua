@@ -23,5 +23,31 @@ return {
     "mrcjkb/rustaceanvim",
     version = "^8",
     lazy = false,
+    opts = {
+      server = {
+        -- LspAttach 事件回调执行函数
+        on_attach = function(client, bufnr)
+          -- 强制启用 inlay_hint
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(true, { bufnr }) -- Neovim 原生 LSP hints 启用
+          end
+        end,
+        default_settings = {
+          -- rust-analyzer language server configuration
+          ["rust-analyzer"] = {},
+        },
+      },
+    },
+    -- mrcjkb/rustaceanvim 通过 vim.g.rustaceanvim 选项进行配置，因此需要通过 config 函数合并 opts
+    config = function(_, opts)
+      vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
+      if vim.fn.executable("rust-analyzer") == 0 then
+        vim.notify(
+          "**rust-analyzer** not found in PATH, please install it.\nhttps://rust-analyzer.github.io/",
+          vim.log.levels.ERROR,
+          { title = "rustaceanvim" }
+        )
+      end
+    end,
   },
 }
