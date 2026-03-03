@@ -57,9 +57,9 @@ return {
     custom_highlights = function(colors)
       return {
         -- Go语言格式化字符串占位符，如fmt.Sprintf中的%s等标识
-        ["@lsp.mod.format.go"] = { fg = colors.teal },
+        ["@lsp.mod.format.go"] = { fg = colors.pink },
         -- Go语言更精准的格式化字符串占位符，如fmt.Sprintf中的%s等标识
-        ["@lsp.typemod.string.format.go"] = { fg = colors.teal },
+        ["@lsp.typemod.string.format.go"] = { fg = colors.pink },
         -- Rust语言格式化字符串占位符
         ["@lsp.type.formatSpecifier.rust"] = { fg = colors.peach },
         -- Rust语言变量强制引用变量颜色，防止格式化字符串时颜色被字符串颜色覆盖
