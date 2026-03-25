@@ -116,6 +116,10 @@ vim.api.nvim_create_autocmd("BufReadPost", {
       local cwd = vim.fn.getcwd()
       -- 判断当前文件是否是当前工作目录的子文件，如果不是则设置为不可编辑
       if string.sub(bufname, 1, string.len(cwd)) ~= cwd then
+        -- 放通当前 git 仓库的临时编辑文件（如 git commit 时的 COMMIT_EDITMSG）
+        if require("util.file").is_git_edit_file(bufname, cwd) then
+          return
+        end
         vim.notify("文件不在当前工作目录下，已被设置为不可编辑：" .. bufname, vim.log.levels.WARN)
         -- 将缓冲区设置为只读
         vim.bo.readonly = true

@@ -54,4 +54,43 @@ function M.is_file_empty(filepath)
   return size == 0
 end
 
+--- 判断文件是否是当前 git 仓库的临时编辑文件（如 COMMIT_EDITMSG）
+--- worktree 的 git dir 在主仓库的 .git/worktrees/ 下，通过 git rev-parse 获取精确路径
+--- @param bufname string 文件绝对路径
+--- @param cwd string 当前工作目录
+--- @return boolean
+function M.is_git_edit_file(bufname, cwd)
+  local git_edit_files = {
+    "COMMIT_EDITMSG",
+    "MERGE_MSG",
+    "TAG_EDITMSG",
+    "SQUASH_MSG",
+    "git-rebase-todo",
+  }
+  local filename = vim.fn.fnamemodify(bufname, ":t")
+  local matched = false
+  for _, git_file in ipairs(git_edit_files) do
+    if filename == git_file then
+      matched = true
+      break
+    end
+  end
+  if not matched then
+    return false
+  end
+  -- 通过 git rev-parse 获取当前工作目录对应的 git dir
+  local git_dir =
+    vim.fn.system("git -C " .. vim.fn.shellescape(cwd) .. " rev-parse --git-dir 2>/dev/null"):gsub("\n$", "")
+  if vim.v.shell_error ~= 0 then
+    return false
+  end
+  -- git rev-parse --git-dir 可能返回相对路径，需要转为绝对路径
+  if not vim.startswith(git_dir, "/") then
+    git_dir = cwd .. "/" .. git_dir
+  end
+  git_dir = vim.fn.resolve(git_dir)
+  -- 判断文件是否在该 git dir 下
+  return vim.startswith(bufname, git_dir .. "/")
+end
+
 return M
