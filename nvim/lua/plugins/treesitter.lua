@@ -1,11 +1,12 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    event = { "BufReadPost", "BufNewFile", "BufWritePre", "VeryLazy" },
-    opts = {
-      highlight = { enable = true },
-      indent = { enable = true },
-      ensure_installed = {
+    lazy = false,
+    branch = "main",
+    build = ":TSUpdate",
+    config = function()
+      -- 需要预安装的解析器
+      local parsers = {
         "bash",
         "c",
         "cpp",
@@ -51,67 +52,69 @@ return {
         "cmake",
         "rust",
         "ron",
-      },
-      incremental_selection = {
-        enable = true,
-      },
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+      }
+
+      -- 启动后直接安装预安装解析器
+      require("nvim-treesitter").install(parsers)
+
+      -- 打开文件后执行加载treesitter
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function(args)
+          local buf, filetype = args.buf, args.match
+
+          -- 校验treesitter是否支持
+          local language = vim.treesitter.language.get_lang(filetype)
+          if not language then
+            return
+          end
+
+          -- 校验解析器是否存在
+          if not vim.treesitter.language.add(language) then
+            return
+          end
+
+          -- 启动treesitter特性，如语法高亮等
+          vim.treesitter.start(buf, language)
+
+          -- 启用基于treesitter的缩进
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
+          -- 启用基于treesitter的折叠
+          vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+          vim.wo[0][0].foldmethod = "expr"
+        end,
+      })
     end,
   },
 
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
     event = "VeryLazy",
-    enabled = true,
     opts = {
-      textobjects = {
-        move = {
-          enable = true,
-          goto_next_start = {
-            ["]f"] = "@function.outer",
-            ["]c"] = "@class.outer",
-            ["]a"] = "@parameter.inner",
-          },
-          goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
-          goto_previous_start = {
-            ["[f"] = "@function.outer",
-            ["[c"] = "@class.outer",
-            ["[a"] = "@parameter.inner",
-          },
-          goto_previous_end = {
-            ["[F"] = "@function.outer",
-            ["[C"] = "@class.outer",
-            ["[A"] = "@parameter.inner",
-          },
-        },
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
       },
     },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-
-      -- When in diff mode, we want to use the default
-      -- vim text objects c & C instead of the treesitter ones.
-      local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
-      local configs = require("nvim-treesitter.configs")
-      for name, fn in pairs(move) do
-        if name:find("goto") == 1 then
-          move[name] = function(q, ...)
-            if vim.wo.diff then
-              local config = configs.get_module("textobjects.move")[name] ---@type table<string,string>
-              for key, query in pairs(config or {}) do
-                if q == query and key:find("[%]%[][cC]") then
-                  vim.cmd("normal! " .. key)
-                  return
-                end
-              end
-            end
-            return fn(q, ...)
-          end
-        end
-      end
-    end,
+    keys = {
+      {
+        "]f",
+        mode = { "n", "x", "o" },
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
+        end,
+        desc = "Go to next function start",
+      },
+      {
+        "[f",
+        mode = { "n", "x", "o" },
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start("@function.outer", "textobjects")
+        end,
+        desc = "Go to previous function start",
+      },
+    },
   },
 
   -- 将当前函数的声明显示在编辑器最顶部

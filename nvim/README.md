@@ -29,6 +29,7 @@ Nvim 0.11+
 
 ### 依赖工具
 
+- [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md): tree-sitter 解析工具。
 - [cURL](https://curl.se/)：命令行数据传输工具，支持 HTTP、WS 等协议发送数据。
 - [gRPCurl](https://github.com/fullstorydev/grpcurl)：适用于 gRPC 协议的 cURL。
 - [jq](https://jqlang.org)：轻量且灵活的命令行 JSON 处理工具。

@@ -59,10 +59,10 @@ set("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 -- 诊断
 local diagnostic_goto = function(next, severity)
-  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-  severity = severity and vim.diagnostic.severity[severity] or nil
+  local count = next and 1 or -1
+  local sev = severity and vim.diagnostic.severity[severity] or nil
   return function()
-    go({ severity = severity })
+    vim.diagnostic.jump({ count = count, severity = sev })
   end
 end
 set("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
