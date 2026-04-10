@@ -81,7 +81,15 @@ setup("cmake")
 -- LspAttach事件监听
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
-  callback = function()
+  callback = function(event)
+    -- 默认启用 inlay hint
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    local bufnr = event.buf
+    if client and client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    end
+
+    -- 快捷键配置
     vim.keymap.set("n", "<leader>cl", "<cmd>LspInfo<cr>", { desc = "Lsp Info" })
     vim.keymap.set("n", "gd", function()
       Snacks.picker.lsp_definitions()

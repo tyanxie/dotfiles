@@ -25,13 +25,6 @@ return {
     lazy = false,
     opts = {
       server = {
-        -- LspAttach 事件回调执行函数
-        on_attach = function(client, bufnr)
-          -- 强制启用 inlay_hint
-          if client.server_capabilities.inlayHintProvider then
-            vim.lsp.inlay_hint.enable(true, { bufnr }) -- Neovim 原生 LSP hints 启用
-          end
-        end,
         default_settings = {
           -- rust-analyzer language server configuration
           ["rust-analyzer"] = {},
