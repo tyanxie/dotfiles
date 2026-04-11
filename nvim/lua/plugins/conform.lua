@@ -34,7 +34,7 @@ return {
       markdown = { "prettier", lsp_format = "fallback" },
       c = { "clang-format", lsp_format = "fallback" },
       cpp = { "clang-format", lsp_format = "fallback" },
-      python = { "yapf", lsp_format = "fallback" },
+      python = { "ruff_fix", "ruff_organize_imports", "ruff_format", lsp_format = "fallback" },
       toml = { "taplo", lsp_format = "fallback" },
       cmake = { "cmake_format", lsp_format = "fallback" },
     },

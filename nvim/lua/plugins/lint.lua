@@ -8,6 +8,7 @@ return {
     -- 支持的lint工具可以查看官方文档：https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#available-linters
     lint.linters_by_ft = {
       go = { "golangcilint" },
+      python = { "ruff" },
     }
 
     -- 创建一个autocmd自动执行lint

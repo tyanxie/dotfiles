@@ -32,7 +32,7 @@ return {
       "clangd", -- github:clangd/clangd
       "clang-format", -- pypi:clang-format
       "basedpyright", -- pypi:basedpyright
-      "yapf", -- pypi:yapf
+      "ruff", -- pypi:ruff
       "cmake-language-server", -- pypi:cmake-language-server
       "cmakelang", -- pypi:cmake-annotate pypi:cmake-format pypi:cmake-lint pypi:ctest-to
       "rust-analyzer", -- github:rust-lang/rust-analyzer
