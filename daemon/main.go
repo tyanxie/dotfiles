@@ -134,20 +134,18 @@ func process(appearance Appearance) {
 		return
 	}
 
-	// 按照运行模式的不同做的额外操作
-	switch runMode {
-	case RunModeLocal:
-		// 将外观同步给远程机器
+	// 将外观写入文件
+	filename := filepath.Join(home, ".dotfiles-daemon-appearance")
+	data := strconv.FormatInt(int64(appearance), 10)
+	err := os.WriteFile(filename, []byte(data), 0666)
+	if err != nil {
+		slog.Error("write appearance to file failed", "appearance", appearance, "filename", filename, "err", err)
+	}
+
+	// 将外观同步给远程机器
+	if runMode == RunModeLocal {
 		for _, host := range remoteHosts {
 			go sendToRemote(appearance, host)
-		}
-	case RunModeRemote:
-		// 将外观写入文件
-		filename := filepath.Join(home, ".dotfiles-daemon-appearance")
-		data := strconv.FormatInt(int64(appearance), 10)
-		err := os.WriteFile(filename, []byte(data), 0666)
-		if err != nil {
-			slog.Error("write appearance to file failed", "appearance", appearance, "filename", filename, "err", err)
 		}
 	}
 
