@@ -33,12 +33,12 @@ export default function (pi: ExtensionAPI) {
 			const result = ctx.ui.setTheme(theme);
 			if (result.success) {
 				currentTheme = theme;
-				ctx.ui.notify(`🎨 Theme switched to: ${theme}`, "info");
+				ctx.ui.notify(`  Theme switched to: ${theme}`, "info");
 			} else {
-				ctx.ui.notify(`❌ Failed to switch theme: ${result.error}`, "error");
+				ctx.ui.notify(`  Failed to switch theme: ${result.error}`, "error");
 			}
 		} catch (err) {
-			ctx.ui.notify(`❌ Failed to read appearance file: ${err}`, "error");
+			ctx.ui.notify(`  Failed to read appearance file: ${err}`, "error");
 		}
 	}
 
@@ -47,13 +47,13 @@ export default function (pi: ExtensionAPI) {
 		await syncTheme(ctx);
 
 		// 监听文件变化
-		ctx.ui.notify(`👀 Watching ${APPEARANCE_FILE} for theme sync`, "info");
+		ctx.ui.notify(`  Watching ${APPEARANCE_FILE} for theme sync`, "info");
 		try {
 			watcher = watch(APPEARANCE_FILE, () => {
 				syncTheme(ctx);
 			});
 		} catch (err) {
-			ctx.ui.notify(`❌ Failed to watch appearance file: ${err}`, "error");
+			ctx.ui.notify(`  Failed to watch appearance file: ${err}`, "error");
 		}
 	});
 

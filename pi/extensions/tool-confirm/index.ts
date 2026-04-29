@@ -41,7 +41,7 @@ export default function (pi: ExtensionAPI) {
 		description: "Toggle tool confirmation on/off",
 		handler: async (_args, ctx) => {
 			enabled = !enabled;
-			ctx.ui.notify(`🔔 Tool confirm: ${enabled ? "ON" : "OFF"}`, "info");
+			ctx.ui.notify(`  Tool confirm: ${enabled ? "ON" : "OFF"}`, "info");
 		},
 	});
 
