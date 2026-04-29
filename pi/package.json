@@ -1,0 +1,14 @@
+{
+	"name": "tyanxie-pi-config",
+	"private": true,
+	"keywords": ["pi-package"],
+	"pi": {
+		"extensions": ["./extensions"],
+		"themes": ["./themes"]
+	},
+	"dependencies": {
+		"@mariozechner/pi-coding-agent": "*",
+		"@mariozechner/pi-tui": "*",
+		"@types/node": "*"
+	}
+}

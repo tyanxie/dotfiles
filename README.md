@@ -16,6 +16,7 @@
 - [ghostty](https://ghostty.org/)
 - [kitty](https://github.com/kovidgoyal/kitty)
 - [neovim](https://github.com/neovim/neovim)
+- [pi](https://pi.dev/)
 - [sketchybar](https://github.com/FelixKratz/SketchyBar)
 - [tmux](https://github.com/tmux/tmux)
 - [wezterm](https://github.com/wez/wezterm)
