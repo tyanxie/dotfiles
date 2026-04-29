@@ -5,6 +5,7 @@ tty(0.46.2)# AGENTS.md
 ## 项目结构
 
 - `extensions/` — pi 扩展，每个扩展一个子目录，入口为 `index.ts`
+- `skills/` — pi skills，每个 skill 一个子目录，入口为 `SKILL.md`
 - `themes/` — pi 主题，JSON 格式
 - `package.json` — pi package 声明 + LSP 类型依赖
 - `tsconfig.json` — TypeScript 配置（仅用于编辑器类型检查，pi 运行时不依赖）
@@ -28,6 +29,15 @@ tty(0.46.2)# AGENTS.md
 - Nerd Font 字形与后续文字之间使用两个空格（图标 + 空格 + 文字），保证视觉间距
 - Nerd Font 字符属于 Unicode PUA 区域，`edit` 工具无法正确写入，必须通过 `bash` 调用 Python 写入
 - 修改后在 pi 中执行 `/reload` 即可热重载
+
+## 自定义工具开发规范
+
+- 通过 `pi.registerTool()` 注册自定义 tool，使用 TypeBox 定义参数 schema
+- 纯逻辑抽取到独立文件（如 `core.ts`），不依赖 pi API，方便测试
+- `pi.registerTool()` 的类型定义与 `@sinclair/typebox` 的 `Type.Optional(StringEnum(...))` 存在类型不兼容，可用 `Type.Union(Type.Literal(...))` 替代
+- tool 状态通过 `details` 字段存储在 session 中，通过 `reconstructFromBranch()` 从 session 历史重建
+- 支持 `renderCall` / `renderResult` 自定义 TUI 渲染
+- 支持 `ctx.ui.setWidget()` 注册常驻 widget
 
 ## Git 提交规范
 

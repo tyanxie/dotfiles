@@ -9,6 +9,9 @@ pi/
 ├── extensions/                 # 扩展
 │   ├── sync-appearance/        # 同步 macOS 外观模式到 pi 主题
 │   │   └── index.ts
+│   ├── task/                   # 通用任务追踪工具
+│   │   ├── core.ts             # 纯逻辑（不依赖 pi API）
+│   │   └── index.ts
 │   └── tool-confirm/           # 工具调用确认对话框
 │       └── index.ts
 └── themes/                     # 主题
@@ -25,6 +28,14 @@ pi/
 ### tool-confirm
 
 在 `bash`、`edit`、`write` 工具执行前弹出确认对话框，用户选择 Allow 才执行，否则拦截。使用 `/tool-confirm` 命令可在运行中动态开关。
+
+### task
+
+通用任务追踪工具，注册 `task` 自定义 tool 供 LLM 调用。支持 `init`（初始化任务列表）、`update`（更新状态）、`status`（查看进度）、`clear`（清除）四种操作。
+
+- TUI widget 常驻显示完整任务列表和进度
+- 状态存储在 session 的 tool result details 中，支持分支重建
+- 自定义渲染：调用摘要和结果展示均带主题颜色
 
 ## 主题
 

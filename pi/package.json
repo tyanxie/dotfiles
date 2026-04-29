@@ -4,11 +4,14 @@
 	"keywords": ["pi-package"],
 	"pi": {
 		"extensions": ["./extensions"],
+		"skills": ["./skills"],
 		"themes": ["./themes"]
 	},
 	"dependencies": {
+		"@mariozechner/pi-ai": "*",
 		"@mariozechner/pi-coding-agent": "*",
 		"@mariozechner/pi-tui": "*",
+		"@sinclair/typebox": "*",
 		"@types/node": "*"
 	}
 }
