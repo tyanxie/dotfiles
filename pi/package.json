@@ -4,7 +4,6 @@
 	"keywords": ["pi-package"],
 	"pi": {
 		"extensions": ["./extensions"],
-		"skills": ["./skills"],
 		"themes": ["./themes"]
 	},
 	"dependencies": {

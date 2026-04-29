@@ -8,5 +8,6 @@
 		"skipLibCheck": true,
 		"noEmit": true
 	},
-	"include": ["extensions/**/*.ts"]
+	"include": ["extensions/**/*.ts"],
+	"exclude": ["extensions/*/skills/**"]
 }
