@@ -322,7 +322,7 @@ export async function runSingleTask(
 		promptSource,
 		promptContent,
 		task: input.task,
-		exitCode: 0,
+		exitCode: -1,
 		messages: [],
 		stderr: "",
 		usage: emptyUsage(),

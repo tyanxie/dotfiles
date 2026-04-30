@@ -473,7 +473,6 @@ export default function (pi: ExtensionAPI) {
 			options: { expanded?: boolean; isPartial?: boolean },
 			theme: Theme,
 		) {
-			const isPartial = options?.isPartial ?? false;
 			const details = result.details as SubagentDetails | undefined;
 			if (!details || details.results.length === 0) {
 				const text = result.content[0];
@@ -502,7 +501,8 @@ export default function (pi: ExtensionAPI) {
 			};
 
 			/** 紧凑渲染：每个 section 标题和内容在同一行 */
-			const renderCompact = (r: SingleResult, partial: boolean, indent = "  "): string[] => {
+			const renderCompact = (r: SingleResult, indent = "  "): string[] => {
+				const partial = r.exitCode === -1;
 				const lines: string[] = [];
 
 				if (r.model) {
@@ -548,7 +548,8 @@ export default function (pi: ExtensionAPI) {
 			};
 
 			/** 完整渲染：每个 section 标题独占一行，内容在下方 */
-			const renderFull = (r: SingleResult, partial: boolean, indent = "  "): string[] => {
+			const renderFull = (r: SingleResult, indent = "  "): string[] => {
+				const partial = r.exitCode === -1;
 				const lines: string[] = [];
 
 				if (r.model) {
@@ -625,13 +626,13 @@ export default function (pi: ExtensionAPI) {
 			};
 
 			/** 根据 expanded 选择渲染模式 */
-			const renderResult = (r: SingleResult, partial: boolean, indent = "  "): string[] => {
-				return expanded ? renderFull(r, partial, indent) : renderCompact(r, partial, indent);
+			const renderResult = (r: SingleResult, indent = "  "): string[] => {
+				return expanded ? renderFull(r, indent) : renderCompact(r, indent);
 			};
 
 			// --- Single 模式 ---
 			if (details.mode === "single" && details.results.length === 1) {
-				const lines = ["", ...renderResult(details.results[0], isPartial)];
+				const lines = ["", ...renderResult(details.results[0])];
 				if (hasTruncation) {
 					lines.push("");
 					lines.push("  " + theme.fg("dim", "(Ctrl+O to expand)"));
@@ -657,7 +658,7 @@ export default function (pi: ExtensionAPI) {
 					const r = details.results[i];
 					lines.push("");
 					lines.push(`  ${theme.fg("muted", `[${i + 1}]`)}`);
-					const itemLines = renderResult(r, isPartial, "  ");
+					const itemLines = renderResult(r, "  ");
 					lines.push(...itemLines);
 				}
 
@@ -691,7 +692,7 @@ export default function (pi: ExtensionAPI) {
 				for (const r of details.results) {
 					lines.push("");
 					lines.push(`  ${theme.fg("muted", `Step ${r.step}:`)}`);
-					const itemLines = renderResult(r, isPartial, "  ");
+					const itemLines = renderResult(r, "  ");
 					lines.push(...itemLines);
 				}
 
