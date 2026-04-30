@@ -484,9 +484,7 @@ export default function (pi: ExtensionAPI) {
 			}
 
 			const expanded = options?.expanded ?? false;
-			const MAX_OUTPUT_ITEMS = 5;
-
-			const MAX_TRUNCATE_CHARS = 160;
+			const MAX_TRUNCATE_CHARS = 80;
 			let hasTruncation = false;
 			const truncate = (text: string): string => {
 				// 压缩空白为单行预览
@@ -503,53 +501,26 @@ export default function (pi: ExtensionAPI) {
 				return result + "...";
 			};
 
-			/** 渲染单个 result 的详情块 */
-			const renderSingleBlock = (r: SingleResult, partial: boolean): string => {
+			/** 紧凑渲染：每个 section 标题和内容在同一行 */
+			const renderCompact = (r: SingleResult, partial: boolean, indent = "  "): string[] => {
 				const lines: string[] = [];
 
-				// 标题后空行
-				lines.push("");
-
-				// Model 块
 				if (r.model) {
-					lines.push("  " + theme.fg("mdHeading", "[Model]"));
-					lines.push("  " + theme.fg("dim", r.model));
-					lines.push("");
+					lines.push(indent + theme.fg("mdHeading", "[Model]") + " " + theme.fg("dim", r.model));
 				}
-
-				// Prompt 块
 				if (r.promptContent) {
-					lines.push("  " + theme.fg("mdHeading", "[Prompt]"));
-					const promptDisplay = expanded
-						? r.promptContent
-						: truncate(r.promptContent);
-					for (const l of promptDisplay.split("\n")) {
-						lines.push("  " + theme.fg("dim", l));
-					}
-					lines.push("");
+					lines.push(indent + theme.fg("mdHeading", "[Prompt]") + " " + theme.fg("dim", truncate(r.promptContent)));
 				}
+				lines.push(indent + theme.fg("mdHeading", "[Task]") + " " + theme.fg("dim", truncate(r.task)));
 
-				// Task 块
-				lines.push("  " + theme.fg("mdHeading", "[Task]"));
-				const taskDisplay = expanded
-					? r.task
-					: truncate(r.task);
-				for (const l of taskDisplay.split("\n")) {
-					lines.push("  " + theme.fg("dim", l));
-				}
-				lines.push("");
-
-				// Status 块
+				// Status
 				let statusIcon: string;
 				let statusText: string;
 				if (partial) {
 					statusIcon = theme.fg("warning", "\u2192");
 					statusText = "running";
 				} else {
-					const isError =
-						r.exitCode !== 0 ||
-						r.stopReason === "error" ||
-						r.stopReason === "aborted";
+					const isError = r.exitCode !== 0 || r.stopReason === "error" || r.stopReason === "aborted";
 					if (isError) {
 						statusIcon = theme.fg("error", "\u2717");
 						statusText = r.stopReason || "failed";
@@ -558,15 +529,69 @@ export default function (pi: ExtensionAPI) {
 						statusText = "completed";
 					}
 				}
-				const usageStr = r.usage.turns > 0
-					? " (" + formatUsageStats(r.usage) + ")"
-					: "";
-				lines.push("  " + theme.fg("mdHeading", "[Status]"));
-				lines.push(
-					"  " + statusIcon + " " + statusText + theme.fg("dim", usageStr),
-				);
+				const usageStr = r.usage.turns > 0 ? " (" + formatUsageStats(r.usage) + ")" : "";
+				lines.push(indent + theme.fg("mdHeading", "[Status]") + " " + statusIcon + " " + statusText + theme.fg("dim", usageStr));
 
-				// Output 块 — 只在有内容时展示
+				// Output — 只在有内容时展示
+				const finalOutput = getFinalOutput(r.messages);
+				const toolCalls = getDisplayItems(r.messages).filter((item) => item.type === "toolCall");
+				if (finalOutput || toolCalls.length > 0) {
+					const outputPreview = finalOutput ? truncate(finalOutput) : "(tool calls only)";
+					lines.push(indent + theme.fg("mdHeading", "[Output]") + " " + outputPreview);
+				}
+
+				if (!partial && (r.exitCode !== 0 || r.stopReason === "error") && r.errorMessage) {
+					lines.push(indent + theme.fg("error", `Error: ${r.errorMessage}`));
+				}
+
+				return lines;
+			};
+
+			/** 完整渲染：每个 section 标题独占一行，内容在下方 */
+			const renderFull = (r: SingleResult, partial: boolean, indent = "  "): string[] => {
+				const lines: string[] = [];
+
+				if (r.model) {
+					lines.push(indent + theme.fg("mdHeading", "[Model]"));
+					lines.push(indent + theme.fg("dim", r.model));
+					lines.push("");
+				}
+
+				if (r.promptContent) {
+					lines.push(indent + theme.fg("mdHeading", "[Prompt]"));
+					for (const l of r.promptContent.split("\n")) {
+						lines.push(indent + theme.fg("dim", l));
+					}
+					lines.push("");
+				}
+
+				lines.push(indent + theme.fg("mdHeading", "[Task]"));
+				for (const l of r.task.split("\n")) {
+					lines.push(indent + theme.fg("dim", l));
+				}
+				lines.push("");
+
+				// Status
+				let statusIcon: string;
+				let statusText: string;
+				if (partial) {
+					statusIcon = theme.fg("warning", "\u2192");
+					statusText = "running";
+				} else {
+					const isError = r.exitCode !== 0 || r.stopReason === "error" || r.stopReason === "aborted";
+					if (isError) {
+						statusIcon = theme.fg("error", "\u2717");
+						statusText = r.stopReason || "failed";
+					} else {
+						statusIcon = theme.fg("success", "\u2713");
+						statusText = "completed";
+					}
+				}
+				const usageStr = r.usage.turns > 0 ? " (" + formatUsageStats(r.usage) + ")" : "";
+				lines.push(indent + theme.fg("mdHeading", "[Status]"));
+				lines.push(indent + statusIcon + " " + statusText + theme.fg("dim", usageStr));
+
+				// Output
 				const displayItems = getDisplayItems(r.messages);
 				const finalOutput = getFinalOutput(r.messages);
 				const toolCalls = displayItems.filter((item) => item.type === "toolCall");
@@ -574,62 +599,44 @@ export default function (pi: ExtensionAPI) {
 
 				if (hasOutput) {
 					lines.push("");
-					lines.push("  " + theme.fg("mdHeading", "[Output]"));
-					if (expanded) {
-						for (const item of displayItems) {
-							if (item.type === "toolCall" && item.name && item.args) {
-								lines.push(
-									"  " + theme.fg("muted", "\u2192 ") +
-										formatToolCall(item.name, item.args,
-											(c: string, t: string) => theme.fg(c as ThemeColor, t)),
-								);
-							}
+					lines.push(indent + theme.fg("mdHeading", "[Output]"));
+					for (const item of displayItems) {
+						if (item.type === "toolCall" && item.name && item.args) {
+							lines.push(
+								indent + theme.fg("muted", "\u2192 ") +
+									formatToolCall(item.name, item.args,
+										(c: string, t: string) => theme.fg(c as ThemeColor, t)),
+							);
 						}
-						if (finalOutput) {
-							for (const l of finalOutput.split("\n")) {
-								lines.push("  " + l);
-							}
-						}
-					} else {
-						const toShow = toolCalls.slice(-MAX_OUTPUT_ITEMS);
-						const skipped = toolCalls.length - toShow.length;
-						if (skipped > 0) {
-							lines.push("  " + theme.fg("muted", `... ${skipped} earlier items`));
-						}
-						for (const item of toShow) {
-							if (item.name && item.args) {
-								lines.push(
-									"  " + theme.fg("muted", "\u2192 ") +
-										formatToolCall(item.name, item.args,
-											(c: string, t: string) => theme.fg(c as ThemeColor, t)),
-								);
-							}
-						}
-						if (finalOutput) {
-							const preview = truncate(finalOutput);
-							for (const l of preview.split("\n")) {
-								lines.push("  " + l);
-							}
+					}
+					if (finalOutput) {
+						for (const l of finalOutput.split("\n")) {
+							lines.push(indent + l);
 						}
 					}
 				}
 
 				if (!partial && (r.exitCode !== 0 || r.stopReason === "error") && r.errorMessage) {
 					lines.push("");
-					lines.push("  " + theme.fg("error", `Error: ${r.errorMessage}`));
+					lines.push(indent + theme.fg("error", `Error: ${r.errorMessage}`));
 				}
 
-				if (hasTruncation) {
-					lines.push("");
-					lines.push("  " + theme.fg("dim", "(Ctrl+O to expand)"));
-				}
+				return lines;
+			};
 
-				return lines.join("\n");
+			/** 根据 expanded 选择渲染模式 */
+			const renderResult = (r: SingleResult, partial: boolean, indent = "  "): string[] => {
+				return expanded ? renderFull(r, partial, indent) : renderCompact(r, partial, indent);
 			};
 
 			// --- Single 模式 ---
 			if (details.mode === "single" && details.results.length === 1) {
-				return new Text(renderSingleBlock(details.results[0], isPartial), 0, 0);
+				const lines = ["", ...renderResult(details.results[0], isPartial)];
+				if (hasTruncation) {
+					lines.push("");
+					lines.push("  " + theme.fg("dim", "(Ctrl+O to expand)"));
+				}
+				return new Text(lines.join("\n"), 0, 0);
 			}
 
 			// --- Parallel 模式 ---
@@ -648,31 +655,23 @@ export default function (pi: ExtensionAPI) {
 
 				for (let i = 0; i < details.results.length; i++) {
 					const r = details.results[i];
-					const isRunning = r.exitCode === -1;
-					const isError = r.exitCode > 0 || r.stopReason === "error" || r.stopReason === "aborted";
-					const icon = isRunning
-						? theme.fg("warning", "\u2192")
-						: isError
-							? theme.fg("error", "\u2717")
-							: theme.fg("success", "\u2713");
-					const modelStr = r.model ? "  " + theme.fg("dim", r.model) : "";
-
 					lines.push("");
-					lines.push(
-						`  ${theme.fg("muted", `[${i + 1}]`)} ${icon} ${isRunning ? "running" : isError ? "failed" : "completed"}${modelStr}`,
-					);
-					const taskPreview = truncate(r.task);
-					lines.push(`      ${theme.fg("mdHeading", "[Task]")} ${theme.fg("dim", taskPreview)}`);
-					const output = getFinalOutput(r.messages);
-					const outputPreview = output
-						? truncate(output)
-						: isRunning ? "(running...)" : "(no output)";
-					lines.push(`      ${theme.fg("mdHeading", "[Output]")} ${theme.fg("dim", outputPreview)}`);
+					lines.push(`  ${theme.fg("muted", `[${i + 1}]`)}`);
+					const itemLines = renderResult(r, isPartial, "  ");
+					lines.push(...itemLines);
 				}
 
 				if (running === 0) {
+					const totalStr = formatUsageStats(aggregateUsage(details.results));
+					if (totalStr) {
+						lines.push("");
+						lines.push("  " + theme.fg("dim", "Total: " + totalStr));
+					}
+				}
+
+				if (hasTruncation) {
 					lines.push("");
-					lines.push("  " + theme.fg("dim", "Total: " + formatUsageStats(aggregateUsage(details.results))));
+					lines.push("  " + theme.fg("dim", "(Ctrl+O to expand)"));
 				}
 
 				return new Text(lines.join("\n"), 0, 0);
@@ -682,46 +681,30 @@ export default function (pi: ExtensionAPI) {
 			if (details.mode === "chain") {
 				const successCount = details.results.filter((r) => r.exitCode === 0).length;
 				const total = details.results.length;
-				const modelStr = details.results[0]?.model
-					? "  " + theme.fg("dim", details.results[0].model)
-					: "";
 
 				const lines: string[] = [];
 				lines.push(
 					theme.fg("toolTitle", theme.bold("chain")) +
-						"  " + theme.fg("accent", `${successCount}/${total} steps`) + modelStr,
+						"  " + theme.fg("accent", `${successCount}/${total} steps`),
 				);
 
 				for (const r of details.results) {
-					const isRunning = r.exitCode === -1;
-					const isError = r.exitCode > 0 || r.stopReason === "error" || r.stopReason === "aborted";
-					const icon = isRunning
-						? theme.fg("warning", "\u2192")
-						: isError
-							? theme.fg("error", "\u2717")
-							: r.exitCode === 0
-								? theme.fg("success", "\u2713")
-								: theme.fg("dim", "\u25CB");
-
 					lines.push("");
-					lines.push(
-						`  ${theme.fg("muted", `Step ${r.step}:`)} ${icon} ${isRunning ? "running" : isError ? "failed" : r.exitCode === 0 ? "completed" : "pending"}`,
-					);
-					if (r.promptContent) {
-						const promptPreview = truncate(r.promptContent);
-						lines.push(`      ${theme.fg("mdHeading", "[Prompt]")} ${theme.fg("dim", promptPreview)}`);
-					}
-					const taskPreview = truncate(r.task.replace(/\{previous\}/g, "").trim());
-					lines.push(`      ${theme.fg("mdHeading", "[Task]")} ${theme.fg("dim", taskPreview)}`);
-					const output = getFinalOutput(r.messages);
-					const outputPreview = output
-						? truncate(output)
-						: isRunning ? "(running...)" : "(no output)";
-					lines.push(`      ${theme.fg("mdHeading", "[Output]")} ${theme.fg("dim", outputPreview)}`);
+					lines.push(`  ${theme.fg("muted", `Step ${r.step}:`)}`);
+					const itemLines = renderResult(r, isPartial, "  ");
+					lines.push(...itemLines);
 				}
 
-				lines.push("");
-				lines.push("  " + theme.fg("dim", "Total: " + formatUsageStats(aggregateUsage(details.results))));
+				const totalStr = formatUsageStats(aggregateUsage(details.results));
+				if (totalStr) {
+					lines.push("");
+					lines.push("  " + theme.fg("dim", "Total: " + totalStr));
+				}
+
+				if (hasTruncation) {
+					lines.push("");
+					lines.push("  " + theme.fg("dim", "(Ctrl+O to expand)"));
+				}
 
 				return new Text(lines.join("\n"), 0, 0);
 			}
