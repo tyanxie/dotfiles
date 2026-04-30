@@ -15,7 +15,7 @@ pi/
 │   │   └── skills/             # 14 个 superpowers skills
 │   ├── footer/                  # 自定义 footer（进度条+模型信息）
 │   │   └── index.ts
-│   ├── sync-appearance/        # 同步 macOS 外观模式到 pi 主题
+│   ├── theme/                  # 同步系统外观模式到 pi 主题
 │   │   └── index.ts
 │   ├── task/                   # 通用任务追踪工具
 │   │   ├── core.ts             # 纯逻辑（不依赖 pi API）
@@ -39,9 +39,9 @@ pi/
 
 各段在数据不可用时自动隐藏。
 
-### sync-appearance
+### theme
 
-通过 [dotfiles-daemon](../daemon) 同步 macOS 外观模式。daemon 将当前外观（1=light, 2=dark）写入 `~/.dotfiles-daemon-appearance`，扩展通过 `fs.watch` 监听该文件变化，自动在 Catppuccin Latte 和 Mocha 之间切换主题。
+通过 [dotfiles-daemon](../daemon) 同步系统外观模式。daemon 检测系统外观（macOS / Linux）并将结果（1=light, 2=dark）写入 `~/.dotfiles-daemon-appearance`，扩展通过 `fs.watch` 监听该文件变化，自动在 Catppuccin Latte 和 Mocha 之间切换主题。
 
 ### tool-confirm
 

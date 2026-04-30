@@ -1,9 +1,9 @@
 /**
- * 通过 dotfiles-daemon 同步 macOS 外观模式到 pi 主题。
+ * 通过 dotfiles-daemon 同步系统外观模式到 pi 主题。
  *
- * daemon 会将当前外观模式（1=light, 2=dark）写入
- * ~/.dotfiles-daemon-appearance 文件，本扩展监听该文件变化，
- * 自动在 Catppuccin Latte 和 Mocha 之间切换。
+ * daemon 检测系统外观模式（macOS / Linux）并将结果
+ * （1=light, 2=dark）写入 ~/.dotfiles-daemon-appearance，
+ * 本扩展监听该文件变化，自动在 Catppuccin Latte 和 Mocha 之间切换。
  */
 
 import { watch, type FSWatcher } from "node:fs";
