@@ -643,16 +643,8 @@ export default function (pi: ExtensionAPI) {
 			// --- Parallel 模式 ---
 			if (details.mode === "parallel") {
 				const running = details.results.filter((r) => r.exitCode === -1).length;
-				const successCount = details.results.filter((r) => r.exitCode === 0).length;
-				const status = running > 0
-					? `${details.results.length - running}/${details.results.length} done, ${running} running`
-					: `${successCount}/${details.results.length} completed`;
 
 				const lines: string[] = [];
-				lines.push(
-					theme.fg("toolTitle", theme.bold("parallel")) +
-						"  " + theme.fg("accent", status),
-				);
 
 				for (let i = 0; i < details.results.length; i++) {
 					const r = details.results[i];
@@ -680,14 +672,7 @@ export default function (pi: ExtensionAPI) {
 
 			// --- Chain 模式 ---
 			if (details.mode === "chain") {
-				const successCount = details.results.filter((r) => r.exitCode === 0).length;
-				const total = details.results.length;
-
 				const lines: string[] = [];
-				lines.push(
-					theme.fg("toolTitle", theme.bold("chain")) +
-						"  " + theme.fg("accent", `${successCount}/${total} steps`),
-				);
 
 				for (const r of details.results) {
 					lines.push("");
