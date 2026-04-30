@@ -484,13 +484,23 @@ export default function (pi: ExtensionAPI) {
 			}
 
 			const expanded = options?.expanded ?? false;
-			const MAX_COLLAPSED_LINES = 2;
 			const MAX_OUTPUT_ITEMS = 5;
 
-			const truncate = (text: string, maxLines: number): string => {
-				const lines = text.split("\n");
-				if (lines.length <= maxLines) return text;
-				return lines.slice(0, maxLines).join("\n") + "\n...";
+			const MAX_TRUNCATE_CHARS = 160;
+			let hasTruncation = false;
+			const truncate = (text: string): string => {
+				// 压缩空白为单行预览
+				const normalized = text.replace(/\s+/g, " ").trim();
+				if (normalized.length <= MAX_TRUNCATE_CHARS) return normalized;
+				hasTruncation = true;
+				let end = MAX_TRUNCATE_CHARS;
+				// 往回找最近的空格（单词边界），中文文本无空格则直接截断
+				const lastSpace = normalized.lastIndexOf(" ", end);
+				if (lastSpace > end * 0.5) end = lastSpace;
+				// 去掉末尾标点和空白
+				let result = normalized.slice(0, end);
+				result = result.replace(/[\s,.:;!?\-\u2014\uff0c\u3002\uff1a\uff1b\uff01\uff1f\u3001]+$/, "");
+				return result + "...";
 			};
 
 			/** 渲染单个 result 的详情块 */
@@ -512,7 +522,7 @@ export default function (pi: ExtensionAPI) {
 					lines.push("  " + theme.fg("mdHeading", "[Prompt]"));
 					const promptDisplay = expanded
 						? r.promptContent
-						: truncate(r.promptContent, MAX_COLLAPSED_LINES);
+						: truncate(r.promptContent);
 					for (const l of promptDisplay.split("\n")) {
 						lines.push("  " + theme.fg("dim", l));
 					}
@@ -523,7 +533,7 @@ export default function (pi: ExtensionAPI) {
 				lines.push("  " + theme.fg("mdHeading", "[Task]"));
 				const taskDisplay = expanded
 					? r.task
-					: truncate(r.task, MAX_COLLAPSED_LINES);
+					: truncate(r.task);
 				for (const l of taskDisplay.split("\n")) {
 					lines.push("  " + theme.fg("dim", l));
 				}
@@ -596,9 +606,9 @@ export default function (pi: ExtensionAPI) {
 							}
 						}
 						if (finalOutput) {
-							const preview = truncate(finalOutput, MAX_COLLAPSED_LINES);
+							const preview = truncate(finalOutput);
 							for (const l of preview.split("\n")) {
-								lines.push("  " + theme.fg("dim", l));
+								lines.push("  " + l);
 							}
 						}
 					}
@@ -607,6 +617,11 @@ export default function (pi: ExtensionAPI) {
 				if (!partial && (r.exitCode !== 0 || r.stopReason === "error") && r.errorMessage) {
 					lines.push("");
 					lines.push("  " + theme.fg("error", `Error: ${r.errorMessage}`));
+				}
+
+				if (hasTruncation) {
+					lines.push("");
+					lines.push("  " + theme.fg("dim", "(Ctrl+O to expand)"));
 				}
 
 				return lines.join("\n");
@@ -646,11 +661,11 @@ export default function (pi: ExtensionAPI) {
 					lines.push(
 						`  ${theme.fg("muted", `[${i + 1}]`)} ${icon} ${isRunning ? "running" : isError ? "failed" : "completed"}${modelStr}`,
 					);
-					const taskPreview = truncate(r.task, 1);
+					const taskPreview = truncate(r.task);
 					lines.push(`      ${theme.fg("mdHeading", "[Task]")} ${theme.fg("dim", taskPreview)}`);
 					const output = getFinalOutput(r.messages);
 					const outputPreview = output
-						? truncate(output, 1)
+						? truncate(output)
 						: isRunning ? "(running...)" : "(no output)";
 					lines.push(`      ${theme.fg("mdHeading", "[Output]")} ${theme.fg("dim", outputPreview)}`);
 				}
@@ -693,14 +708,14 @@ export default function (pi: ExtensionAPI) {
 						`  ${theme.fg("muted", `Step ${r.step}:`)} ${icon} ${isRunning ? "running" : isError ? "failed" : r.exitCode === 0 ? "completed" : "pending"}`,
 					);
 					if (r.promptContent) {
-						const promptPreview = truncate(r.promptContent, 1);
+						const promptPreview = truncate(r.promptContent);
 						lines.push(`      ${theme.fg("mdHeading", "[Prompt]")} ${theme.fg("dim", promptPreview)}`);
 					}
-					const taskPreview = truncate(r.task.replace(/\{previous\}/g, "").trim(), 1);
+					const taskPreview = truncate(r.task.replace(/\{previous\}/g, "").trim());
 					lines.push(`      ${theme.fg("mdHeading", "[Task]")} ${theme.fg("dim", taskPreview)}`);
 					const output = getFinalOutput(r.messages);
 					const outputPreview = output
-						? truncate(output, 1)
+						? truncate(output)
 						: isRunning ? "(running...)" : "(no output)";
 					lines.push(`      ${theme.fg("mdHeading", "[Output]")} ${theme.fg("dim", outputPreview)}`);
 				}
