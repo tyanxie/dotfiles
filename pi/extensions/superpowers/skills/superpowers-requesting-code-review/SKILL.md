@@ -31,7 +31,14 @@ HEAD_SHA=$(git rev-parse HEAD)
 
 **2. Dispatch code-reviewer subagent:**
 
-Use Task tool with /skill:superpowers-requesting-code-review type, fill template at `code-reviewer.md`
+Use `subagent` tool with `promptFile` pointing to `code-reviewer.md`:
+
+```
+subagent({
+  promptFile: "./code-reviewer.md",
+  task: "Review: {WHAT_WAS_IMPLEMENTED}\nRequirements: {PLAN_OR_REQUIREMENTS}\nBase: {BASE_SHA}\nHead: {HEAD_SHA}\nDescription: {DESCRIPTION}"
+})
+```
 
 **Placeholders:**
 - `{WHAT_WAS_IMPLEMENTED}` - What you just built
@@ -56,12 +63,8 @@ You: Let me request code review before proceeding.
 BASE_SHA=$(git log --oneline | grep "Task 1" | head -1 | awk '{print $1}')
 HEAD_SHA=$(git rev-parse HEAD)
 
-[Dispatch /skill:superpowers-requesting-code-review subagent]
-  WHAT_WAS_IMPLEMENTED: Verification and repair functions for conversation index
-  PLAN_OR_REQUIREMENTS: Task 2 from docs/superpowers/plans/deployment-plan.md
-  BASE_SHA: a7981ec
-  HEAD_SHA: 3df7661
-  DESCRIPTION: Added verifyIndex() and repairIndex() with 4 issue types
+[Dispatch code-reviewer subagent]
+subagent({ promptFile: "./code-reviewer.md", task: "Review: Verification and repair functions...\nBase: a7981ec\nHead: 3df7661" })
 
 [Subagent returns]:
   Strengths: Clean architecture, real tests

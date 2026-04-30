@@ -1,11 +1,11 @@
-tty(0.46.2)# AGENTS.md
-    加强
+# AGENTS.md
+
 本项目是 pi-coding-agent 的个人配置包。
 
 ## 项目结构
 
 - `extensions/` — pi 扩展，每个扩展一个子目录，入口为 `index.ts`
-- `skills/` — pi skills，每个 skill 一个子目录，入口为 `SKILL.md`
+- `extensions/superpowers/skills/` — superpowers skills，通过 `resources_discover` 事件注册
 - `themes/` — pi 主题，JSON 格式
 - `package.json` — pi package 声明 + LSP 类型依赖
 - `tsconfig.json` — TypeScript 配置（仅用于编辑器类型检查，pi 运行时不依赖）
@@ -38,6 +38,14 @@ tty(0.46.2)# AGENTS.md
 - tool 状态通过 `details` 字段存储在 session 中，通过 `reconstructFromBranch()` 从 session 历史重建
 - 支持 `renderCall` / `renderResult` 自定义 TUI 渲染
 - 支持 `ctx.ui.setWidget()` 注册常驻 widget
+
+## subagent 扩展开发规范
+
+- `subagent` 扩展通过 `spawn` 独立 `pi` 子进程实现任务委派
+- 不创建临时文件，`--append-system-prompt` 同时支持文件路径和原始文本
+- model 默认继承主 session（`ctx.model.provider/ctx.model.id`），可通过参数覆盖
+- prompt 来源支持 `prompt`（内联）和 `promptFile`（文件路径），二者互斥
+- 三种模式：single（单任务）、parallel（并行）、chain（串行链式，`{previous}` 占位符传递输出）
 
 ## Git 提交规范
 

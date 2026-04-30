@@ -45,14 +45,14 @@ digraph process {
 
     subgraph cluster_per_task {
         label="Per Task";
-        "Dispatch implementer subagent (./implementer-prompt.md)" [shape=box];
+        "subagent({ promptFile: './implementer-prompt.md', task: ... })" [shape=box];
         "Implementer subagent asks questions?" [shape=diamond];
         "Answer questions, provide context" [shape=box];
         "Implementer subagent implements, tests, commits, self-reviews" [shape=box];
-        "Dispatch spec reviewer subagent (./spec-reviewer-prompt.md)" [shape=box];
+        "subagent({ promptFile: './spec-reviewer-prompt.md', task: ... })" [shape=box];
         "Spec reviewer subagent confirms code matches spec?" [shape=diamond];
         "Implementer subagent fixes spec gaps" [shape=box];
-        "Dispatch code quality reviewer subagent (./code-quality-reviewer-prompt.md)" [shape=box];
+        "subagent({ promptFile: './code-quality-reviewer-prompt.md', task: ... })" [shape=box];
         "Code quality reviewer subagent approves?" [shape=diamond];
         "Implementer subagent fixes quality issues" [shape=box];
         "Mark task complete in task" [shape=box];
@@ -63,22 +63,22 @@ digraph process {
     "Dispatch final code reviewer subagent for entire implementation" [shape=box];
     "Use /skill:superpowers-finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
-    "Read plan, extract all tasks with full text, note context, create task" -> "Dispatch implementer subagent (./implementer-prompt.md)";
-    "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer subagent asks questions?";
+    "Read plan, extract all tasks with full text, note context, create task" -> "subagent({ promptFile: './implementer-prompt.md', task: ... })";
+    "subagent({ promptFile: './implementer-prompt.md', task: ... })" -> "Implementer subagent asks questions?";
     "Implementer subagent asks questions?" -> "Answer questions, provide context" [label="yes"];
-    "Answer questions, provide context" -> "Dispatch implementer subagent (./implementer-prompt.md)";
+    "Answer questions, provide context" -> "subagent({ promptFile: './implementer-prompt.md', task: ... })";
     "Implementer subagent asks questions?" -> "Implementer subagent implements, tests, commits, self-reviews" [label="no"];
-    "Implementer subagent implements, tests, commits, self-reviews" -> "Dispatch spec reviewer subagent (./spec-reviewer-prompt.md)";
-    "Dispatch spec reviewer subagent (./spec-reviewer-prompt.md)" -> "Spec reviewer subagent confirms code matches spec?";
+    "Implementer subagent implements, tests, commits, self-reviews" -> "subagent({ promptFile: './spec-reviewer-prompt.md', task: ... })";
+    "subagent({ promptFile: './spec-reviewer-prompt.md', task: ... })" -> "Spec reviewer subagent confirms code matches spec?";
     "Spec reviewer subagent confirms code matches spec?" -> "Implementer subagent fixes spec gaps" [label="no"];
-    "Implementer subagent fixes spec gaps" -> "Dispatch spec reviewer subagent (./spec-reviewer-prompt.md)" [label="re-review"];
-    "Spec reviewer subagent confirms code matches spec?" -> "Dispatch code quality reviewer subagent (./code-quality-reviewer-prompt.md)" [label="yes"];
-    "Dispatch code quality reviewer subagent (./code-quality-reviewer-prompt.md)" -> "Code quality reviewer subagent approves?";
+    "Implementer subagent fixes spec gaps" -> "subagent({ promptFile: './spec-reviewer-prompt.md', task: ... })" [label="re-review"];
+    "Spec reviewer subagent confirms code matches spec?" -> "subagent({ promptFile: './code-quality-reviewer-prompt.md', task: ... })" [label="yes"];
+    "subagent({ promptFile: './code-quality-reviewer-prompt.md', task: ... })" -> "Code quality reviewer subagent approves?";
     "Code quality reviewer subagent approves?" -> "Implementer subagent fixes quality issues" [label="no"];
-    "Implementer subagent fixes quality issues" -> "Dispatch code quality reviewer subagent (./code-quality-reviewer-prompt.md)" [label="re-review"];
+    "Implementer subagent fixes quality issues" -> "subagent({ promptFile: './code-quality-reviewer-prompt.md', task: ... })" [label="re-review"];
     "Code quality reviewer subagent approves?" -> "Mark task complete in task" [label="yes"];
     "Mark task complete in task" -> "More tasks remain?";
-    "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
+    "More tasks remain?" -> "subagent({ promptFile: './implementer-prompt.md', task: ... })" [label="yes"];
     "More tasks remain?" -> "Dispatch final code reviewer subagent for entire implementation" [label="no"];
     "Dispatch final code reviewer subagent for entire implementation" -> "Use /skill:superpowers-finishing-a-development-branch";
 }
@@ -119,9 +119,13 @@ Implementer subagents report one of four statuses. Handle each appropriately:
 
 ## Prompt Templates
 
-- `./implementer-prompt.md` - Dispatch implementer subagent
-- `./spec-reviewer-prompt.md` - Dispatch spec compliance reviewer subagent
-- `./code-quality-reviewer-prompt.md` - Dispatch code quality reviewer subagent
+Use the `subagent` tool with `promptFile` to dispatch subagents. The prompt template files are in this skill's directory:
+
+- `./implementer-prompt.md` - System prompt for implementer subagent: `subagent({ promptFile: "./implementer-prompt.md", task: "Implement Task N: ..." })`
+- `./spec-reviewer-prompt.md` - System prompt for spec compliance reviewer: `subagent({ promptFile: "./spec-reviewer-prompt.md", task: "Review spec compliance: ..." })`
+- `./code-quality-reviewer-prompt.md` - System prompt for code quality reviewer: `subagent({ promptFile: "./code-quality-reviewer-prompt.md", task: "Quality review: ..." })`
+
+Fill in the task-specific content (task description, context, implementer report) in the `task` parameter. Use `model` parameter to select appropriate model per role.
 
 ## Example Workflow
 

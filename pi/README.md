@@ -7,6 +7,12 @@
 ```
 pi/
 ├── extensions/                 # 扩展
+│   ├── subagent/               # 通用 subagent 委派工具
+│   │   ├── core.ts             # spawn + JSON 解析（不依赖 pi API）
+│   │   └── index.ts
+│   ├── superpowers/            # Superpowers 工作流 skills + session 注入
+│   │   ├── index.ts
+│   │   └── skills/             # 14 个 superpowers skills
 │   ├── sync-appearance/        # 同步 macOS 外观模式到 pi 主题
 │   │   └── index.ts
 │   ├── task/                   # 通用任务追踪工具
@@ -31,11 +37,25 @@ pi/
 
 ### task
 
-通用任务追踪工具，注册 `task` 自定义 tool 供 LLM 调用。支持 `init`（初始化任务列表）、`update`（更新状态）、`status`（查看进度）、`clear`（清除）四种操作。
+通用任务追踪工具，注册 `task` 自定义 tool 供 LLM 调用。支持 `init`、`update`、`status`、`clear` 四种操作。
 
 - TUI widget 常驻显示完整任务列表和进度
 - 状态存储在 session 的 tool result details 中，支持分支重建
 - 自定义渲染：调用摘要和结果展示均带主题颜色
+
+### subagent
+
+通用 subagent 委派工具，通过 spawn 独立 pi 子进程执行任务。支持三种模式：
+
+- **Single** — 单任务委派
+- **Parallel** — 多任务并行执行（最多 8 个，4 并发）
+- **Chain** — 串行链式执行，`{previous}` 占位符传递上一步输出
+
+prompt 来源灵活：内联文本（`prompt`）或文件路径（`promptFile`）。model 默认继承主 session，可通过 `provider/id` 格式指定。
+
+### superpowers
+
+基于 [Superpowers](https://github.com/obra/superpowers) 的工作流 skills 集成，包含 14 个 skills（brainstorming、TDD、debugging、code review 等）。通过 `resources_discover` 事件注册 skills 目录，session 启动时注入 `using-superpowers` 核心指引到 system prompt。
 
 ## 主题
 
