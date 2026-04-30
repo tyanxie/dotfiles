@@ -5,6 +5,7 @@
 ## 项目结构
 
 - `extensions/` — pi 扩展，每个扩展一个子目录，入口为 `index.ts`
+- `extensions/header/` — 自定义启动 header（ASCII art + 快捷提示）
 - `extensions/superpowers/skills/` — superpowers skills，通过 `resources_discover` 事件注册
 - `themes/` — pi 主题，JSON 格式
 - `package.json` — pi package 声明 + LSP 类型依赖

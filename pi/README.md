@@ -13,6 +13,8 @@ pi/
 │   ├── superpowers/            # Superpowers 工作流 skills + session 注入
 │   │   ├── index.ts
 │   │   └── skills/             # 14 个 superpowers skills
+│   ├── header/                 # 自定义启动 header（ASCII art + 快捷提示）
+│   │   └── index.ts
 │   ├── footer/                  # 自定义 footer（进度条+模型信息）
 │   │   └── index.ts
 │   ├── theme/                  # 同步系统外观模式到 pi 主题
@@ -28,6 +30,15 @@ pi/
 ```
 
 ## 扩展
+
+### header
+
+自定义启动 header，使用 `setHeader` API 替换默认 header，展示个性化面板：
+
+- ASCII art：ANSI Shadow 字体的 "T-PI" 居中显示，配色跟随主题 accent
+- 版本号：`pi vX.X.X` 居中
+
+使用 `/builtin-header` 命令可恢复默认 header。
 
 ### footer
 
