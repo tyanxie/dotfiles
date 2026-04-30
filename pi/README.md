@@ -13,6 +13,8 @@ pi/
 │   ├── superpowers/            # Superpowers 工作流 skills + session 注入
 │   │   ├── index.ts
 │   │   └── skills/             # 14 个 superpowers skills
+│   ├── footer/                  # 自定义 footer（进度条+模型信息）
+│   │   └── index.ts
 │   ├── sync-appearance/        # 同步 macOS 外观模式到 pi 主题
 │   │   └── index.ts
 │   ├── task/                   # 通用任务追踪工具
@@ -26,6 +28,16 @@ pi/
 ```
 
 ## 扩展
+
+### footer
+
+自定义 footer，使用 `setFooter` API 替换默认 footer 为单行紧凑布局：
+
+- 左侧：工作目录 + Git 分支（accent/muted 配色）
+- 中间：上下文进度条（10 格，按用量 0~60%/60~90%/90~100% 显示绿/黄/红，并显示上下文窗口大小）
+- 右侧：模型信息（provider + model + thinking level），右对齐
+
+各段在数据不可用时自动隐藏。
 
 ### sync-appearance
 
