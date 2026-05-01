@@ -6,7 +6,7 @@
 
 - `extensions/` — pi 扩展，每个扩展一个子目录，入口为 `index.ts`
 - `extensions/header/` — 自定义启动 header（ASCII art + 快捷提示）
-- `extensions/superpowers/skills/` — superpowers skills，通过 `resources_discover` 事件注册
+- `extensions/powerflow/` — powerflow 工作流扩展，单一 skill 入口 + guides + prompts
 - `themes/` — pi 主题，JSON 格式
 - `package.json` — pi package 声明 + LSP 类型依赖
 - `tsconfig.json` — TypeScript 配置（仅用于编辑器类型检查，pi 运行时不依赖）

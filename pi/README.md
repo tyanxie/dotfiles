@@ -10,9 +10,9 @@ pi/
 │   ├── subagent/               # 通用 subagent 委派工具
 │   │   ├── core.ts             # spawn + JSON 解析（不依赖 pi API）
 │   │   └── index.ts
-│   ├── superpowers/            # Superpowers 工作流 skills + session 注入
+│   ├── powerflow/              # Powerflow 工作流 skill + session 注入
 │   │   ├── index.ts
-│   │   └── skills/             # 14 个 superpowers skills
+│   │   └── skills/powerflow/   # 1 个 skill 入口 + guides + prompts
 │   ├── header/                 # 自定义启动 header（ASCII art + 快捷提示）
 │   │   └── index.ts
 │   ├── footer/                  # 自定义 footer（进度条+模型信息）
@@ -70,15 +70,15 @@ pi/
 
 prompt 来源：内联文本（`prompt`）或文件路径（`promptFile`），二者互斥。model 默认继承主 session，可通过 `provider/id` 格式指定。不创建临时文件，prompt 内容通过 `--append-system-prompt` 传递给子进程。
 
-### superpowers
+### powerflow
 
-基于 [Superpowers](https://github.com/obra/superpowers) 的工作流 skills 集成，包含 14 个 skills：
+轻量级工作流扩展，引导 agent 从需求分析到代码交付的完整流程：
 
-- **流程类**：brainstorming、writing-plans、executing-plans、verification-before-completion
-- **开发类**：test-driven-development、systematic-debugging、subagent-driven-development
-- **协作类**：requesting-code-review、receiving-code-review、dispatching-parallel-agents
-- **工具类**：using-git-worktrees、finishing-a-development-branch、writing-skills
-- **元技能**：using-superpowers（session 启动时注入 system prompt）
+- **单一 skill 入口** + 分阶段引用文件（guides/ + prompts/）
+- **两条路径**：完整流程（spec → plan → 开发）和直接开发
+- **强制 subagent review**：spec/plan/code review 均派遣 subagent 审阅
+- **禁止中途提交**：开发完成后用户确认文件清单才提交
+- 核心指引通过 `before_agent_start` 注入 system prompt（~350 tokens）
 
 通过 `resources_discover` 事件注册 skills 目录。
 
