@@ -6,9 +6,13 @@
 
 - `extensions/` — pi 扩展，每个扩展一个子目录，入口为 `index.ts`
 - `extensions/header/` — 自定义启动 header（ASCII art + 快捷提示）
-- `extensions/powerflow/` — powerflow 工作流扩展，单一 skill 入口 + guides + prompts
+- `extensions/footer/` — 自定义 footer（进度条 + 模型信息）
+- `extensions/theme/` — 同步系统外观模式到 pi 主题
+- `extensions/task/` — 通用任务追踪工具
+- `extensions/subagent/` — 通用 subagent 委派工具
+- `extensions/powerflow/` — powerflow 工作流扩展，skills 通过 package.json 声明式注册
 - `themes/` — pi 主题，JSON 格式
-- `package.json` — pi package 声明 + LSP 类型依赖
+- `package.json` — pi package 声明（extensions / skills / themes）+ LSP 类型依赖
 - `tsconfig.json` — TypeScript 配置（仅用于编辑器类型检查，pi 运行时不依赖）
 
 ## 技术要点
