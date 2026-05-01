@@ -40,7 +40,10 @@ export default function (pi: ExtensionAPI) {
 
           // 版本信息居中
           const versionText = "pi v" + VERSION;
-          const versionPad = Math.max(0, Math.floor((width - visibleWidth(versionText)) / 2));
+          const versionPad = Math.max(
+            0,
+            Math.floor((width - visibleWidth(versionText)) / 2),
+          );
           lines.push("");
           lines.push(" ".repeat(versionPad) + theme.fg("dim", versionText));
 

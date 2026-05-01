@@ -58,12 +58,18 @@ export default function (pi: ExtensionAPI) {
             }
 
             // 格式化上下文窗口大小
-            const contextWindow = usage.contextWindow ?? ctx.model?.contextWindow ?? 0;
-            const cwText = contextWindow > 0 ? "/" + formatContextWindow(contextWindow) : "";
+            const contextWindow =
+              usage.contextWindow ?? ctx.model?.contextWindow ?? 0;
+            const cwText =
+              contextWindow > 0 ? "/" + formatContextWindow(contextWindow) : "";
 
-            const bar = theme.fg(colorToken, "\u2588".repeat(filled))
-              + theme.fg("dim", "\u2591".repeat(empty));
-            const pctText = theme.fg(colorToken, ` ${Math.round(percent)}%${cwText}`);
+            const bar =
+              theme.fg(colorToken, "\u2588".repeat(filled)) +
+              theme.fg("dim", "\u2591".repeat(empty));
+            const pctText = theme.fg(
+              colorToken,
+              ` ${Math.round(percent)}%${cwText}`,
+            );
             progressStr = "  " + bar + pctText;
           }
 
@@ -100,7 +106,7 @@ export default function (pi: ExtensionAPI) {
               const truncatedRight = truncateToWidth(rightStr, available);
               const truncatedWidth = visibleWidth(truncatedRight);
               const padding = " ".repeat(
-                Math.max(0, width - leftWidth - truncatedWidth)
+                Math.max(0, width - leftWidth - truncatedWidth),
               );
               line = leftPart + padding + truncatedRight;
             } else {

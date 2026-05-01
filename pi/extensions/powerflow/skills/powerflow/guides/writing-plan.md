@@ -29,6 +29,7 @@ docs/powerflow/YYYY-MM-DD-feature-name/plan.md
 ```
 
 设计要求：
+
 - 模块边界清晰，职责单一
 - 倾向小而专注的文件
 - 一起变更的文件放在一起
@@ -42,6 +43,7 @@ docs/powerflow/YYYY-MM-DD-feature-name/plan.md
 **可并行**: 是/否
 
 **文件:**
+
 - 新建: exact/path/to/file
 - 修改: exact/path/to/existing
 - 测试: tests/exact/path/to/test（可选）
@@ -64,18 +66,22 @@ docs/powerflow/YYYY-MM-DD-feature-name/plan.md
 
 ```markdown
 ### 任务 1: 类型定义
+
 **依赖**: 无
 **可并行**: 是
 
 ### 任务 2: 核心逻辑
+
 **依赖**: 任务 1
 **可并行**: 是（与任务 3 可并行）
 
 ### 任务 3: UI 组件
+
 **依赖**: 任务 1
 **可并行**: 是（与任务 2 可并行）
 
 ### 任务 4: 集成
+
 **依赖**: 任务 2, 任务 3
 **可并行**: 否
 ```
