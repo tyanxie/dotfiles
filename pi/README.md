@@ -19,8 +19,10 @@ pi/
 │   │   └── index.ts
 │   ├── theme/                  # 同步系统外观模式到 pi 主题
 │   │   └── index.ts
-│   └── task/                   # 通用任务追踪工具
-│       ├── core.ts             # 纯逻辑（不依赖 pi API）
+│   ├── task/                   # 通用任务追踪工具
+│   │   ├── core.ts             # 纯逻辑（不依赖 pi API）
+│   │   └── index.ts
+│   └── format/                 # 自动格式化（edit/write 后触发）
 │       └── index.ts
 └── themes/                     # 主题
     ├── catppuccin-latte.json   # Catppuccin Latte (亮色)
@@ -69,6 +71,15 @@ pi/
 - **Chain** — 串行链式执行，`{previous}` 占位符传递上一步输出
 
 prompt 来源：内联文本（`prompt`）或文件路径（`promptFile`），二者互斥。model 默认继承主 session，可通过 `provider/id` 格式指定。不创建临时文件，prompt 内容通过 `--append-system-prompt` 传递给子进程。
+
+### format
+
+自动格式化扩展，监听 `tool_result` 事件，当 `edit`/`write` 工具成功修改文件后，根据文件扩展名调用对应 formatter：
+
+- `.go` → goimports
+- `.js` `.jsx` `.ts` `.tsx` `.vue` `.html` `.css` `.scss` `.less` `.json` `.md` `.yaml` `.yml` → prettier
+
+Formatter 通过系统 PATH 查找，不可用时首次警告后静默跳过。
 
 ### powerflow
 

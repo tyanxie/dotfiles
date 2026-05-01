@@ -10,6 +10,7 @@
 - `extensions/theme/` — 同步系统外观模式到 pi 主题
 - `extensions/task/` — 通用任务追踪工具
 - `extensions/subagent/` — 通用 subagent 委派工具
+- `extensions/format/` — 自动格式化扩展，edit/write 工具修改文件后自动调用对应 formatter
 - `extensions/powerflow/` — powerflow 工作流扩展，skills 通过 package.json 声明式注册
 - `themes/` — pi 主题，JSON 格式
 - `package.json` — pi package 声明（extensions / skills / themes）+ LSP 类型依赖
