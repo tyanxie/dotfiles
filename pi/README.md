@@ -19,10 +19,8 @@ pi/
 │   │   └── index.ts
 │   ├── theme/                  # 同步系统外观模式到 pi 主题
 │   │   └── index.ts
-│   ├── task/                   # 通用任务追踪工具
-│   │   ├── core.ts             # 纯逻辑（不依赖 pi API）
-│   │   └── index.ts
-│   └── tool-confirm/           # 工具调用确认对话框
+│   └── task/                   # 通用任务追踪工具
+│       ├── core.ts             # 纯逻辑（不依赖 pi API）
 │       └── index.ts
 └── themes/                     # 主题
     ├── catppuccin-latte.json   # Catppuccin Latte (亮色)
@@ -53,10 +51,6 @@ pi/
 ### theme
 
 通过 [dotfiles-daemon](../daemon) 同步系统外观模式。daemon 检测系统外观（macOS / Linux）并将结果（1=light, 2=dark）写入 `~/.dotfiles-daemon-appearance`，扩展通过 `fs.watch` 监听该文件变化，自动在 Catppuccin Latte 和 Mocha 之间切换主题。
-
-### tool-confirm
-
-在 `bash`、`edit`、`write` 工具执行前弹出确认对话框，用户选择 Allow 才执行，否则拦截。使用 `/tool-confirm` 命令可在运行中动态开关。
 
 ### task
 
