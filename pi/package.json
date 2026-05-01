@@ -4,6 +4,7 @@
 	"keywords": ["pi-package"],
 	"pi": {
 		"extensions": ["./extensions"],
+		"skills": ["./extensions/powerflow/skills"],
 		"themes": ["./themes"]
 	},
 	"dependencies": {
