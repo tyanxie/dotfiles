@@ -28,9 +28,6 @@ export default function (pi: ExtensionAPI) {
         render(width: number): string[] {
           const lines: string[] = [];
 
-          // 空行
-          lines.push("");
-
           // ASCII art 居中显示
           const artWidth = visibleWidth(HEADER_ART[0] ?? "");
           for (const artLine of HEADER_ART) {
@@ -47,7 +44,6 @@ export default function (pi: ExtensionAPI) {
           lines.push("");
           lines.push(" ".repeat(versionPad) + theme.fg("dim", versionText));
 
-          lines.push("");
           return lines.map((l) => truncateToWidth(l, width));
         },
         invalidate() {},
