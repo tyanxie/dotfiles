@@ -28,11 +28,8 @@ export default function (pi: ExtensionAPI) {
         invalidate() {},
         render(width: number): string[] {
           // === 左侧：工作目录 + Git 分支 ===
-          let pwd = process.cwd();
-          const home = process.env.HOME || process.env.USERPROFILE;
-          if (home && pwd.startsWith(home)) {
-            pwd = `~${pwd.slice(home.length)}`;
-          }
+          // 只展示当前目录名
+          const pwd = process.cwd().split("/").pop() || "/";
 
           const branch = footerData.getGitBranch();
           const pwdStr = theme.fg("accent", pwd);
