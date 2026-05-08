@@ -5,8 +5,8 @@
  * 工作目录 + Git 分支 | 上下文进度条 | 模型信息（右对齐）
  */
 
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
-import { truncateToWidth, visibleWidth } from "@mariozechner/pi-tui";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
 /** 格式化 token 数量（参考原生 footer 的 formatTokens 逻辑） */
 function formatContextWindow(count: number): string {

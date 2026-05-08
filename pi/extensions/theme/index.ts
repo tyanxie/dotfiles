@@ -13,7 +13,7 @@ import { readFile } from "node:fs/promises";
 import type {
   ExtensionAPI,
   ExtensionContext,
-} from "@mariozechner/pi-coding-agent";
+} from "@earendil-works/pi-coding-agent";
 
 const APPEARANCE_FILE = `${process.env.HOME}/.dotfiles-daemon-appearance`;
 const THEME_LIGHT = "catppuccin-latte";

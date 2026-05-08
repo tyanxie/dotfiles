@@ -1,4 +1,4 @@
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 // formatter 配置：扩展名 → [命令, 构建参数的函数]
 const FORMATTERS: Record<

@@ -5,9 +5,9 @@
  * 风格参考 neovim snacks.dashboard 配置。
  */
 
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
-import { VERSION } from "@mariozechner/pi-coding-agent";
-import { visibleWidth, truncateToWidth } from "@mariozechner/pi-tui";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { VERSION } from "@earendil-works/pi-coding-agent";
+import { visibleWidth, truncateToWidth } from "@earendil-works/pi-tui";
 
 /** ANSI Shadow 字体的 "T-Pi" ASCII art */
 const HEADER_ART = [

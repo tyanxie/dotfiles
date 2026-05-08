@@ -19,7 +19,7 @@
 ## 技术要点
 
 - 扩展使用 TypeScript 编写，通过 jiti 加载，无需编译
-- 类型从 `@mariozechner/pi-coding-agent` 和 `@mariozechner/pi-tui` 导入
+- 类型从 `@earendil-works/pi-coding-agent` 和 `@earendil-works/pi-tui` 导入
 - 主题 JSON 需定义全部 51 个 color token，格式参考 pi 文档 themes.md
 - `node_modules/` 和 `pnpm-lock.yaml` 仅用于编辑器 LSP，不参与 pi 运行时
 
@@ -35,7 +35,7 @@
 - 导出默认函数 `export default function (pi: ExtensionAPI) { ... }`
 - 注释使用中文，日志和用户提示使用英文
 - 使用 `pi.on()` 订阅事件，`pi.registerCommand()` 注册命令
-- UI 组件从 `@mariozechner/pi-tui` 导入（`Container`、`Text`、`SelectList`、`Spacer` 等）
+- UI 组件从 `@earendil-works/pi-tui` 导入（`Container`、`Text`、`SelectList`、`Spacer` 等）
 - 不使用 emoji / 颜文字，图标统一使用 Nerd Font 字形
 - Nerd Font 字形与后续文字之间使用两个空格（图标 + 空格 + 文字），保证视觉间距
 - Nerd Font 字符属于 Unicode PUA 区域，`edit` 工具无法正确写入，必须通过 `bash` 调用 Python 写入
