@@ -112,7 +112,7 @@ pi install /path/to/dotfiles/pi
 
 ```bash
 # 安装类型依赖（仅用于编辑器 LSP 类型检查，pi 运行时不依赖）
-pnpm install
+bun install
 
 # 修改扩展或主题后，在 pi 中执行 /reload 即可热重载
 ```

@@ -21,7 +21,7 @@
 - 扩展使用 TypeScript 编写，通过 jiti 加载，无需编译
 - 类型从 `@earendil-works/pi-coding-agent` 和 `@earendil-works/pi-tui` 导入
 - 主题 JSON 需定义全部 51 个 color token，格式参考 pi 文档 themes.md
-- `node_modules/` 和 `pnpm-lock.yaml` 仅用于编辑器 LSP，不参与 pi 运行时
+- `node_modules/` 和 `bun.lock` 仅用于编辑器 LSP，不参与 pi 运行时
 
 ## 工作流程规范
 
