@@ -11,7 +11,6 @@
 - `extensions/task/` — 通用任务追踪工具
 - `extensions/subagent/` — 通用 subagent 委派工具
 - `extensions/format/` — 自动格式化扩展，edit/write 工具修改文件后自动调用对应 formatter
-- `extensions/powerflow/` — powerflow 工作流扩展，skills 通过 package.json 声明式注册
 - `themes/` — pi 主题，JSON 格式
 - `package.json` — pi package 声明（extensions / skills / themes）+ LSP 类型依赖
 - `tsconfig.json` — TypeScript 配置（仅用于编辑器类型检查，pi 运行时不依赖）
