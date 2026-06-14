@@ -19,6 +19,11 @@ function formatContextWindow(count: number): string {
 
 export default function (pi: ExtensionAPI) {
   pi.on("session_start", async (_event, ctx) => {
+    if (ctx.mode !== "tui") {
+      ctx.ui.notify(`[footer] Inactive in ${ctx.mode} mode`, "info");
+      return;
+    }
+
     ctx.ui.setFooter((tui, theme, footerData) => {
       const unsub = footerData.onBranchChange(() => tui.requestRender());
 

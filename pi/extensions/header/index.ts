@@ -21,7 +21,10 @@ const HEADER_ART = [
 
 export default function (pi: ExtensionAPI) {
   pi.on("session_start", async (_event, ctx) => {
-    if (!ctx.hasUI) return;
+    if (ctx.mode !== "tui") {
+      ctx.ui.notify(`[header] Inactive in ${ctx.mode} mode`, "info");
+      return;
+    }
 
     ctx.ui.setHeader((_tui, theme) => {
       return {

@@ -47,6 +47,11 @@ export default function (pi: ExtensionAPI) {
   }
 
   pi.on("session_start", async (_event, ctx) => {
+    if (ctx.mode !== "tui") {
+      ctx.ui.notify(`[theme] Inactive in ${ctx.mode} mode`, "info");
+      return;
+    }
+
     // 文件不存在时直接使用默认暗色主题
     if (!existsSync(APPEARANCE_FILE)) {
       const result = ctx.ui.setTheme(THEME_DARK);
