@@ -22,7 +22,9 @@ pi/
 │   ├── task/                   # 通用任务追踪工具
 │   │   ├── core.ts             # 纯逻辑（不依赖 pi API）
 │   │   └── index.ts
-│   └── format/                 # 自动格式化（edit/write 后触发）
+│   ├── format/                 # 自动格式化（edit/write 后触发）
+│   │   └── index.ts
+│   └── rtk/                    # RTK token 优化（bash 命令改写）
 │       └── index.ts
 └── themes/                     # 主题
     ├── catppuccin-latte.json   # Catppuccin Latte (亮色)
@@ -90,6 +92,16 @@ Formatter 通过系统 PATH 查找，不可用时首次警告后静默跳过。
 - **渐进式解锁**：fetch 开箱即用，search 在调用时检查 key，未配置则报错引导
 - **配置引导**：`/setup-web` 命令展示 Tavily 注册流程
 - **自定义渲染**：renderCall 展示 action + 目标，renderResult 展示 [Input] + [Output]
+
+### rtk
+
+[RTK (Rust Token Killer)](https://github.com/rtk-ai/rtk) token 优化扩展，全局可用。拦截 bash 命令并改写为 rtk 等价命令，通过智能过滤/压缩命令输出减少 60-90% 的 token 消耗。
+
+- **透明改写**：监听 `tool_call` 事件，对 bash 命令调用 `rtk rewrite` 查询等价写法，原地改写命令
+- **安全放行**：无法安全改写的复杂命令（管道、子命令替换、重定向等）原样放行
+- **fail-open**：rtk 未安装、版本过旧、rewrite 超时/出错时均静默放行，不阻塞任何操作
+- **用户提示**：每次改写通过 `notify` 展示原始命令到改写命令的映射
+- **依赖**：需要 [rtk >= 0.23.0](https://github.com/rtk-ai/rtk#installation) 安装在 PATH 中
 
 ## 主题
 
