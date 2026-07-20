@@ -68,15 +68,29 @@ return {
     end,
     -- Neovim生态中其它插件的主题支持
     integrations = {
-      blink_cmp = true,
+      blink_cmp = {
+        enabled = true,
+        style = "bordered",
+      },
+      dap = true,
+      dap_ui = true,
       dropbar = {
         enabled = true,
         color_mode = true,
       },
+      flash = true,
+      gitsigns = true,
+      mini = {
+        enabled = true,
+        indentscope_color = "overlay2",
+      },
+      neotree = true,
       noice = true,
+      render_markdown = true,
       snacks = {
         enabled = true,
       },
+      treesitter_context = true,
       which_key = true,
     },
   },
