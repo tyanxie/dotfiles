@@ -7,9 +7,6 @@
 ```
 pi/
 ├── extensions/                 # 扩展
-│   ├── subagent/               # 通用 subagent 委派工具
-│   │   ├── core.ts             # spawn + JSON 解析（不依赖 pi API）
-│   │   └── index.ts
 │   ├── web/                   # 网络内容获取（全局可用）
 │   │   ├── core.ts             # 纯逻辑（Jina Reader + Tavily Search）
 │   │   └── index.ts
@@ -61,16 +58,6 @@ pi/
 - TUI widget 常驻显示完整任务列表和进度
 - 状态存储在 session 的 tool result details 中，通过分支历史重建（支持 undo/redo）
 - 自定义渲染：调用摘要和结果展示均带主题颜色
-
-### subagent
-
-通用 subagent 委派工具，通过 spawn 独立 pi 子进程执行任务。支持三种模式：
-
-- **Single** — 单任务委派
-- **Parallel** — 多任务并行执行（最多 8 个，4 并发）
-- **Chain** — 串行链式执行，`{previous}` 占位符传递上一步输出
-
-prompt 来源：内联文本（`prompt`）或文件路径（`promptFile`），二者互斥。model 默认继承主 session，可通过 `provider/id` 格式指定。不创建临时文件，prompt 内容通过 `--append-system-prompt` 传递给子进程。
 
 ### format
 

@@ -9,7 +9,6 @@
 - `extensions/footer/` — 自定义 footer（进度条 + 模型信息）
 - `extensions/theme/` — 同步系统外观模式到 pi 主题
 - `extensions/task/` — 通用任务追踪工具
-- `extensions/subagent/` — 通用 subagent 委派工具
 - `extensions/format/` — 自动格式化扩展，edit/write 工具修改文件后自动调用对应 formatter
 - `extensions/web/` — 网络内容获取扩展（fetch + search），全局可用
 - `themes/` — pi 主题，JSON 格式
@@ -49,14 +48,6 @@
 - tool 状态通过 `details` 字段存储在 session 中，通过 `reconstructFromBranch()` 从 session 历史重建
 - 支持 `renderCall` / `renderResult` 自定义 TUI 渲染
 - 支持 `ctx.ui.setWidget()` 注册常驻 widget
-
-## subagent 扩展开发规范
-
-- `subagent` 扩展通过 `spawn` 独立 `pi` 子进程实现任务委派
-- 不创建临时文件，`--append-system-prompt` 同时支持文件路径和原始文本
-- model 默认继承主 session（`ctx.model.provider/ctx.model.id`），可通过参数覆盖
-- prompt 来源支持 `prompt`（内联）和 `promptFile`（文件路径），二者互斥
-- 三种模式：single（单任务）、parallel（并行）、chain（串行链式，`{previous}` 占位符传递输出）
 
 ## Git 提交规范
 
